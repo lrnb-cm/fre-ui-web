@@ -3,9 +3,9 @@
 ## Prerequisites
 **Group Teams By separation concerns around what team is accomplishing. Domain expertise.**
 
-[React + Rx.js](https://www.netguru.com/blog/react-rxjs)
-[Apollo State](https://www.apollographql.com/blog/apollo-client/caching/local-state-management-with-reactive-variables/)
-[React-Hooks](https://reactjs.org/docs/react-component.html)
+- [React + Rx.js](https://www.netguru.com/blog/react-rxjs)
+- [Apollo State](https://www.apollographql.com/blog/apollo-client/caching/local-state-management-with-reactive-variables/)
+- [React-Hooks](https://reactjs.org/docs/react-component.html)
 
 > VSCode Extensions:
 
