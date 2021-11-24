@@ -3,18 +3,17 @@
 ## Prerequisites
 **Group Teams By separation concerns around what team is accomplishing. Domain expertise.**
 
-```
-[x]https://www.netguru.com/blog/react-rxjs
-[x]https://www.apollographql.com/blog/apollo-client/caching/
-[x]local-state-management-with-reactive-variables/
-[x]https://reactjs.org/docs/react-component.html
-```
+[React + Rx.js](https://www.netguru.com/blog/react-rxjs)
+[Apollo State](https://www.apollographql.com/blog/apollo-client/caching/local-state-management-with-reactive-variables/)
+[React-Hooks](https://reactjs.org/docs/react-component.html)
 
 > VSCode Extensions:
+
 *eslint, prettier, prettier eslint, simple react snippets,
 TODO Highlight, Visual Studio IntelliCode*
 
-> Lint on Save: 
+> Lint on Save:
+
 *File > Preferences > Settings (or Ctrl+,) > Search: codeActionsOnSave > Edit in settings.json > add to json:*
 ```
 "editor.codeActionsOnSave": {
