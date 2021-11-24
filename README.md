@@ -1,21 +1,30 @@
 # Lillii RnB Freeing Returns Documetation
 
 ## Prerequisites
-Group Teams By separation concerns around what team is accomplishing. Domain expertise.
+**Group Teams By separation concerns around what team is accomplishing. Domain expertise.**
 
-https://www.netguru.com/blog/react-rxjs
-https://www.apollographql.com/blog/apollo-client/caching/local-state-management-with-reactive-variables/
-https://reactjs.org/docs/react-component.html
+```
+[x]https://www.netguru.com/blog/react-rxjs
+[x]https://www.apollographql.com/blog/apollo-client/caching/
+[x]local-state-management-with-reactive-variables/
+[x]https://reactjs.org/docs/react-component.html
+```
 
-vscode extensions:
+> VSCode Extensions:
+*
 eslint, prettier, prettier eslint, simple react snippets,
 TODO Highlight, Visual Studio IntelliCode
+*
 
-Lint on Save: 
-File > Preferences > Settings (or Ctrl+,) > Search: codeActionsOnSave > Edit in settings.json > add to json: "editor.codeActionsOnSave": {
+> Lint on Save: 
+*
+File > Preferences > Settings (or Ctrl+,) > Search: codeActionsOnSave > Edit in settings.json > add to json:*
+```
+"editor.codeActionsOnSave": {
   "source.fixAll.eslint": true
 },
 "eslint.validate": ["javascript"]
+```
 
 ## Technologies
 
@@ -34,7 +43,7 @@ File > Preferences > Settings (or Ctrl+,) > Search: codeActionsOnSave > Edit in 
 ```bash
 createdb enterprise-db
 ```
-3. [Update](server-enterprise/ormconfig.json)
+3. [Update Config](server-enterprise/ormconfig.json)
 4. Start Redis
 
 - Frontend
