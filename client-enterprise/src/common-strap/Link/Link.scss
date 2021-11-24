@@ -1,0 +1,21 @@
+@import "scss/mainSass/_variables";
+
+
+:local(.a) {
+  color: $accentColor;
+  text-decoration: none;
+  &:hover {
+    text-decoration-color: rgb(255, 153, 0);
+  }
+  &:visited {
+    color: $activeColor;
+  }
+}
+
+:local(.b) {
+  color: $accentColor;
+  text-decoration: none;
+  &:visited {
+    color: $activeColor;
+  }
+}

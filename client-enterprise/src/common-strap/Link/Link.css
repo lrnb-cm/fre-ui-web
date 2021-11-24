@@ -1,0 +1,20 @@
+:local(.a) {
+  color: #ff7d38;
+  text-decoration: none;
+}
+:local(.a):hover {
+  text-decoration-color: #ff9900;
+}
+:local(.a):visited {
+  color: #ff7d38;
+}
+
+:local(.b) {
+  color: #ff7d38;
+  text-decoration: none;
+}
+:local(.b):visited {
+  color: #ff7d38;
+}
+
+/*# sourceMappingURL=Link.css.map */
