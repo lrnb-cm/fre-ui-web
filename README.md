@@ -11,14 +11,11 @@
 ```
 
 > VSCode Extensions:
-*
-eslint, prettier, prettier eslint, simple react snippets,
-TODO Highlight, Visual Studio IntelliCode
-*
+*eslint, prettier, prettier eslint, simple react snippets,
+TODO Highlight, Visual Studio IntelliCode*
 
 > Lint on Save: 
-*
-File > Preferences > Settings (or Ctrl+,) > Search: codeActionsOnSave > Edit in settings.json > add to json:*
+*File > Preferences > Settings (or Ctrl+,) > Search: codeActionsOnSave > Edit in settings.json > add to json:*
 ```
 "editor.codeActionsOnSave": {
   "source.fixAll.eslint": true
