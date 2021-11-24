@@ -35,6 +35,7 @@
     "@babel/plugin-proposal-pipeline-operator": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
     "@babel/runtime": "7.13.8",
+    "@testing-library/react": "^12.1.2",
     "sass": "^1.43.4",
     "typescript": "4.1.3"
   },
