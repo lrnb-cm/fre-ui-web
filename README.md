@@ -42,13 +42,13 @@ createdb enterprise-db
 3. [Update Config](server-enterprise/ormconfig.json)
 4. Start Redis
 
-- Frontend
+> Frontend
 5. cd client-enterprise
 6. npm install
 7. npm start
 8. App running on port 3000
 
-- Backend
+> Backend
 5. cd server-enterprise
 6. npm install
 7. npm run start-services
@@ -56,21 +56,29 @@ createdb enterprise-db
 9. Gateway [Query-to] running on port 5000
 
 ### Deployment
-- Frontend
+> Frontend
 1. Push to Git
 2. npm run build
 3. Deploy to GCP App Engine
 
-- Backend
+> Backend
 1. Push to Git
 2. Docker Build
-- docker build -f ./Dockerfiles/container.dockerfile -t gcr.io/freeing-returns/container:staging .
+```
+docker build -f ./Dockerfiles/container.dockerfile -t gcr.io/freeing-returns/container:staging .
+```
 3. Tag container as [latest] release
-- docker tag 715bc70a8a10 gcr.io/freeing-returns/container:latest
+```
+docker tag 715bc70a8a10 gcr.io/freeing-returns/container:latest
+```
 4. Push to Container Registry
-- docker push gcr.io/freeing-returns/container:staging
+```
+docker push gcr.io/freeing-returns/container:staging
+```
 5. Deploy to k8s
-- cd manifests > kubectl apply -f . > kubectl get all
+```
+cd manifests > kubectl apply -f . > kubectl get all
+```
 6. Deploy to GKE
 - 
 
