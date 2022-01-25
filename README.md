@@ -18,7 +18,7 @@ TODO Highlight, Visual Studio IntelliCode*
 "editor.codeActionsOnSave": {
   "source.fixAll.eslint": true
 },
-"eslint.validate": ["javascript"]
+"eslint.validate": ["javascript", "typescript", "typescriptreact"]
 ```
 
 ## Technologies
