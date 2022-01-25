@@ -1,10 +1,10 @@
-import * as container from './container/container';
-import * as container2 from './newContainer/container';
-import * as container3 from './loginContainer/loginContainer'
+import Containers from './transactionContainer/container';
+import NewContainer from './newContainer/container';
+import LoginContainer from './loginContainer'
 
 
 export {
-    container,
-    container2,
-    container3
+    Containers,
+    NewContainer,
+    LoginContainer
 }

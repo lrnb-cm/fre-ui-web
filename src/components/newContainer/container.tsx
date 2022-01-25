@@ -7,7 +7,7 @@ import { NewSearch } from "./search";
 import { useApolloClient } from "@apollo/client";
 import { Item } from "./item";
 
-export function NewContainer (props: { currency: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) { 
+export default function NewContainer (props: { currency: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) { 
   const client = useApolloClient()
   const state:newStates = newLocalstate(); 
   
