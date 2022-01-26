@@ -46,7 +46,3 @@ TODO Highlight, Visual Studio IntelliCode*
 
 1. Complete Frontend
 2. Add Developers!
-
-## License
-
-The MIT License (MIT)
