@@ -24,25 +24,24 @@ TODO Highlight, Visual Studio IntelliCode*
 ## Technologies
 
 1. Auth: GCP OpenID Connect Tokens
-2. Front End: React.js + Rx.js (State Management) (<embed> for embedding)
+2. Front End: React.js + Rx.js (State Management) (```<embed>``` for embedding)
 3. Scheduled Events: Cron Jobs
 4. Host: (Google Cloud App Engine)
 
 
 ### Installation
-1. Clone Repository && cd fre-ui-web-master
-2. cd client-enterprise
-3. npm install
-4. npm start
-5. App running on port 3000
+1. Clone Repository && cd fre-ui-web-production
+2. npm install
+3. npm start
+4. App running on port 3000
 
 ### Deployment
 > Frontend
 1. Push to Git
 2. npm run build
-3. Deploy to GCP App Engine
+3. Deploy to Favorite Cloud Provider!
 
 ## To do
 
-1. Complete Frontend
-2. Add Developers!
+1. Add Developers
+2. Complete Frontend
