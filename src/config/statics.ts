@@ -1,1 +1,1 @@
-export var MY_ENV = 'development';
+export var MY_ENV = 'production';
