@@ -4,7 +4,9 @@ import { Google, Salesforce } from "./config";
 import { GET_USER_AT_CLIENT } from "./queries/queries";
 
 export default function LoginCallback() {
-  const { data, loading, error } = useQuery(GET_USER_AT_CLIENT);
+  const { data, loading, error } = useQuery(GET_USER_AT_CLIENT, {
+    variables: { email: localStorage.getItem('email') }
+  });
   useEffect(() => {
     const code = (window.location.search.match(/code=([^&]+)/) || [])[1];
     const state = (window.location.search.match(/state=([^&]+)/) || [])[1];

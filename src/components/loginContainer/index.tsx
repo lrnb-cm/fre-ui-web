@@ -4,11 +4,12 @@ import { localState } from "./state/loginState";
 import { OIDC_LOGIN } from "./queries/mutations";
 import { Google } from "./config";
 
-let emails = prompt("Enter Email Address:");
+let emails = localStorage.getItem('email')
 var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-if (emails === '' || emails && !emails.match(mailformat)) {
+if (emails === '' || emails && !emails.match(mailformat) || emails === null) {
   emails = String(prompt("Enter Email Address:"))
 }
+emails && emails.match(mailformat) && localStorage.setItem('email', emails)
 
 export default function LoginComp() {
   const [login, { data, loading, error }] = useMutation(OIDC_LOGIN);
