@@ -30,9 +30,9 @@ TODO Highlight, Visual Studio IntelliCode*
 
 
 ### Installation
-1. Clone Repository && cd fre-ui-web-production
-2. npm install
-3. npm start
+1. ```git clone https://github.com/lrnb-cm/fre-ui-web.git && cd fre-ui-web```
+2. ```npm install```
+3. ```npm start```
 4. App running on port 3000
 
 ### Deployment
