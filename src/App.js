@@ -6,8 +6,22 @@ import LoginCallback from "./components/loginContainer/Callback";
 import { Containers, LoginContainer } from "./components";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
+
+import makeStyles from '@mui/styles/makeStyles';
+
+const theme = createTheme();
+
+const useStyles = makeStyles((theme) => {
+  root: {
+    // some CSS that access to theme
+  }
+});
+
 
 export default function App() {
+  const classes = useStyles()
+  
   // @ts-ignore
   if (module.hot) {
     // @ts-ignore
@@ -34,11 +48,15 @@ export default function App() {
     <div className="App">
       <h2>Welcome to LilliiRnB's Enterprise App!</h2>
       <StrictMode>
-        <ApolloProvider client={client}>
-          <Router>
-            <Apps /> 
-          </Router>
-        </ApolloProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <ApolloProvider client={client}>
+            <Router>
+              <Apps /> 
+            </Router>
+          </ApolloProvider>
+       </ThemeProvider>
+      </StyledEngineProvider>
       </StrictMode>
     </div>
   );

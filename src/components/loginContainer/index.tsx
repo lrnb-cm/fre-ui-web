@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { localState } from "./state/loginState";
 import { OIDC_LOGIN } from "./queries/mutations";
@@ -33,7 +33,7 @@ export default function LoginComp() {
     <div>
       <Button 
         variant="contained" color="primary" 
-        onClick={() => handleLogin()}
+        onClick={handleLogin}
       >
         Login with Google
       </Button>
