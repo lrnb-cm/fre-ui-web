@@ -37,10 +37,13 @@
     "rxjs": "^6.5.4"
   },
   "devDependencies": {
+    "@apollo/react-testing": "^4.0.0",
     "@babel/plugin-proposal-export-default-from": "^7.16.0",
     "@babel/plugin-proposal-pipeline-operator": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
     "@babel/runtime": "7.13.8",
+    "@react-mock/localstorage": "^0.1.2",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@types/react-router-dom": "^5.3.3",
     "sass": "^1.43.4",
