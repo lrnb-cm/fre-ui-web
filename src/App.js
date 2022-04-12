@@ -1,35 +1,29 @@
-import { StrictMode } from "react";
-import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { uri } from "./config";
-import LoginCallback from "./components/loginContainer/Callback";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import { Containers, LoginContainer } from "./components";
-import "./App.css";
+import LoginCallback from "./components/loginContainer/Callback";
+import { StrictMode } from "react";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { uri } from "./config";
+import { theme } from "./theme";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  ThemeProvider,
-  StyledEngineProvider,
-  createTheme,
-} from "@mui/material/styles";
+import "./App.css";
+import { CssBaseline } from "@mui/material";
+import { FirebaseContext } from "./contexts/FirebaseContext";
+import { initializeApp } from "firebase/app";
 
-import makeStyles from "@mui/styles/makeStyles";
-
-const theme = createTheme();
-
-const useStyles = makeStyles((theme) => {
-  root: {
-    // some CSS that access to theme
-  }
-});
+const firebaseConfig = {
+  apiKey: "AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI",
+  authDomain: "freeing-returns.firebaseapp.com",
+};
 
 export default function App() {
-  const classes = useStyles();
-
   // @ts-ignore
   if (module.hot) {
     // @ts-ignore
     module.hot.accept("./components", (e) => {
       const PageComponent = require("./components");
+      // @ts-ignore
       render(main(PageComponent), appRootElement);
     });
   }
@@ -38,6 +32,7 @@ export default function App() {
     uri,
     cache: new InMemoryCache(),
   });
+
   const Apps = () => {
     let routes = useRoutes([
       { path: "/transactions", element: <Containers /> },
@@ -47,20 +42,21 @@ export default function App() {
     return routes;
   };
 
+  const firebase = initializeApp(firebaseConfig);
   return (
-    <div className="App">
-      <h2>Welcome to LilliiRnB's Enterprise App!</h2>
-      <StrictMode>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <ApolloProvider client={client}>
+    <StrictMode>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <ApolloProvider client={client}>
+            <FirebaseContext.Provider value={firebase}>
+              <CssBaseline />
               <Router>
                 <Apps />
               </Router>
-            </ApolloProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </StrictMode>
-    </div>
+            </FirebaseContext.Provider>
+          </ApolloProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </StrictMode>
   );
 }
