@@ -1,12 +1,13 @@
 import { StrictMode } from 'react'
-import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
+import { BrowserRouter as Router, useRoutes, Navigate } from 'react-router-dom'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { uri } from './config'
 import LoginCallback from './components/loginContainer/Callback'
 import { Containers, LoginContainer } from './components'
-import Customers from './components/customerContainer/Customers'
+import Customer from './components/customerContainer/Customers'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ResponsiveDrawer from './components/layauts/ResponsiveDrawer'
 
 export default function App() {
   // @ts-ignore
@@ -27,17 +28,18 @@ export default function App() {
       { path: '/transactions', element: <Containers /> },
       { path: '/', element: <LoginContainer /> },
       { path: '/validated', element: <LoginCallback /> },
-      { path: '/customers', element: <Customers /> }
+      { path: '/customers', element: <Customer /> }
     ])
     return routes
   }
 
   return (
-    <div className="App">
-      <h2>Welcome to LilliiRnB's Enterprise App!</h2>
+    <div>
+      {/*<h2>Welcome to LilliiRnB's Enterprise App!</h2>*/}
       <StrictMode>
         <ApolloProvider client={client}>
-          <Router>
+          <Router to="/customers" replace={true}>
+            <ResponsiveDrawer />
             <Apps />
           </Router>
         </ApolloProvider>
