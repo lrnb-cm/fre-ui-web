@@ -1,12 +1,14 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Stats from './components/stats';
+import { withTheme } from '@mui/styles';
+import { Stack } from '@mui/material';
 
 export default function dashboard() {
   return (
     <DashboardLayout>
       <DashboardTitle>Dashboard</DashboardTitle>
-      <DashboardStatTile>
+      <DashboardStatTile flexDirection="row">
         <Stats title="shops" count={321} />
         <Stats title="customers" count={23391} />
         <Stats title="Total returns" count={1550} />
@@ -39,7 +41,7 @@ const DashboardTitle = styled('div')(({ theme }) => ({
   marginBottom: '36px',
 }));
 
-const DashboardStatTile = styled('div')(({ theme }) => ({
+const DashboardStatTile = styled(withTheme(Stack))(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   display: 'flex',

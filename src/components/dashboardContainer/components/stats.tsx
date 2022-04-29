@@ -1,6 +1,8 @@
 import { FC, ReactElement } from 'react';
 import { styled } from '@mui/material/styles';
 import { StatsPropsType } from '../types';
+import { withTheme } from '@mui/styles';
+import { Box } from '@mui/material';
 
 const Stats: FC<StatsPropsType> = ({ count, title }): ReactElement => {
   return (
@@ -11,7 +13,7 @@ const Stats: FC<StatsPropsType> = ({ count, title }): ReactElement => {
   );
 };
 
-const StatWrapper = styled('div')(({ theme }) => ({
+const StatWrapper = styled(withTheme(Box))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -26,7 +28,7 @@ const StatCount = styled('span')(({ theme }) => ({
   fontSize: '32px',
   lineHeight: '125%',
   letterSpacing: '-0.01em',
-  color: '#3C3C3C',
+  color: theme.palette.text.primary,
 }));
 
 const Statitle = styled('span')(({ theme }) => ({
@@ -35,7 +37,8 @@ const Statitle = styled('span')(({ theme }) => ({
   fontWeight: 400,
   fontSize: '14px',
   lineHeight: '150%',
-  color: '#969696',
+  color: theme.palette.text.secondary,
+
   textTransform: 'capitalize',
 }));
 
