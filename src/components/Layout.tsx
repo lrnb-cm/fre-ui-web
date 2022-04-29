@@ -15,10 +15,11 @@ const Layout: FC = ({ children }): ReactElement => {
 
 const LayoutWrapper = styled('div')(({ theme }) => ({
   background: theme.palette.background.default,
-  // width: '100vw',
+  width: '100%',
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'row',
+  boxSizing: 'border-box',
 }));
 
 const SidebarWrapper = styled('div')(({ theme }) => ({
@@ -29,7 +30,8 @@ const SidebarWrapper = styled('div')(({ theme }) => ({
 const ContentWrapper = styled('div')(({ theme }) => ({
   padding: '16px 140px',
   height: 'auto',
-  width: '100%',
+  width: `calc(100vw - 72px)`,
+  boxSizing: 'border-box',
 }));
 
 const HeaderWrapper = styled('div')(({ theme }) => ({
