@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 const Layout: FC = ({ children }): ReactElement => {
   return (
     <LayoutWrapper>
-      <SidebarWrapper />
+      <SidebarWrapper>Sidebar</SidebarWrapper>
       <ContentWrapper>
         <HeaderWrapper />
         {children}
