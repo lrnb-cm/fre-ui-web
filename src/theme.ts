@@ -105,6 +105,7 @@ export const theme = createTheme({
       size: 20,
       lineHeight: '125%',
     }),
+
     subtitle1: buildVariant({
       fontWeight: fontWeightBold,
       size: 16,
