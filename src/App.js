@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { theme } from './theme';
+import Layout from './components/Layout';
 
 export default function App() {
   // @ts-ignore
@@ -36,20 +37,19 @@ export default function App() {
   };
 
   return (
-    <div className="App">
-      <h2>Welcome to LilliiRnB's Enterprise App!</h2>
-      <StrictMode>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <ApolloProvider client={client}>
-              <CssBaseline />
+    <StrictMode>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <ApolloProvider client={client}>
+            <CssBaseline />
+            <Layout>
               <Router>
                 <Apps />
               </Router>
-            </ApolloProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </StrictMode>
-    </div>
+            </Layout>
+          </ApolloProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </StrictMode>
   );
 }
