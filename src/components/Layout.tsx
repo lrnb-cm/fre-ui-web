@@ -32,7 +32,7 @@ const SidebarWrapper = styled('div')(({ theme }: { theme: Theme }) => {
 });
 
 const ContentWrapper = styled('div')(({ theme }) => ({
-  padding: theme.custom.pxToRem(16, 140),
+  padding: theme.custom.pxToRem(16, 100),
   height: 'auto',
   width: `calc(100% - ${theme.custom.sidebar})`,
   boxSizing: 'border-box',

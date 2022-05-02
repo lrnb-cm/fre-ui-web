@@ -40,6 +40,7 @@ const ProductLeftContent = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
+  marginRight: theme.custom.pxToRem(18),
 }));
 
 const Avatar = styled(withTheme(MuiAvatar))(({ theme }) => ({
