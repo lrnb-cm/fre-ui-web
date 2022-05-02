@@ -5,6 +5,8 @@ import { withTheme } from '@mui/styles';
 import { Box, Stack } from '@mui/material';
 import ProductDisplay from './components/ProductDisplay';
 import profile_img from '../../asset/img/productImg.svg';
+import BarGraph from './components/BarChart';
+import barData from './components/barData';
 
 export default function dashboard() {
   return (
@@ -17,7 +19,11 @@ export default function dashboard() {
         <Stats title="received" count={1200} />
         <Stats title="in progress" count={350} />
       </DashboardStatTile>
-      <DashboardGraphReport></DashboardGraphReport>
+      <DashboardGraphReport>
+        <BarGraph width={342} height={127} data={barData} />
+        <BarGraph width={342} height={127} data={barData} />
+        <BarGraph width={342} height={127} data={barData} />
+      </DashboardGraphReport>
       <DashboardProductReport>
         <ProductReportHeader>
           <DisplayTitle>Most Reported Products</DisplayTitle>
