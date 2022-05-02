@@ -27,14 +27,13 @@ const ProductDisplay: FC<ProductDisplayType> = ({
 };
 
 const ProductDisplayContent = styled(withTheme(Stack))(({ theme }) => ({
-  padding: '12px 24px',
+  padding: theme.custom.pxToRem(12, 24),
   background: theme.palette.background.paper,
-  borderRadius: '16px',
+  borderRadius: theme.custom.pxToRem(16),
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'row',
-  width: '288px',
 }));
 
 const ProductLeftContent = styled(withTheme(Stack))(({ theme }) => ({
@@ -52,14 +51,14 @@ const ProductContent = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-start',
   flexDirection: 'column',
-  marginLeft: theme.typography.pxToRem(16),
+  marginLeft: theme.custom.pxToRem(16),
 }));
 
 const ProductTitle = styled('div')(({ theme }) => ({
   fontFamily: 'Intro Bold',
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: theme.typography.pxToRem(14),
+  fontSize: theme.custom.pxToRem(14),
   lineHeight: '150%',
   color: theme.palette.text.primary,
 }));
@@ -67,7 +66,7 @@ const ProductSubTitle = styled('div')(({ theme }) => ({
   fontFamily: 'Intro Book',
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: theme.typography.pxToRem(12),
+  fontSize: theme.custom.pxToRem(12),
   lineHeight: '120%',
   color: theme.palette.text.secondary,
 }));
@@ -76,7 +75,7 @@ const ProductPrice = styled('div')(({ theme }) => ({
   fontFamily: 'Intro Bold',
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: '14px',
+  fontSize: theme.custom.pxToRem(14),
   lineHeight: '140%',
   //   textAlign: 'right',
   color: theme.palette.text.primary,

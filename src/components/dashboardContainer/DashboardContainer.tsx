@@ -66,7 +66,7 @@ const DashboardTitle = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
   fontWeight: 600,
   color: theme.palette.text.primary,
-  marginBottom: theme.typography.pxToRem(36),
+  marginBottom: theme.custom.pxToRem(36),
 }));
 
 const DashboardStatTile = styled(withTheme(Stack))(({ theme }) => ({
@@ -74,19 +74,19 @@ const DashboardStatTile = styled(withTheme(Stack))(({ theme }) => ({
   borderRadius: '16px',
   display: 'flex',
   justifyContent: 'space-around',
-  paddingLeft: '100px',
-  paddingRight: '100px',
+  paddingLeft: theme.custom.pxToRem(100),
+  paddingRight: theme.custom.pxToRem(100),
   width: '100%',
-  marginBottom: theme.typography.pxToRem(29),
+  marginBottom: theme.custom.pxToRem(29),
 }));
 
 const DashboardGraphReport = styled('div')(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   display: 'flex',
-  height: theme.typography.pxToRem(255),
-  padding: theme.typography.pxToRem(24),
-  marginBottom: theme.typography.pxToRem(29),
+  height: theme.custom.pxToRem(255),
+  padding: theme.custom.pxToRem(24),
+  marginBottom: theme.custom.pxToRem(29),
 }));
 
 const DashboardProductReport = styled('div')(({ theme }) => ({
@@ -100,14 +100,14 @@ const ProductReportHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   width: '100%',
-  marginBottom: theme.typography.pxToRem(20),
+  marginBottom: theme.custom.pxToRem(20),
 }));
 
 const DisplayTitle = styled('div')(({ theme }) => ({
   fontFamily: 'Intro Bold',
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: theme.typography.pxToRem(20),
+  fontSize: theme.custom.pxToRem(20),
   lineHeight: '120%',
   color: theme.palette.text.primary,
 }));
@@ -115,8 +115,8 @@ const ViewAll = styled('div')(({ theme }) => ({
   fontFamily: 'Intro Bold',
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: theme.typography.pxToRem(12),
-  lineHeight: theme.typography.pxToRem(12),
+  fontSize: theme.custom.pxToRem(12),
+  lineHeight: theme.custom.pxToRem(12),
   textAlign: 'right',
   letterSpacing: '-0.01em',
   color: theme.palette.text.secondary,

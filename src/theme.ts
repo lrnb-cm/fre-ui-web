@@ -1,14 +1,19 @@
-import { createTheme } from '@mui/material';
-
+const htmlFontSize = 16;
 const defaultFontFamily = 'NTR';
 const fontSize = 14;
-const htmlFontSize = 16;
 const fontWeightLight = 300;
 const fontWeightRegular = 400;
 const fontWeightMedium = 500;
 const fontWeightBold = 700;
 const coef = fontSize / 14;
-const pxToRem = (size: number) => `${(size / htmlFontSize) * coef}rem`;
+// const pxToRem = (size: number) => `${(size / htmlFontSize) * coef}rem`;
+
+const pxToRem = (...args: number[]) => {
+  return args.slice(0, 4).reduce((sum, size) => {
+    const increment = `${(size / htmlFontSize) * coef}rem`;
+    return sum ? `${sum} ${increment}` : increment;
+  }, '');
+};
 
 const buildVariant = ({
   fontFamily = defaultFontFamily,
@@ -24,7 +29,7 @@ const buildVariant = ({
   letterSpacing,
 });
 
-export const theme = createTheme({
+export const theme = {
   palette: {
     mode: 'light',
     common: {
@@ -77,7 +82,7 @@ export const theme = createTheme({
     fontWeightRegular,
     fontWeightMedium,
     fontWeightBold,
-    htmlFontSize,
+    // htmlFontSize,
     h1: buildVariant({
       fontWeight: fontWeightBold,
       size: 92,
@@ -135,4 +140,11 @@ export const theme = createTheme({
       textTransform: 'uppercase',
     },
   },
-});
+};
+
+export const customTheming = {
+  custom: {
+    sidebar: pxToRem(72),
+    pxToRem: pxToRem,
+  },
+};

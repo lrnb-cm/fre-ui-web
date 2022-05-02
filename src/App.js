@@ -7,10 +7,16 @@ import DashboardContainer from './components/dashboardContainer/DashboardContain
 import { Containers, LoginContainer } from './components';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import {
+  ThemeProvider,
+  StyledEngineProvider,
+  Theme,
+} from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { theme } from './theme';
+import { theme, customTheming } from './theme';
 import Layout from './components/Layout';
+import { deepmerge } from '@mui/utils';
+import { createTheme } from '@mui/material/styles';
 
 export default function App() {
   // @ts-ignore
@@ -36,19 +42,20 @@ export default function App() {
     return routes;
   };
 
+  const mergeTheme = createTheme(deepmerge(theme, customTheming));
   return (
     <StrictMode>
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <ApolloProvider client={client}>
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={mergeTheme}>
             <CssBaseline />
             <Layout>
               <Router>
                 <Apps />
               </Router>
             </Layout>
-          </ApolloProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </ApolloProvider>
       </StyledEngineProvider>
     </StrictMode>
   );
