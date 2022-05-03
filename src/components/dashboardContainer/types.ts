@@ -18,3 +18,17 @@ export type BarChartType = {
   height: number;
   width: number;
 };
+
+export type ChartSectionProps = {
+  barData: {
+    date: string;
+    value: number;
+  }[];
+  total: number;
+  title: string;
+};
+
+export type TotalSectionType = {
+  total: number;
+  title: string;
+};

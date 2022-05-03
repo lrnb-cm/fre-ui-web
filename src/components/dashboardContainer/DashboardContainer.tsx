@@ -7,6 +7,7 @@ import ProductDisplay from './components/ProductDisplay';
 import profile_img from '../../asset/img/productImg.svg';
 import BarGraph from './components/BarChart';
 import barData from './components/barData';
+import ChartSection from './components/ChartSection';
 
 export default function dashboard() {
   return (
@@ -19,10 +20,14 @@ export default function dashboard() {
         <Stats title="received" count={1200} />
         <Stats title="in progress" count={350} />
       </DashboardStatTile>
-      <DashboardGraphReport>
-        <BarGraph width={342} height={127} data={barData} />
-        <BarGraph width={342} height={127} data={barData} />
-        <BarGraph width={342} height={127} data={barData} />
+      <DashboardGraphReport gap={1}>
+        <ChartSection barData={barData} total={1824} title="Report Summary" />
+        <ChartSection
+          barData={barData}
+          total={824}
+          title="Reporting Customers"
+        />
+        <ChartSection barData={barData} total={84} title="Total Returns" />
       </DashboardGraphReport>
       <DashboardProductReport>
         <ProductReportHeader>
@@ -86,13 +91,15 @@ const DashboardStatTile = styled(withTheme(Stack))(({ theme }) => ({
   marginBottom: theme.custom.pxToRem(29),
 }));
 
-const DashboardGraphReport = styled('div')(({ theme }) => ({
+const DashboardGraphReport = styled(withTheme(Box))(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   display: 'flex',
   height: theme.custom.pxToRem(255),
   padding: theme.custom.pxToRem(24),
   marginBottom: theme.custom.pxToRem(29),
+  alignItems: 'center',
+  justifyContent: 'space-between',
 }));
 
 const DashboardProductReport = styled('div')(({ theme }) => ({
