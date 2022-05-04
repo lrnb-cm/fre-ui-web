@@ -15,8 +15,8 @@ const TotalSection: FC<TotalSectionType> = ({ total, title }): ReactElement => {
 
 const TotalSectionWrapper = styled(withTheme(Box))(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
   flexDirection: 'column',
 }));
 
