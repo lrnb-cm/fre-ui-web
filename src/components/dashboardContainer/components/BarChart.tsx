@@ -31,8 +31,9 @@ const BarGraph: FC<BarChartType> = ({ data, width, height }): ReactElement => {
         axisLine={false}
         tickLine={false}
         tickMargin={8}
-        // tickCount={5}
-        // interval={10}
+        tickCount={4}
+        interval={0}
+        padding={{ top: 6, bottom: 7 }}
         // type="number"
         // domain={['auto', 'auto']}
         // ticks={[10, 20, 30]}
