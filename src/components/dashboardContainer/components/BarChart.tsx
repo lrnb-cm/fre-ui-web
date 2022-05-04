@@ -12,7 +12,6 @@ const BarGraph: FC<BarChartType> = ({ data, width, height }): ReactElement => {
     );
   }, [data]);
 
-  console.log('max', max);
   return (
     <BarChart
       data={data}
