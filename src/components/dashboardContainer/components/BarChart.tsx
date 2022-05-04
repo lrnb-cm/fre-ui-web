@@ -1,8 +1,18 @@
 import React, { ReactElement, FC } from 'react';
-import { XAxis, YAxis, CartesianGrid, BarChart, Bar } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, BarChart, Bar, Cell } from 'recharts';
 import { BarChartType } from '../types';
 
 const BarGraph: FC<BarChartType> = ({ data, width, height }): ReactElement => {
+  const colors = ['#EBC052', '#DF5555'];
+
+  const max = React.useMemo(() => {
+    return data.reduce(
+      (prev, current) => (prev.value > current.value ? prev : current),
+      { value: -1 }
+    );
+  }, [data]);
+
+  console.log('max', max);
   return (
     <BarChart
       data={data}
@@ -35,7 +45,14 @@ const BarGraph: FC<BarChartType> = ({ data, width, height }): ReactElement => {
         radius={[8, 8, 8, 8]}
         animationDuration={500}
         animationEasing="linear"
-      />
+      >
+        {data.map((entry, index) => (
+          <Cell
+            key={`cell-${index}`}
+            fill={entry.value === max.value ? colors[1] : colors[0]}
+          />
+        ))}
+      </Bar>
     </BarChart>
   );
 };
