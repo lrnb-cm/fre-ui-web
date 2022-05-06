@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { BrowserRouter as Router, useRoutes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, useRoutes, Navigate, Routes } from 'react-router-dom'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { uri } from './config'
 import LoginCallback from './components/loginContainer/Callback'
@@ -38,9 +38,8 @@ export default function App() {
       {/*<h2>Welcome to LilliiRnB's Enterprise App!</h2>*/}
       <StrictMode>
         <ApolloProvider client={client}>
-          <Router to="/customers" replace={true}>
+          <Router>
             <ResponsiveDrawer />
-            <Apps />
           </Router>
         </ApolloProvider>
       </StrictMode>

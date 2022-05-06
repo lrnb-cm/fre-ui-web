@@ -1,12 +1,73 @@
-.test {
-    display: 'table';
-    table-layout: 'fixed';
-    width: '75%';
-    height: '100%';
-    margin-left: '12%';
-    margin-top: '3%'
+:root {
+    background-color: #f7f7f7;
 }
 
-.MuiPaper-root {
-    border-radius: 20px;
+#root {
+    background-color: #f7f7f7;
+}
+
+
+/* Table */
+
+.mui-11mde6h-MuiPaper-root {
+    /* margin-left: 12%;*/
+    display: grid;
+    margin-block-start: 2%;
+    margin-inline-start: 2%;
+    box-sizing: inherit;
+    table-layout: 'fixed';
+    width: 96%;
+    height: 100%;
+    border-radius: 16px;
+    background-color: #ffffff;
+    line-height: 5;
+}
+
+
+/* Table title  */
+
+.mui-2ulfj5-MuiTypography-root {
+    position: absolute;
+    left: 1;
+    top: calc(40% - 40px / 2);
+    margin: 1;
+    font-family: 'Intro Bold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 0.0075em;
+    align-items: center;
+    letter-spacing: -0.01em;
+    line-height: 125%;
+    /* color.text.primary */
+    color: #3c3c3c;
+}
+
+
+/* pagination text label */
+
+.mui-pdct74-MuiTablePagination-selectLabel {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    flex-shrink: 0;
+    display: inline;
+    margin-top: 14px;
+}
+
+
+/* pagination drop down */
+
+.mui-levciy-MuiTablePagination-displayedRows {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    margin-top: 14px;
 }
