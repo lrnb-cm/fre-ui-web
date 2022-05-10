@@ -21,18 +21,18 @@ const TotalSectionWrapper = styled(withTheme(Box))(({ theme }) => ({
 }));
 
 const TotalSectionCount = styled('span')(({ theme }) => ({
-  fontFamily: 'Intro Bold',
+  fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(24),
   lineHeight: '125%',
   color: theme.palette.text.primary,
 }));
 
 const TotalSectionitle = styled('span')(({ theme }) => ({
-  fontFamily: 'Intro Book',
+  fontFamily: theme.typography.fontFamily,
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(16),
   lineHeight: '150%',
   color: theme.palette.text.secondary,

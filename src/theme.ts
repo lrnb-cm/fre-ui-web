@@ -1,5 +1,6 @@
 const htmlFontSize = 16;
-const defaultFontFamily = 'NTR';
+const defaultFontFamily = 'Intro Book';
+const secondaryFontFamily = 'Intro Bold';
 const fontSize = 14;
 const fontWeightLight = 300;
 const fontWeightRegular = 400;
@@ -77,11 +78,13 @@ export const theme = {
   },
   typography: {
     fontFamily: defaultFontFamily,
+    fontFamilyBold: secondaryFontFamily,
     fontSize,
     fontWeightLight,
     fontWeightRegular,
     fontWeightMedium,
     fontWeightBold,
+
     // htmlFontSize,
     h1: buildVariant({
       fontWeight: fontWeightBold,

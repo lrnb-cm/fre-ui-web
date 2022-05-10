@@ -18,14 +18,14 @@ body {
 
 @font-face {
   font-family: 'Intro Bold';
-  font-weight: 400;
+  /* font-weight: 400; */
   src: local('Intro'),
     url(./asset/fonts/Intro-bold-regular.otf) format('opentype');
 }
 
 @font-face {
   font-family: 'Intro Book';
-  font-weight: 400;
+  /* font-weight: 400; */
   src: local('Intro'),
     url(./asset/fonts/Intro-book-regular.otf) format('opentype');
 }

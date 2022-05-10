@@ -73,9 +73,9 @@ const DashboardLayout = styled('div')(() => ({
 
 const DashboardTitle = styled('div')(({ theme }) => ({
   ...theme.typography.h3,
-  fontFamily: 'Intro Bold',
+  fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
-  fontWeight: 600,
+  fontWeight: theme.typography.fontWeightRegular,
   color: theme.palette.text.primary,
   marginBottom: theme.custom.pxToRem(36),
 }));
@@ -117,17 +117,17 @@ const ProductReportHeader = styled('div')(({ theme }) => ({
 }));
 
 const DisplayTitle = styled('div')(({ theme }) => ({
-  fontFamily: 'Intro Bold',
+  fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(20),
   lineHeight: '120%',
   color: theme.palette.text.primary,
 }));
 const ViewAll = styled('div')(({ theme }) => ({
-  fontFamily: 'Intro Bold',
+  fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(12),
   lineHeight: theme.custom.pxToRem(12),
   textAlign: 'right',

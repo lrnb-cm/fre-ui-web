@@ -22,9 +22,9 @@ const StatWrapper = styled(withTheme(Box))(({ theme }) => ({
 }));
 
 const StatCount = styled('span')(({ theme }) => ({
-  fontFamily: 'Intro Bold',
+  fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(32),
   lineHeight: '125%',
   letterSpacing: '-0.01em',
@@ -32,9 +32,9 @@ const StatCount = styled('span')(({ theme }) => ({
 }));
 
 const Statitle = styled('span')(({ theme }) => ({
-  fontFamily: 'Intro Book',
+  fontFamily: theme.typography.fontFamily,
   fontStyle: 'normal',
-  fontWeight: 400,
+  fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(14),
   lineHeight: '150%',
   color: theme.palette.text.secondary,
