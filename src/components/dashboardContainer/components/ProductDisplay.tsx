@@ -56,7 +56,7 @@ const ProductContent = styled(withTheme(Stack))(({ theme }) => ({
 }));
 
 const ProductTitle = styled('div')(({ theme }) => ({
-  fontFamily: 'Intro Bold',
+  fontFamily: 'Intro Book',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: theme.custom.pxToRem(14),
