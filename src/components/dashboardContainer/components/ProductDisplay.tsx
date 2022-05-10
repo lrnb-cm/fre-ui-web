@@ -2,7 +2,7 @@ import { FC, ReactElement } from 'react';
 import { styled } from '@mui/material/styles';
 import { ProductDisplayType } from '../types';
 import { withTheme } from '@mui/styles';
-import { Box, Stack } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 import MuiAvatar from '@mui/material/Avatar';
 
 const ProductDisplay: FC<ProductDisplayType> = ({
@@ -12,21 +12,23 @@ const ProductDisplay: FC<ProductDisplayType> = ({
   price,
 }): ReactElement => {
   return (
-    <ProductDisplayContent>
-      <ProductLeftContent>
-        <Avatar src={img} />
-        <ProductContent direction="row">
-          <ProductTitle>{title}</ProductTitle>
-          <ProductSubTitle>{subTitle}</ProductSubTitle>
-        </ProductContent>
-      </ProductLeftContent>
+    <Grid item xs={12} sm={6} lg={3}>
+      <ProductDisplayContent>
+        <ProductLeftContent>
+          <Avatar src={img} />
+          <ProductContent direction="row">
+            <ProductTitle>{title}</ProductTitle>
+            <ProductSubTitle>{subTitle}</ProductSubTitle>
+          </ProductContent>
+        </ProductLeftContent>
 
-      <ProductPrice>${price.toFixed(2)}</ProductPrice>
-    </ProductDisplayContent>
+        <ProductPrice>${price.toFixed(2)}</ProductPrice>
+      </ProductDisplayContent>
+    </Grid>
   );
 };
 
-const ProductDisplayContent = styled(withTheme(Stack))(({ theme }) => ({
+const ProductDisplayContent = styled('div')(({ theme }) => ({
   padding: theme.custom.pxToRem(12, 24),
   background: theme.palette.background.paper,
   borderRadius: theme.custom.pxToRem(16),

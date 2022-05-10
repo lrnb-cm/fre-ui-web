@@ -28,13 +28,14 @@ export default function dashboard() {
           title="Reporting Customers"
         />
         <ChartSection barData={barData} total={84} title="Total Returns" />
-      </DashboardGraphReport>
+      </DashboardGraphReport> */}
+
       <DashboardProductReport>
         <ProductReportHeader>
           <DisplayTitle>Most Reported Products</DisplayTitle>
           <ViewAll>View All</ViewAll>
         </ProductReportHeader>
-        <ProductDisplayWrapper flexDirection="row">
+        <ProductDisplayWrapper container spacing={{ xs: 2, lg: 1 }}>
           <ProductDisplay
             img={profile_img}
             title="Nike Air Force 1"
@@ -60,7 +61,7 @@ export default function dashboard() {
             price={1777.7}
           />
         </ProductDisplayWrapper>
-      </DashboardProductReport> */}
+      </DashboardProductReport>
     </DashboardLayout>
   );
 }
@@ -96,7 +97,7 @@ const DashboardStatTile = styled(withTheme(Grid))(({ theme }) => ({
   },
 }));
 
-const DashboardGraphReport = styled(withTheme(Box))(({ theme }) => ({
+const DashboardGraphReport = styled(withTheme(Grid))(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   display: 'flex',
@@ -143,7 +144,7 @@ const ViewAll = styled('div')(({ theme }) => ({
   cursor: 'pointer',
 }));
 
-const ProductDisplayWrapper = styled(withTheme(Stack))(({ theme }) => ({
+const ProductDisplayWrapper = styled(withTheme(Grid))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',

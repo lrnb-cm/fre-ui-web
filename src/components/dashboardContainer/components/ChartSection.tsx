@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { withTheme } from '@mui/styles';
-import { Box, Stack } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
 import BarGraph from './BarChart';
 import { FC, ReactElement } from 'react';
 import { ChartSectionProps } from '../types';
@@ -12,7 +12,7 @@ const ChartSection: FC<ChartSectionProps> = ({
   title,
 }): ReactElement => {
   return (
-    <ChartSectionWrapper>
+    <ChartSectionWrapper xs={12} sm={6} md={4}>
       <ChartStats>
         <TotalSection title={title} total={total} />
         <div>Week</div>
@@ -22,11 +22,11 @@ const ChartSection: FC<ChartSectionProps> = ({
   );
 };
 
-const ChartSectionWrapper = styled('div')(({ theme }) => ({
+const ChartSectionWrapper = styled(withTheme(Grid))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   //   justifyContent: 'space-between',
-  flexDirection: 'column',
+  // flexDirection: 'column',
   height: '100%',
 }));
 const ChartStats = styled('div')(({ theme }) => ({
