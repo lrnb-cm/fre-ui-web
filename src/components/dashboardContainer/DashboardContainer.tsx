@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Stats from './components/stats';
 import { withTheme } from '@mui/styles';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Grid } from '@mui/material';
 import ProductDisplay from './components/ProductDisplay';
 import profile_img from '../../asset/img/productImg.svg';
 import BarGraph from './components/BarChart';
@@ -13,14 +13,14 @@ export default function dashboard() {
   return (
     <DashboardLayout>
       <DashboardTitle>Dashboard</DashboardTitle>
-      <DashboardStatTile flexDirection="row">
+      <DashboardStatTile container>
         <Stats title="shops" count={321} />
         <Stats title="customers" count={23391} />
         <Stats title="Total returns" count={1550} />
         <Stats title="received" count={1200} />
         <Stats title="in progress" count={350} />
       </DashboardStatTile>
-      <DashboardGraphReport gap={1}>
+      {/* <DashboardGraphReport gap={1}>
         <ChartSection barData={barData} total={1824} title="Report Summary" />
         <ChartSection
           barData={barData}
@@ -60,7 +60,7 @@ export default function dashboard() {
             price={1777.7}
           />
         </ProductDisplayWrapper>
-      </DashboardProductReport>
+      </DashboardProductReport> */}
     </DashboardLayout>
   );
 }
@@ -80,15 +80,20 @@ const DashboardTitle = styled('div')(({ theme }) => ({
   marginBottom: theme.custom.pxToRem(36),
 }));
 
-const DashboardStatTile = styled(withTheme(Stack))(({ theme }) => ({
+const DashboardStatTile = styled(withTheme(Grid))(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   display: 'flex',
-  justifyContent: 'space-around',
-  paddingLeft: theme.custom.pxToRem(100),
-  paddingRight: theme.custom.pxToRem(100),
   width: '100%',
+  justifyContent: 'space-around',
   marginBottom: theme.custom.pxToRem(29),
+  [theme.breakpoints.down('lg')]: {
+    justifyContent: 'unset',
+  },
+  [theme.breakpoints.up('lg')]: {
+    paddingLeft: theme.custom.pxToRem(100),
+    paddingRight: theme.custom.pxToRem(100),
+  },
 }));
 
 const DashboardGraphReport = styled(withTheme(Box))(({ theme }) => ({

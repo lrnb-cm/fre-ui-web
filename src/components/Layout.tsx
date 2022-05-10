@@ -32,11 +32,14 @@ const SidebarWrapper = styled('div')(({ theme }: { theme: Theme }) => {
 });
 
 const ContentWrapper = styled('div')(({ theme }) => ({
-  padding: theme.custom.pxToRem(16, 100),
   height: 'auto',
   width: `calc(100% - ${theme.custom.sidebar})`,
   boxSizing: 'border-box',
   border: '1px solid violet',
+  padding: theme.custom.pxToRem(16, 40),
+  [theme.breakpoints.up('lg')]: {
+    padding: theme.custom.pxToRem(16, 100),
+  },
 }));
 
 const HeaderWrapper = styled('div')(({ theme }) => ({

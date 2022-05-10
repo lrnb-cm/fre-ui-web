@@ -8,6 +8,15 @@ const fontWeightMedium = 500;
 const fontWeightBold = 700;
 const coef = fontSize / 14;
 // const pxToRem = (size: number) => `${(size / htmlFontSize) * coef}rem`;
+// breakpoints
+
+const bkPoints = {
+  xl: 1920,
+  lg: 1280,
+  md: 960,
+  sm: 600,
+  xs: 0,
+};
 
 const pxToRem = (...args: number[]) => {
   return args.slice(0, 4).reduce((sum, size) => {
@@ -142,6 +151,9 @@ export const theme = {
       ...buildVariant({ letterSpacing: '0.2em', lineHeight: '140%' }),
       textTransform: 'uppercase',
     },
+  },
+  breakpoints: {
+    values: bkPoints,
   },
 };
 

@@ -2,23 +2,23 @@ import { FC, ReactElement } from 'react';
 import { styled } from '@mui/material/styles';
 import { StatsPropsType } from '../types';
 import { withTheme } from '@mui/styles';
-import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const Stats: FC<StatsPropsType> = ({ count, title }): ReactElement => {
   return (
-    <StatWrapper>
+    <StatWrapper xs={6} sm={6} md={4} lg={2}>
       <StatCount>{count}</StatCount>
       <Statitle>{title}</Statitle>
     </StatWrapper>
   );
 };
 
-const StatWrapper = styled(withTheme(Box))(({ theme }) => ({
+const StatWrapper = styled(withTheme(Grid))(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
   flexDirection: 'column',
   padding: theme.custom.pxToRem(24),
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 const StatCount = styled('span')(({ theme }) => ({
