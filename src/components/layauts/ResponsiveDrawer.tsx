@@ -20,6 +20,7 @@ import PeopleIcon from '@mui/icons-material/People'
 import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import { useNavigate, useRoutes } from 'react-router-dom'
 import Customers from '../customerContainer/Customers'
+import ProductsContainer from '../productsContainer/ProductsContainer'
 
 const drawerWidth = 240
 
@@ -110,9 +111,9 @@ export default function ResponsiveDrawer() {
       onClick: () => navigate('/customers')
     },
     {
-      text: 'Transactions',
+      text: 'Products',
       icon: <LocalAtmIcon />,
-      onClick: () => navigate('/transactions')
+      onClick: () => navigate('/products')
     }
   ]
   let result = itemsList.map((a) => a.text)
@@ -121,7 +122,7 @@ export default function ResponsiveDrawer() {
   const Apps = () => {
     let routes = useRoutes([
       { path: '/customers', element: <Customers /> },
-      { path: '/transactions', element: <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.</div> }
+      { path: '/products', element: <ProductsContainer /> }
     ])
     return routes
   }
