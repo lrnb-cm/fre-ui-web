@@ -11,36 +11,36 @@ import {
   OutlinedInput,
   styled,
   Typography,
-} from "@mui/material";
-import { Google } from "./config";
-import { localState } from "./state/loginState";
-import { OIDC_LOGIN } from "./queries/mutations";
-import { useEffect, useState } from "react";
-import { useMutation, useReactiveVar } from "@apollo/client";
-import Account from "../layouts/Account";
-import TextInput from "../form/TextInput";
-import { useFirebaseContext } from "../../contexts/FirebaseContext";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import Lock from "../../icons/Lock";
-import SolidLock from "../../icons/SolidLock";
+} from '@mui/material';
+import { Google } from './config';
+import { localState } from './state/loginState';
+import { OIDC_LOGIN } from './queries/mutations';
+import { useEffect, useState } from 'react';
+import { useMutation, useReactiveVar } from '@apollo/client';
+import Account from '../auth/Account';
+import TextInput from '../form/TextInput';
+import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import Lock from '../../icons/Lock';
+import SolidLock from '../../icons/SolidLock';
 
 export default function LoginComp() {
   const [login, { data, loading, error }] = useMutation(OIDC_LOGIN);
   const state = useReactiveVar(localState);
-  const [loginEmail, setLoginEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginEmail, setLoginEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const firebase = useFirebaseContext();
 
-  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [email, setEmail] = useState(localStorage.getItem('email'));
   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   useEffect(() => {
-    if (email === "" || (email && !email.match(mailformat)) || email === null) {
-      const newEmail = String(prompt("Enter Email Address:"));
+    if (email === '' || (email && !email.match(mailformat)) || email === null) {
+      const newEmail = String(prompt('Enter Email Address:'));
       if (newEmail.match(mailformat)) {
         setEmail(newEmail);
-        localStorage.setItem("email", newEmail);
+        localStorage.setItem('email', newEmail);
       }
     }
   }, [email]);
@@ -49,8 +49,8 @@ export default function LoginComp() {
     redirect_uri: Google.REDIRECT_URI,
     scope: Google.SCOPE,
     login_hint: email,
-    prompt: "consent",
-    state: state.provider || "google",
+    prompt: 'consent',
+    state: state.provider || 'google',
   };
 
   const handleLogin = () => {
@@ -68,13 +68,13 @@ export default function LoginComp() {
   const handleFirebaseLogin = () => {
     if (!firebase)
       throw new Error(
-        "useFirebaseContext must be within FirebaseContext.Provider"
+        'useFirebaseContext must be within FirebaseContext.Provider'
       );
 
     const auth = getAuth(firebase);
     signInWithEmailAndPassword(auth, loginEmail, password)
       .then((res) => {
-        console.log(res, "res");
+        console.log(res, 'res');
       })
       .catch((error) => {
         //Todo: handle login error
@@ -96,17 +96,17 @@ export default function LoginComp() {
           type="email"
           value={loginEmail}
           onChange={(e) => setLoginEmail(e.target.value)}
-          inputProps={{ autoComplete: "username" }}
+          inputProps={{ autoComplete: 'username' }}
         />
       </Grid>
       <Grid item>
         <TextInput
           label="Password"
           id="password"
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          inputProps={{ autoComplete: "current-password" }}
+          inputProps={{ autoComplete: 'current-password' }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton

@@ -2,12 +2,14 @@ import React, { FC, ReactElement } from 'react';
 import { Outlet } from 'react-router-dom';
 import { styled, Theme } from '@mui/material/styles';
 import Header from './headerContainer/Header';
+import Sidebar from './sidebarContainer/Sidebar';
 const Layout: FC = (): ReactElement => {
   return (
     <LayoutWrapper>
-      <SidebarWrapper>Sidebar</SidebarWrapper>
+      <Sidebar />
       <ContentWrapper>
         <Header />
+        <Outlet />
         <Outlet />
       </ContentWrapper>
     </LayoutWrapper>
@@ -23,14 +25,6 @@ const LayoutWrapper = styled('div')(({ theme }) => ({
   boxSizing: 'border-box',
   // border: '1px solid red',
 }));
-
-const SidebarWrapper = styled('div')(({ theme }: { theme: Theme }) => {
-  return {
-    minWidth: theme.custom.sidebar,
-    minHeight: '100%',
-    border: '1px solid blue',
-  };
-});
 
 const ContentWrapper = styled('div')(({ theme }) => ({
   height: 'auto',
