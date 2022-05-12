@@ -88,15 +88,9 @@ export default function ResponsiveDrawer() {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawerToogle = () => {
+    setOpen((prev) => !prev);
   };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const active = false;
 
   const topNav = [
     {
@@ -182,12 +176,8 @@ export default function ResponsiveDrawer() {
             />
           );
         })}
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'rtl' ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
+        <IconButton onClick={handleDrawerToogle}>
+          {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </BottomNav>
     </Drawer>

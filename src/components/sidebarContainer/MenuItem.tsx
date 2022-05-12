@@ -11,6 +11,7 @@ export default function MenuItems({ text, icon, open, onClick }: menuItemType) {
     pathname.split('/')[2] === undefined ? 'dashboard' : pathname.split('/')[2];
 
   const Icon = icon;
+  const active = navPath === text.toString().replace(/\ /g, '').toLowerCase();
   return (
     <ListItem
       button
@@ -29,15 +30,12 @@ export default function MenuItems({ text, icon, open, onClick }: menuItemType) {
           justifyContent: 'center',
         }}
       >
-        <Icon
-          fill={
-            navPath === text.toString().replace(/\ /g, '').toLowerCase()
-              ? '#3758CC'
-              : '#3C3C3C'
-          }
-        />
+        <Icon fill={active ? '#3758CC' : '#3C3C3C'} />
       </ListItemIcon>
-      <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+      <ListItemText
+        primary={text}
+        sx={{ opacity: open ? 1 : 0, color: active ? '#3758CC' : '#3C3C3C' }}
+      />
     </ListItem>
   );
 }
