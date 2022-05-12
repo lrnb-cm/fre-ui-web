@@ -1,5 +1,10 @@
 import { StrictMode } from 'react';
-import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  useRoutes,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { uri } from './config';
 import LoginCallback from './components/loginContainer/Callback';
@@ -41,17 +46,21 @@ export default function App() {
     uri,
     cache: new InMemoryCache(),
   });
-  const Apps = () => {
-    let routes = useRoutes([
-      { path: '/transactions', element: <Containers /> },
-      { path: '/', element: <LoginContainer /> },
-      { path: '/validated', element: <LoginCallback /> },
-      { path: '/dashboard', element: <DashboardContainer /> },
-      { path: '/customers', element: <Customer /> },
-      { path: '/Products', element: <ProductsContainer /> },
-    ]);
-    return routes;
-  };
+  // const Apps = () => {
+  //   let routes = useRoutes([
+  //     { path: '/', element: <LoginContainer /> },
+  //     { path: '/validated', element: <LoginCallback /> },
+
+  //     {
+  //       path: '/',
+  //       element: <DashboardContainer />,
+  //     },
+  //     { path: '/transactions', element: <Containers /> },
+  //     { path: '/customers', element: <Customer /> },
+  //     { path: '/Products', element: <ProductsContainer /> },
+  //   ]);
+  //   return routes;
+  // };
 
   const mergeTheme = createTheme(deepmerge(theme, customTheming));
   const firebase = initializeApp(firebaseConfig);
@@ -63,9 +72,21 @@ export default function App() {
             <ThemeProvider theme={mergeTheme}>
               <CssBaseline />
               <Router>
-                <Layout>
-                  <Apps />
-                </Layout>
+                <Routes>
+                  <Route index element={<LoginContainer />} />
+                  <Route path="validated" element={<LoginCallback />} />
+                  <Route path="dashboard" element={<Layout />}>
+                    <Route index element={<DashboardContainer />} />
+                    <Route path="customers" element={<Customer />} />
+                    <Route path="Products" element={<ProductsContainer />} />
+                    <Route path="transactions" element={<Containers />} />
+
+                    {/* Using path="*"" means "match anything", so this route
+            acts like a catch-all for URLs that we don't have explicit
+            routes for. */}
+                    <Route path="*" element={<DashboardContainer />} />
+                  </Route>
+                </Routes>
               </Router>
             </ThemeProvider>
           </FirebaseContext.Provider>

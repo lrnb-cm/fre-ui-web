@@ -1,14 +1,14 @@
 import React, { FC, ReactElement } from 'react';
+import { Outlet } from 'react-router-dom';
 import { styled, Theme } from '@mui/material/styles';
 import Header from './headerContainer/Header';
-
-const Layout: FC = ({ children }): ReactElement => {
+const Layout: FC = (): ReactElement => {
   return (
     <LayoutWrapper>
       <SidebarWrapper>Sidebar</SidebarWrapper>
       <ContentWrapper>
         <Header />
-        {children}
+        <Outlet />
       </ContentWrapper>
     </LayoutWrapper>
   );
