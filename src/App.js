@@ -19,39 +19,39 @@ import { deepmerge } from '@mui/utils';
 import { createTheme } from '@mui/material/styles';
 import { FirebaseContext } from './contexts/FirebaseContext';
 import { initializeApp } from 'firebase/app';
-import ResponsiveDrawer from './components/layauts/ResponsiveDrawer'
-import Customer from './components/customerContainer/Customers'
+import Customer from './components/customerContainer/Customers';
+import ProductsContainer from './components/productsContainer/ProductsContainer';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
   authDomain: 'freeing-returns.firebaseapp.com',
 };
 
-
 export default function App() {
   // @ts-ignore
   if (module.hot) {
     // @ts-ignore
     module.hot.accept('./components', (e) => {
-      const PageComponent = require('./components')
-      render(main(PageComponent), appRootElement)
-    })
+      const PageComponent = require('./components');
+      render(main(PageComponent), appRootElement);
+    });
   }
   // setup apollo
   const client = new ApolloClient({
     uri,
-    cache: new InMemoryCache()
-  })
+    cache: new InMemoryCache(),
+  });
   const Apps = () => {
     let routes = useRoutes([
       { path: '/transactions', element: <Containers /> },
       { path: '/', element: <LoginContainer /> },
       { path: '/validated', element: <LoginCallback /> },
       { path: '/dashboard', element: <DashboardContainer /> },
-      { path: '/customers', element: <Customer /> }
-    ])
-    return routes
-  }
+      { path: '/customers', element: <Customer /> },
+      { path: '/Products', element: <ProductsContainer /> },
+    ]);
+    return routes;
+  };
 
   const mergeTheme = createTheme(deepmerge(theme, customTheming));
   const firebase = initializeApp(firebaseConfig);
@@ -73,5 +73,4 @@ export default function App() {
       </StyledEngineProvider>
     </StrictMode>
   );
-   
 }

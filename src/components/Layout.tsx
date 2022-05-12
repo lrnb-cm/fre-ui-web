@@ -1,12 +1,13 @@
 import React, { FC, ReactElement } from 'react';
 import { styled, Theme } from '@mui/material/styles';
+import Header from './headerContainer/Header';
 
 const Layout: FC = ({ children }): ReactElement => {
   return (
     <LayoutWrapper>
       <SidebarWrapper>Sidebar</SidebarWrapper>
       <ContentWrapper>
-        <HeaderWrapper />
+        <Header />
         {children}
       </ContentWrapper>
     </LayoutWrapper>
@@ -40,15 +41,6 @@ const ContentWrapper = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     padding: theme.custom.pxToRem(16, 100),
   },
-}));
-
-const HeaderWrapper = styled('div')(({ theme }) => ({
-  marginBottom: theme.custom.pxToRem(36),
-  height: theme.custom.pxToRem(50),
-  background: theme.palette.background.paper,
-  borderRadius: '16px',
-  width: '100%',
-  // border: '1px solid pink',
 }));
 
 export default Layout;
