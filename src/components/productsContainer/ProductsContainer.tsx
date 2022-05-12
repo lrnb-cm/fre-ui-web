@@ -20,5 +20,4 @@ const ProductLayout = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  marginTop: '25px',
 }));

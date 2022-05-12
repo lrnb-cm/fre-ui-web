@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { styled } from '@mui/material/styles'
-import { withTheme } from '@mui/styles'
-import { Box, Grid, Stack } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
-import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt'
-import AddIcon from '@mui/icons-material/Add'
-import TuneIcon from '@mui/icons-material/Tune'
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import { withTheme } from '@mui/styles';
+import { Box, Grid, Stack } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
+import AddIcon from '@mui/icons-material/Add';
+import TuneIcon from '@mui/icons-material/Tune';
 export default function ProductsTitle() {
   return (
     <ProductDisplayContent>
@@ -26,21 +26,21 @@ export default function ProductsTitle() {
         </IconButton>
       </ProductLeftContent>
     </ProductDisplayContent>
-  )
+  );
 }
 const ProductDisplayContent = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'row',
-  marginTop: '25px'
-}))
+  marginBottom: '25px',
+}));
 
 const ProductLeftContent = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  flexDirection: 'row'
-}))
+  flexDirection: 'row',
+}));
 
 const ProductTitle = styled('div')(({ theme }) => ({
   ...theme.typography.h3,
@@ -48,15 +48,13 @@ const ProductTitle = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
   fontWeight: 400,
   color: theme.palette.text.primary,
-  marginBottom: '25px',
-  marginTop: '25px'
-}))
+}));
 
 const Export = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  flexDirection: 'row'
-}))
+  flexDirection: 'row',
+}));
 
 const ExportButtonLabel = styled('div')(({ theme }) => ({
   ...theme.typography.h3,
@@ -65,8 +63,8 @@ const ExportButtonLabel = styled('div')(({ theme }) => ({
   fontWeight: 400,
   lineHeight: '18px',
   letterSpacing: '0em',
-  textAlign: 'left'
-}))
+  textAlign: 'left',
+}));
 
 const AddButtonLabel = styled('div')(({ theme }) => ({
   ...theme.typography.h3,
@@ -75,5 +73,5 @@ const AddButtonLabel = styled('div')(({ theme }) => ({
   fontWeight: 400,
   lineHeight: '18px',
   letterSpacing: '0em',
-  textAlign: 'left'
-}))
+  textAlign: 'left',
+}));

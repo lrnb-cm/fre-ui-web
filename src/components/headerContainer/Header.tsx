@@ -16,7 +16,6 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   width: '100%',
-  //   overflow: 'hidden',
   // border: '1px solid pink',
 }));
 
