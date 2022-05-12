@@ -17,7 +17,12 @@ import { theme, customTheming } from './theme';
 import Layout from './components/Layout';
 import { deepmerge } from '@mui/utils';
 import { createTheme } from '@mui/material/styles';
-
+import { FirebaseContext } from './contexts/FirebaseContext';
+import { initializeApp } from 'firebase/app';
+const firebaseConfig = {
+  apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
+  authDomain: 'freeing-returns.firebaseapp.com',
+};
 export default function App() {
   // @ts-ignore
   if (module.hot) {
@@ -44,18 +49,21 @@ export default function App() {
   };
 
   const mergeTheme = createTheme(deepmerge(theme, customTheming));
+  const firebase = initializeApp(firebaseConfig);
   return (
     <StrictMode>
       <StyledEngineProvider injectFirst>
         <ApolloProvider client={client}>
-          <ThemeProvider theme={mergeTheme}>
-            <CssBaseline />
-            <Layout>
+          <FirebaseContext.Provider value={firebase}>
+            <ThemeProvider theme={mergeTheme}>
+              <CssBaseline />
               <Router>
-                <Apps />
+                <Layout>
+                  <Apps />
+                </Layout>
               </Router>
-            </Layout>
-          </ThemeProvider>
+            </ThemeProvider>
+          </FirebaseContext.Provider>
         </ApolloProvider>
       </StyledEngineProvider>
     </StrictMode>
