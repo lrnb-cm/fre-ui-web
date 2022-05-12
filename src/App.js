@@ -46,21 +46,6 @@ export default function App() {
     uri,
     cache: new InMemoryCache(),
   });
-  // const Apps = () => {
-  //   let routes = useRoutes([
-  //     { path: '/', element: <LoginContainer /> },
-  //     { path: '/validated', element: <LoginCallback /> },
-
-  //     {
-  //       path: '/',
-  //       element: <DashboardContainer />,
-  //     },
-  //     { path: '/transactions', element: <Containers /> },
-  //     { path: '/customers', element: <Customer /> },
-  //     { path: '/Products', element: <ProductsContainer /> },
-  //   ]);
-  //   return routes;
-  // };
 
   const mergeTheme = createTheme(deepmerge(theme, customTheming));
   const firebase = initializeApp(firebaseConfig);
@@ -84,7 +69,7 @@ export default function App() {
                     {/* Using path="*"" means "match anything", so this route
             acts like a catch-all for URLs that we don't have explicit
             routes for. */}
-                    <Route path="*" element={<DashboardContainer />} />
+                    <Route path="*" element={<div>NO CONTENT YET</div>} />
                   </Route>
                 </Routes>
               </Router>

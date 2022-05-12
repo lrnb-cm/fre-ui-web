@@ -1,24 +1,12 @@
 import * as React from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import PeopleIcon from '@mui/icons-material/People';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import { useNavigate } from 'react-router-dom';
+import MenuItems from './MenuItem';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../../asset/img/logo.png';
 import Avatar from '@mui/material/Avatar';
 import DashIcon from '../../asset/icons/dashboardIcon';
@@ -26,6 +14,9 @@ import ReportIcon from '../../asset/icons/reportIcon';
 import MyShopIcon from '../../asset/icons/myshop';
 import ReportedProductIcon from '../../asset/icons/reportedproduct';
 import CustomerIcon from '../../asset/icons/customers';
+import DeployIcon from '../../asset/icons/deploy';
+import IntegrationIcon from '../../asset/icons/integration';
+import EyeIcon from '../../asset/icons/eyeIcon';
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
   transition: theme.transitions.create('width', {
@@ -93,6 +84,8 @@ const Drawer = styled(MuiDrawer, {
 
 export default function ResponsiveDrawer() {
   const theme = useTheme();
+  let navigate = useNavigate();
+
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -103,37 +96,52 @@ export default function ResponsiveDrawer() {
     setOpen(false);
   };
 
-  let navigate = useNavigate();
   const active = false;
-  const itemsList = [
+
+  const topNav = [
     {
       text: 'Dashboard',
-      icon: <DashIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      icon: DashIcon,
       onClick: () => navigate('/dashboard'),
     },
     {
       text: 'Reports',
-      icon: <ReportIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
-      onClick: () => navigate('/dashboard/customers'),
+      icon: ReportIcon,
+      onClick: () => navigate('/dashboard/reports'),
     },
     {
       text: 'My Shop',
-      icon: <MyShopIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      icon: MyShopIcon,
       onClick: () => navigate('/dashboard/myshop'),
     },
     {
       text: 'Products',
-      icon: <ReportedProductIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      icon: ReportedProductIcon,
       onClick: () => navigate('/dashboard/products'),
     },
     {
       text: 'Customers',
-      icon: <CustomerIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      icon: CustomerIcon,
       onClick: () => navigate('/dashboard/customers'),
     },
   ];
-  // let result = itemsList.map((a) => a.text);
-  // console.log(result);
+  const bottomNav = [
+    {
+      text: 'Deploy',
+      icon: DeployIcon,
+      onClick: () => navigate('/dashboard/deploy'),
+    },
+    {
+      text: 'Integration',
+      icon: IntegrationIcon,
+      onClick: () => navigate('/dashboard/integration'),
+    },
+    {
+      text: 'Profile',
+      icon: EyeIcon,
+      onClick: () => navigate('/dashboard/profile'),
+    },
+  ];
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -148,41 +156,37 @@ export default function ResponsiveDrawer() {
           src={logo}
           sx={{ height: '16.75px', width: '51px', marginBottom: '39px' }}
         />
-        {itemsList.map((item, index) => {
+        {topNav.map((item, index) => {
           const { text, icon, onClick } = item;
           return (
-            <ListItem
-              button
-              key={text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-              }}
+            <MenuItems
+              key={index}
+              text={text}
+              icon={icon}
+              open={open}
               onClick={onClick}
-            >
-              {icon && (
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {icon}
-                </ListItemIcon>
-              )}
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItem>
+            />
           );
         })}
       </List>
       <BottomNav>
+        {bottomNav.map((item, index) => {
+          const { text, icon, onClick } = item;
+          return (
+            <MenuItems
+              key={index}
+              text={text}
+              icon={icon}
+              open={open}
+              onClick={onClick}
+            />
+          );
+        })}
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'rtl' ? (
-            <ChevronRightIcon />
-          ) : (
             <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
           )}
         </IconButton>
       </BottomNav>
@@ -195,4 +199,5 @@ const BottomNav = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
+  flexDirection: 'column',
 }));
