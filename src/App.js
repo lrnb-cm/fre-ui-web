@@ -1,29 +1,29 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { BrowserRouter as Router, useRoutes } from "react-router-dom";
-import { Containers, LoginContainer } from "./components";
-import LoginCallback from "./components/loginContainer/Callback";
-import { StrictMode } from "react";
-import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
-import { uri } from "./config";
-import { theme } from "./theme";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import { CssBaseline } from "@mui/material";
-import { FirebaseContext } from "./contexts/FirebaseContext";
-import { initializeApp } from "firebase/app";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI",
-  authDomain: "freeing-returns.firebaseapp.com",
-};
+import { StrictMode } from 'react';
+import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { uri } from './config';
+import LoginCallback from './components/loginContainer/Callback';
+import DashboardContainer from './components/dashboardContainer/DashboardContainer';
+import { Containers, LoginContainer } from './components';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  ThemeProvider,
+  StyledEngineProvider,
+  Theme,
+} from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import { theme, customTheming } from './theme';
+import Layout from './components/Layout';
+import { deepmerge } from '@mui/utils';
+import { createTheme } from '@mui/material/styles';
 
 export default function App() {
   // @ts-ignore
   if (module.hot) {
     // @ts-ignore
-    module.hot.accept("./components", (e) => {
-      const PageComponent = require("./components");
-      // @ts-ignore
+    module.hot.accept('./components', (e) => {
+      const PageComponent = require('./components');
       render(main(PageComponent), appRootElement);
     });
   }
@@ -35,27 +35,28 @@ export default function App() {
 
   const Apps = () => {
     let routes = useRoutes([
-      { path: "/transactions", element: <Containers /> },
-      { path: "/", element: <LoginContainer /> },
-      { path: "/validated", element: <LoginCallback /> },
+      { path: '/transactions', element: <Containers /> },
+      { path: '/', element: <LoginContainer /> },
+      { path: '/validated', element: <LoginCallback /> },
+      { path: '/dashboard', element: <DashboardContainer /> },
     ]);
     return routes;
   };
 
-  const firebase = initializeApp(firebaseConfig);
+  const mergeTheme = createTheme(deepmerge(theme, customTheming));
   return (
     <StrictMode>
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <ApolloProvider client={client}>
-            <FirebaseContext.Provider value={firebase}>
-              <CssBaseline />
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={mergeTheme}>
+            <CssBaseline />
+            <Layout>
               <Router>
                 <Apps />
               </Router>
-            </FirebaseContext.Provider>
-          </ApolloProvider>
-        </ThemeProvider>
+            </Layout>
+          </ThemeProvider>
+        </ApolloProvider>
       </StyledEngineProvider>
     </StrictMode>
   );
