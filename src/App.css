@@ -49,11 +49,13 @@
 /* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
+  width: 3px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #3758cc;
+  width: 3px;
 }
 
 /* Handle on hover */

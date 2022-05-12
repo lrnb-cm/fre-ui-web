@@ -159,7 +159,7 @@ export const theme = {
 
 export const customTheming = {
   custom: {
-    sidebar: pxToRem(72),
+    sidebar: { close: pxToRem(72), open: pxToRem(240) },
     pxToRem: pxToRem,
   },
 };

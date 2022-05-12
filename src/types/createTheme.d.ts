@@ -4,13 +4,13 @@ import * as createTypography from '@mui/material/styles/createTypography';
 declare module '@mui/material/styles/createTheme' {
   interface Theme {
     custom: {
-      sidebar: string;
+      sidebar: { open: string; close: string };
       pxToRem: (...args: number[]) => string;
     };
   }
   interface ThemeOptions {
     custom?: {
-      sidebar?: string;
+      sidebar?: { open: string; close: string };
       pxToRem?: (...args: number[]) => string;
     };
   }

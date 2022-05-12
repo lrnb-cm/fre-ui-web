@@ -19,16 +19,18 @@ import ListItemText from '@mui/material/ListItemText';
 import PeopleIcon from '@mui/icons-material/People';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { useNavigate } from 'react-router-dom';
-
-const drawerWidth = 240;
+import logo from '../../asset/img/logo.png';
+import Avatar from '@mui/material/Avatar';
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: theme.custom.sidebar.open,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+  display: 'flex  !important',
+  justifyContent: 'space-between  !important',
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -37,10 +39,12 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: theme.custom.sidebar.close,
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
+  display: 'flex  !important',
+  justifyContent: 'space-between  !important',
 });
 
 // const AppBar = styled(MuiAppBar, {
@@ -64,10 +68,15 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: theme.custom.sidebar.open,
+  height: '100%',
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+
   ...(open && {
     ...openedMixin(theme),
     '& .MuiDrawer-paper': openedMixin(theme),
@@ -108,7 +117,17 @@ export default function ResponsiveDrawer() {
 
   return (
     <Drawer variant="permanent" open={open}>
-      <List>
+      <List
+        sx={{
+          padding: '18px 8px',
+        }}
+      >
+        <Avatar
+          alt="Logo"
+          variant="square"
+          src={logo}
+          sx={{ height: '16.75px', width: '51px', marginBottom: '39px' }}
+        />
         {itemsList.map((item, index) => {
           const { text, icon, onClick } = item;
           return (
