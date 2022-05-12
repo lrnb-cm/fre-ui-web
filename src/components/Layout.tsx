@@ -30,7 +30,7 @@ const ContentWrapper = styled('div')(({ theme }) => ({
   // width: `calc(100% - ${theme.custom.sidebar.open})`,
   width: '100%',
   boxSizing: 'border-box',
-  border: '1px solid violet',
+  // border: '1px solid violet',
   padding: theme.custom.pxToRem(16, 40),
   [theme.breakpoints.up('lg')]: {
     padding: theme.custom.pxToRem(16, 100),
