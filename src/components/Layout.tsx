@@ -28,7 +28,8 @@ const LayoutWrapper = styled('div')(({ theme }) => ({
 
 const ContentWrapper = styled('div')(({ theme }) => ({
   height: 'auto',
-  width: `calc(100% - ${theme.custom.sidebar})`,
+  // width: `calc(100% - ${theme.custom.sidebar.open})`,
+  width: '100%',
   boxSizing: 'border-box',
   border: '1px solid violet',
   padding: theme.custom.pxToRem(16, 40),

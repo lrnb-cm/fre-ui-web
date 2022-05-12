@@ -21,7 +21,11 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../asset/img/logo.png';
 import Avatar from '@mui/material/Avatar';
-
+import DashIcon from '../../asset/icons/dashboardIcon';
+import ReportIcon from '../../asset/icons/reportIcon';
+import MyShopIcon from '../../asset/icons/myshop';
+import ReportedProductIcon from '../../asset/icons/reportedproduct';
+import CustomerIcon from '../../asset/icons/customers';
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
   transition: theme.transitions.create('width', {
@@ -100,20 +104,36 @@ export default function ResponsiveDrawer() {
   };
 
   let navigate = useNavigate();
+  const active = false;
   const itemsList = [
     {
-      text: 'Customers',
-      icon: <PeopleIcon />,
+      text: 'Dashboard',
+      icon: <DashIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      onClick: () => navigate('/dashboard'),
+    },
+    {
+      text: 'Reports',
+      icon: <ReportIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
       onClick: () => navigate('/dashboard/customers'),
     },
     {
+      text: 'My Shop',
+      icon: <MyShopIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      onClick: () => navigate('/dashboard/myshop'),
+    },
+    {
       text: 'Products',
-      icon: <LocalAtmIcon />,
+      icon: <ReportedProductIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
       onClick: () => navigate('/dashboard/products'),
     },
+    {
+      text: 'Customers',
+      icon: <CustomerIcon fill={active ? '#3758CC' : '#3C3C3C'} />,
+      onClick: () => navigate('/dashboard/customers'),
+    },
   ];
-  let result = itemsList.map((a) => a.text);
-  console.log(result);
+  // let result = itemsList.map((a) => a.text);
+  // console.log(result);
 
   return (
     <Drawer variant="permanent" open={open}>
