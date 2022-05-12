@@ -10,7 +10,6 @@ const Layout: FC = (): ReactElement => {
       <ContentWrapper>
         <Header />
         <Outlet />
-        <Outlet />
       </ContentWrapper>
     </LayoutWrapper>
   );
