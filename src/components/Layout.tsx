@@ -47,6 +47,9 @@ const ContentWrapper = styled('main', {
     [theme.breakpoints.up('lg')]: {
       padding: theme.custom.pxToRem(16, open ? 50 : 100),
     },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.custom.pxToRem(16),
+    },
   };
 });
 
