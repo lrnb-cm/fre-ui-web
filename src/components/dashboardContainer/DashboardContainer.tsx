@@ -20,7 +20,7 @@ export default function dashboard() {
         <Stats title="received" count={1200} />
         <Stats title="in progress" count={350} />
       </DashboardStatTile>
-      <DashboardGraphReport gap={1} container>
+      <DashboardGraphReport container>
         <ChartSection barData={barData} total={1824} title="Report Summary" />
         <ChartSection
           barData={barData}
@@ -101,7 +101,7 @@ const DashboardGraphReport = styled(withTheme(Grid))(({ theme }) => ({
   background: theme.palette.background.paper,
   borderRadius: '16px',
   display: 'flex',
-  height: theme.custom.pxToRem(255),
+  // height: theme.custom.pxToRem(255),
   padding: theme.custom.pxToRem(24),
   marginBottom: theme.custom.pxToRem(29),
   alignItems: 'center',

@@ -35,7 +35,7 @@ const LayoutWrapper = styled('div')(({ theme }) => ({
 const ContentWrapper = styled('main', {
   shouldForwardProp: (props) => props !== 'open',
 })((props: any) => {
-  console.log(props);
+  // console.log(props);
   const { theme, open } = props;
   return {
     height: 'auto',

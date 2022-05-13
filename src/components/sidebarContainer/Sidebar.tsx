@@ -75,7 +75,7 @@ const Drawer = styled(MuiDrawer, {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     display: 'none !important',
   },
   ...(open && {

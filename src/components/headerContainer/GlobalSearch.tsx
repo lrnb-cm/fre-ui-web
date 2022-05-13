@@ -48,7 +48,7 @@ export default function GlobalSearch() {
 const MenuICon = styled('img')(({ theme }) => ({
   margin: theme.custom.pxToRem(0, 10),
   display: 'none',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     display: 'unset',
   },
 }));
