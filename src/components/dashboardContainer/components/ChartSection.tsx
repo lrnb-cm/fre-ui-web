@@ -12,7 +12,7 @@ const ChartSection: FC<ChartSectionProps> = ({
   title,
 }): ReactElement => {
   return (
-    <ChartSectionWrapper xs={12} sm={6} md={4}>
+    <ChartSectionWrapper item xs={12} sm={6} md={4}>
       <ChartStats>
         <TotalSection title={title} total={total} />
         <div>Week</div>
