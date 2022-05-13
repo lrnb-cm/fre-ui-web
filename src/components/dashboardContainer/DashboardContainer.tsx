@@ -20,7 +20,7 @@ export default function dashboard() {
         <Stats title="received" count={1200} />
         <Stats title="in progress" count={350} />
       </DashboardStatTile>
-      {/* <DashboardGraphReport gap={1}>
+      <DashboardGraphReport gap={1} container>
         <ChartSection barData={barData} total={1824} title="Report Summary" />
         <ChartSection
           barData={barData}
@@ -28,7 +28,7 @@ export default function dashboard() {
           title="Reporting Customers"
         />
         <ChartSection barData={barData} total={84} title="Total Returns" />
-      </DashboardGraphReport> */}
+      </DashboardGraphReport>
 
       <DashboardProductReport>
         <ProductReportHeader>

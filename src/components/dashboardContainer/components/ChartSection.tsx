@@ -17,7 +17,12 @@ const ChartSection: FC<ChartSectionProps> = ({
         <TotalSection title={title} total={total} />
         <div>Week</div>
       </ChartStats>
-      <BarGraph width={322} height={137} data={barData} />
+      <BarGraph
+        // width={322}
+        width={100}
+        height={137}
+        data={barData}
+      />
     </ChartSectionWrapper>
   );
 };
@@ -26,7 +31,7 @@ const ChartSectionWrapper = styled(withTheme(Grid))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   //   justifyContent: 'space-between',
-  // flexDirection: 'column',
+  flexDirection: 'column',
   height: '100%',
 }));
 const ChartStats = styled('div')(({ theme }) => ({
