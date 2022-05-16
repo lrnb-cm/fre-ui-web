@@ -1,6 +1,6 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
 import Stats from './components/stats';
+import { styled } from '@mui/material/styles';
 import { withTheme } from '@mui/styles';
 import { Box, Stack, Grid } from '@mui/material';
 import ProductDisplay from './components/ProductDisplay';
