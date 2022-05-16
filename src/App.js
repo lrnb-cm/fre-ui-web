@@ -26,6 +26,9 @@ import { FirebaseContext } from './contexts/FirebaseContext';
 import { initializeApp } from 'firebase/app';
 import Customer from './components/customerContainer/Customers';
 import ProductsContainer from './components/productsContainer/ProductsContainer';
+import store, { persistor } from './redux/store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
@@ -54,26 +57,33 @@ export default function App() {
       <StyledEngineProvider injectFirst>
         <ApolloProvider client={client}>
           <FirebaseContext.Provider value={firebase}>
-            <ThemeProvider theme={mergeTheme}>
-              <CssBaseline />
-              <Router>
-                <Routes>
-                  <Route index element={<LoginContainer />} />
-                  <Route path="validated" element={<LoginCallback />} />
-                  <Route path="dashboard" element={<Layout />}>
-                    <Route index element={<DashboardContainer />} />
-                    <Route path="customers" element={<Customer />} />
-                    <Route path="Products" element={<ProductsContainer />} />
-                    <Route path="transactions" element={<Containers />} />
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={mergeTheme}>
+                  <CssBaseline />
+                  <Router>
+                    <Routes>
+                      <Route index element={<LoginContainer />} />
+                      <Route path="validated" element={<LoginCallback />} />
+                      <Route path="dashboard" element={<Layout />}>
+                        <Route index element={<DashboardContainer />} />
+                        <Route path="customers" element={<Customer />} />
+                        <Route
+                          path="Products"
+                          element={<ProductsContainer />}
+                        />
+                        <Route path="transactions" element={<Containers />} />
 
-                    {/* Using path="*"" means "match anything", so this route
+                        {/* Using path="*"" means "match anything", so this route
             acts like a catch-all for URLs that we don't have explicit
             routes for. */}
-                    <Route path="*" element={<div>NO CONTENT YET</div>} />
-                  </Route>
-                </Routes>
-              </Router>
-            </ThemeProvider>
+                        <Route path="*" element={<div>NO CONTENT YET</div>} />
+                      </Route>
+                    </Routes>
+                  </Router>
+                </ThemeProvider>
+              </PersistGate>
+            </Provider>
           </FirebaseContext.Provider>
         </ApolloProvider>
       </StyledEngineProvider>

@@ -6,6 +6,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import Avatar from '@mui/material/Avatar';
 import avatar from '../../asset/img/avatar.png';
+import menuIcon from '../../asset/img/menu.svg';
+import { styled } from '@mui/material/styles';
+
 export default function GlobalSearch() {
   return (
     <Paper
@@ -19,6 +22,7 @@ export default function GlobalSearch() {
         borderRadius: '16px',
       }}
     >
+      <MenuICon src={menuIcon} alt="menu-icon" />
       <IconButton sx={{ p: '10px' }} aria-label="menu">
         <SearchIcon />
       </IconButton>
@@ -40,3 +44,11 @@ export default function GlobalSearch() {
     </Paper>
   );
 }
+
+const MenuICon = styled('img')(({ theme }) => ({
+  margin: theme.custom.pxToRem(0, 10),
+  display: 'none',
+  [theme.breakpoints.down('md')]: {
+    display: 'unset',
+  },
+}));
