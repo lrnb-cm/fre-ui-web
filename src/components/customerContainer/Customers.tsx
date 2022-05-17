@@ -1,23 +1,18 @@
-import MUIDataTable from 'mui-datatables';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import '../../scss/table.css';
-import { Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import MUIDataTable from 'mui-datatables'
+import { CacheProvider } from '@emotion/react'
+import createCache from '@emotion/cache'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import '../../scss/table.css'
+import { Grid } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 const muiCache = createCache({
   key: 'mui',
-  prepend: true,
-});
+  prepend: true
+})
 
 export default function Customers() {
-  const columns = [
-    { name: 'Customer Name', options: { filterOptions: { fullWidth: true } } },
-    'Customer ID',
-    'Status',
-    'Test Value',
-  ];
+  const columns = [{ name: 'Customer Name', options: { filterOptions: { fullWidth: true } } }, 'Customer ID', 'Status', 'Test Value']
 
   const options: Object = {
     filterType: 'dropdown',
@@ -28,25 +23,25 @@ export default function Customers() {
     textLabels: {
       pagination: {
         next: '>',
-        previous: '< ',
-      },
+        previous: '< '
+      }
     },
     //print: false,
     fixedHeader: true,
-    selectableRows: 'none',
-  };
+    selectableRows: 'none'
+  }
 
   const createTheme = {
     components: {
       MUIDataTableBodyCell: {
         styleOverrides: {
           root: {
-            background: '#FF0000',
-          },
-        },
-      },
-    },
-  };
+            background: '#FF0000'
+          }
+        }
+      }
+    }
+  }
   const data = [
     ['Gabby George', '123456789', 'Active', '100'],
     ['Aiden Lloyd', '123456789', 'Active', '0'],
@@ -64,24 +59,19 @@ export default function Customers() {
     ['Joe Jones', '123456789', 'Active', '0'],
     ['Jacky Jackson', '123456789', 'Active', '5'],
     ['Jo Jo', '123456789', 'Active', '100'],
-    ['Donna Marie', '123456789', 'Active', '5'],
-  ];
+    ['Donna Marie', '123456789', 'Active', '5']
+  ]
 
   return (
     <CacheProvider value={muiCache}>
       <ThemeProvider theme={createTheme}>
         <CustomerTitle>Customers</CustomerTitle>
         <Grid item xs={2}>
-          <MUIDataTable
-            title="Customers"
-            data={data}
-            columns={columns}
-            options={options}
-          />
+          <MUIDataTable title="Customers" data={data} columns={columns} options={options} />
         </Grid>
       </ThemeProvider>
     </CacheProvider>
-  );
+  )
 }
 const CustomerTitle = styled('div')(({ theme }) => ({
   ...theme.typography.h3,
@@ -89,5 +79,5 @@ const CustomerTitle = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
   fontWeight: theme.typography.fontWeightRegular,
   color: theme.palette.text.primary,
-  marginBottom: theme.custom.pxToRem(36),
-}));
+  marginBottom: theme.custom.pxToRem(36)
+}))

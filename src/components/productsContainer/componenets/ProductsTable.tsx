@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import Pagination from './Pagination'
+import '../../../scss/table.css'
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
   return { name, calories, fat, carbs, protein }
@@ -16,15 +17,15 @@ const rows = [createData('Frozen yoghurt', 159, 6.0, 24, 4.0), createData('Ice c
 
 export default function ProductsTable() {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ borderRadius: '16px' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Dessert </TableCell>
+            <TableCell>Calories</TableCell>
+            <TableCell>Fat</TableCell>
+            <TableCell>Carbs</TableCell>
+            <TableCell>Protein</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -33,10 +34,10 @@ export default function ProductsTable() {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.calories}</TableCell>
+              <TableCell>{row.fat}</TableCell>
+              <TableCell>{row.carbs}</TableCell>
+              <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>
