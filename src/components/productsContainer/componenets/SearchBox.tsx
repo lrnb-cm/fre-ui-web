@@ -18,7 +18,6 @@ export default function SearchBox() {
         <Paper
           component="form"
           sx={{
-            p: '4px 6px',
             display: 'flex',
             alignItems: 'center',
             width: '252px',
@@ -26,9 +25,7 @@ export default function SearchBox() {
             borderRadius: '16px',
             justifyContent: 'space-between',
             flexDirection: 'row',
-            border: '1px',
-            borderColor: ' #E6E6E6',
-            borderStyle: 'solid'
+            border: '1px solid #E6E6E6'
           }}>
           <IconButton sx={{ p: '10px' }} aria-label="menu">
             <SearchIcon />
@@ -87,9 +84,9 @@ const ProductDisplayWrapper = styled(withTheme(Grid))(({ theme }) => ({
 }))
 
 const SearchTitle = styled('div')(({ theme }) => ({
-  fontFamily: theme.typography.fontFamily,
+  fontFamily: 'Intro Bold',
   fontStyle: 'normal',
-  fontWeight: theme.typography.fontWeightRegular,
+  fontWeight: 700,
   fontSize: theme.custom.pxToRem(14),
   lineHeight: '150%',
   color: theme.palette.text.primary

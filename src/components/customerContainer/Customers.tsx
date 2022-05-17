@@ -2,7 +2,6 @@ import MUIDataTable from 'mui-datatables'
 import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import '../../scss/table.css'
 import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -67,7 +66,7 @@ export default function Customers() {
       <ThemeProvider theme={createTheme}>
         <CustomerTitle>Customers</CustomerTitle>
         <Grid item xs={2}>
-          <MUIDataTable title="Customers" data={data} columns={columns} options={options} />
+          <MUIDataTable title="" data={data} columns={columns} options={options} />
         </Grid>
       </ThemeProvider>
     </CacheProvider>

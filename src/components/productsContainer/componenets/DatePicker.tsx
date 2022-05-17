@@ -5,6 +5,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { styled, alpha } from '@mui/material/styles'
 import { withTheme } from '@mui/styles'
+import Divider from '@mui/material/Divider'
 
 export default function DatePicker() {
   const [value, setValue] = React.useState<DateRange<Date>>([null, null])
@@ -19,7 +20,7 @@ export default function DatePicker() {
           setValue(newValue)
         }}
         renderInput={(startProps: any, endProps: any) => (
-          <React.Fragment>
+          <div className="datePickerWrapper">
             <TextField
               {...startProps}
               sx={{
@@ -29,11 +30,12 @@ export default function DatePicker() {
                 height: '48px',
                 justifyContent: 'space-between',
                 flexDirection: 'row',
-                border: '1px',
-                borderColor: ' #E6E6E6',
-                borderStyle: 'solid'
+                '& > .MuiOutlinedInput-root > .MuiOutlinedInput-notchedOutline': {
+                  border: 'none !important'
+                }
               }}
             />
+            <Divider orientation="vertical" variant="middle" flexItem />
             <TextField
               {...endProps}
               sx={{
@@ -43,12 +45,12 @@ export default function DatePicker() {
                 height: '48px',
                 justifyContent: 'space-between',
                 flexDirection: 'row',
-                border: '1px',
-                borderColor: ' #E6E6E6',
-                borderStyle: 'solid'
+                '& > .MuiOutlinedInput-root > .MuiOutlinedInput-notchedOutline': {
+                  border: 'none !important'
+                }
               }}
             />
-          </React.Fragment>
+          </div>
         )}
       />
     </LocalizationProvider>

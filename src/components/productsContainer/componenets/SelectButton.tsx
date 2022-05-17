@@ -11,6 +11,7 @@ export default function SelectButton() {
 
   return (
     <Select
+      className="selectButtonWrapper"
       value={age}
       label="Age"
       onChange={handleChange}
@@ -22,9 +23,7 @@ export default function SelectButton() {
         height: '48px',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        border: '1px',
-        borderColor: ' #E6E6E6',
-        borderStyle: 'solid',
+        border: '1px solid #E6E6E6',
         borderRadius: '16px'
       }}>
       <MenuItem value={10}>Ten</MenuItem>

@@ -19,12 +19,12 @@ export default function ProductsTable() {
   return (
     <TableContainer component={Paper} style={{ borderRadius: '16px' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead className="tableHeaderWraper">
           <TableRow>
-            <TableCell>Dessert </TableCell>
-            <TableCell>Calories</TableCell>
-            <TableCell>Fat</TableCell>
-            <TableCell>Carbs</TableCell>
+            <TableCell>Product ID </TableCell>
+            <TableCell>Product Description</TableCell>
+            <TableCell>Item Price</TableCell>
+            <TableCell>Item Discount</TableCell>
             <TableCell>Protein</TableCell>
           </TableRow>
         </TableHead>
@@ -32,9 +32,9 @@ export default function ProductsTable() {
           {rows.map((row) => (
             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.calories}
               </TableCell>
-              <TableCell>{row.calories}</TableCell>
+              <TableCell>{row.name}</TableCell>
               <TableCell>{row.fat}</TableCell>
               <TableCell>{row.carbs}</TableCell>
               <TableCell>{row.protein}</TableCell>
