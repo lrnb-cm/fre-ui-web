@@ -16,7 +16,6 @@ const ReportDetails: FC = (): ReactElement => {
         spacing={{ xs: 3 }}
         sx={{
           marginTop: '20px !important',
-          //    ({ custom }) => custom.pxToRem(44),
         }}
       >
         <Grid item xs={8}>
