@@ -17,6 +17,10 @@ import CustomerIcon from '../../asset/icons/customers';
 import DeployIcon from '../../asset/icons/deploy';
 import IntegrationIcon from '../../asset/icons/integration';
 import EyeIcon from '../../asset/icons/eyeIcon';
+import { sidebarVar } from './state/sidebarState';
+import { toggleSideBar } from '../../redux/states/UI.slice';
+import { RootState, useAppDispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
   transition: theme.transitions.create('width', {
@@ -71,7 +75,9 @@ const Drawer = styled(MuiDrawer, {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-
+  [theme.breakpoints.down('md')]: {
+    display: 'none !important',
+  },
   ...(open && {
     ...openedMixin(theme),
     '& .MuiDrawer-paper': openedMixin(theme),
@@ -83,13 +89,12 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function ResponsiveDrawer() {
-  const theme = useTheme();
   let navigate = useNavigate();
-
-  const [open, setOpen] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const open: boolean = useSelector((state: RootState) => state.UI.openSideBar);
 
   const handleDrawerToogle = () => {
-    setOpen((prev) => !prev);
+    dispatch(toggleSideBar());
   };
 
   const topNav = [

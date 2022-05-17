@@ -6,7 +6,7 @@ import { Grid } from '@mui/material'
 
 const Stats: FC<StatsPropsType> = ({ count, title }): ReactElement => {
   return (
-    <StatWrapper xs={6} sm={6} md={4} lg={2}>
+    <StatWrapper item xs={6} sm={6} md={4} lg={2}>
       <StatCount>{count}</StatCount>
       <Statitle>{title}</Statitle>
     </StatWrapper>
