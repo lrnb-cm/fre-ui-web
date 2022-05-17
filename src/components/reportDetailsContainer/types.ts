@@ -3,3 +3,9 @@ export type ReportActivityTileProps = {
   desc: string;
   time: string;
 };
+
+export type ReportDetailTileProps = {
+  title: string;
+  info: string;
+  icon?: boolean;
+};

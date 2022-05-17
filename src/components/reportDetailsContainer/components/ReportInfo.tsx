@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { withTheme } from '@mui/styles';
 import { Grid } from '@mui/material';
 import more from '../../../asset/img/more.svg';
+import ReportDetailTile from './ReportDetailTile';
 const ReportInfo: FC = (): ReactElement => {
   return (
     <ReportInfoWrapper container>
@@ -14,7 +15,9 @@ const ReportInfo: FC = (): ReactElement => {
       <ReportInfoDetails container>
         <ReportInfoDetailsLeft item xs={8}>
           <ReportDetails container>
-            <
+            <ReportDetailTile title="Date of Report" info="15.09.2021" />
+            <ReportDetailTile title="Type" info="Return" />
+            <ReportDetailTile title="Status" info="In Progress" icon />
           </ReportDetails>
           <ReportDetailsDescription container>
             <ReportDescriptionTitle>Return Description</ReportDescriptionTitle>
@@ -41,11 +44,12 @@ const ReportInfoWrapper = styled(withTheme(Grid))(() => ({
   padding: '24px',
 }));
 
-const ReportInfoHeader = styled(withTheme(Grid))(() => ({
+const ReportInfoHeader = styled(withTheme(Grid))(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
+  marginBottom: theme.custom.pxToRem(32),
 }));
 const ReportMoreIcon = styled('img')(() => ({
   cursor: 'pointer',
@@ -63,12 +67,16 @@ const ReportInfoTitle = styled(withTheme(Grid))(() => ({
   color: '#3C3C3C',
 }));
 
-const ReportInfoDetails = styled(withTheme(Grid))(() => ({}));
+const ReportInfoDetails = styled(withTheme(Grid))(({ theme }) => ({
+  marginBottom: theme.custom.pxToRem(32),
+}));
 
 const ReportInfoDetailsLeft = styled(withTheme(Grid))(() => ({}));
 
 const ReportInfoDetailsRight = styled(withTheme(Grid))(() => ({}));
-const ReportDetails = styled(withTheme(Grid))(() => ({}));
+const ReportDetails = styled(withTheme(Grid))(({ theme }) => ({
+  marginBottom: theme.custom.pxToRem(32),
+}));
 const ReportDetailsDescription = styled(withTheme(Grid))(() => ({}));
 const ReportDescriptionTitle = styled('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,
