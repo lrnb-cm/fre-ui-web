@@ -3,6 +3,10 @@ import { styled } from '@mui/material/styles';
 import { withTheme } from '@mui/styles';
 import { Grid } from '@mui/material';
 import more from '../../../asset/img/more.svg';
+import telephone from '../../../asset/img/telephone.svg';
+import mailbox from '../../../asset/img/mailbox.svg';
+import arrowRight from '../../../asset/img/arrow-right.svg';
+
 import ReportDetailTile from './ReportDetailTile';
 const ReportInfo: FC = (): ReactElement => {
   return (
@@ -12,8 +16,8 @@ const ReportInfo: FC = (): ReactElement => {
         <ReportMoreIcon src={more} alt="more" />
       </ReportInfoHeader>
 
-      <ReportInfoDetails container>
-        <ReportInfoDetailsLeft item xs={8}>
+      <ReportInfoDetails container columnSpacing={2}>
+        <ReportInfoDetailsLeft item xs={7}>
           <ReportDetails container>
             <ReportDetailTile title="Date of Report" info="15.09.2021" />
             <ReportDetailTile title="Type" info="Return" />
@@ -29,7 +33,21 @@ const ReportInfo: FC = (): ReactElement => {
             </ReportDescriptionInfo>
           </ReportDetailsDescription>
         </ReportInfoDetailsLeft>
-        <ReportInfoDetailsRight item xs={4}></ReportInfoDetailsRight>
+        <ReportInfoDetailsRight item xs={5}>
+          <ReportContactWrapper>
+            <ReportContactName>Good Shop</ReportContactName>
+            <ReportContactAddress>
+              2923 Sycamore Street Santa Clara, CA
+            </ReportContactAddress>
+            <ReportContactIcons>
+              <div>
+                <TelIcon src={telephone} alt="telephone" />
+                <Mailbox src={mailbox} alt="mailbox" />
+              </div>
+              <ArrowRight src={arrowRight} alt="arrowRight" />
+            </ReportContactIcons>
+          </ReportContactWrapper>
+        </ReportInfoDetailsRight>
       </ReportInfoDetails>
     </ReportInfoWrapper>
   );
@@ -94,4 +112,47 @@ const ReportDescriptionInfo = styled('div')(({ theme }) => ({
   fontSize: theme.custom.pxToRem(14),
   lineHeight: '150%',
   color: theme.palette.text.primary,
+}));
+
+const ReportContactWrapper = styled('div')(({ theme }) => ({
+  background: '#FFFFFF',
+  border: '1px solid #E6E6E6',
+  borderRadius: theme.custom.pxToRem(16),
+  padding: theme.custom.pxToRem(24),
+}));
+const ReportContactName = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamilyBold,
+  fontStyle: 'normal',
+  fontWeight: theme.typography.fontWeightBold,
+  fontSize: theme.custom.pxToRem(24),
+  lineHeight: '125%',
+  color: '#3C3C3C',
+  marginBottom: theme.custom.pxToRem(12),
+}));
+const ReportContactAddress = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
+  fontStyle: 'normal',
+  fontWeight: theme.typography.fontWeightRegular,
+  fontSize: theme.custom.pxToRem(16),
+  lineHeight: '150%',
+  color: theme.palette.text.secondary,
+  marginBottom: theme.custom.pxToRem(35),
+}));
+const ReportContactIcons = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}));
+
+const TelIcon = styled('img')(({ theme }) => ({
+  marginRight: theme.custom.pxToRem(20.27),
+  cursor: 'pointer',
+}));
+
+const ArrowRight = styled('img')(({ theme }) => ({
+  cursor: 'pointer',
+}));
+
+const Mailbox = styled('img')(({ theme }) => ({
+  cursor: 'pointer',
 }));
