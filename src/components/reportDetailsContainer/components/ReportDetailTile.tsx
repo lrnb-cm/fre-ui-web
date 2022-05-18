@@ -8,9 +8,10 @@ const ReportDetailTile: FC<ReportDetailTileProps> = ({
   title,
   info,
   icon,
+  itemsPerRow,
 }): ReactElement => {
   return (
-    <ReportDetailTileWrapper item xs={4}>
+    <ReportDetailTileWrapper item {...itemsPerRow}>
       <ReportTileTitle>{title}</ReportTileTitle>
       <ReportTileInfo>
         {icon && <ReportInfoIcon></ReportInfoIcon>}

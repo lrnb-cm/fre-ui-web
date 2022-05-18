@@ -8,4 +8,5 @@ export type ReportDetailTileProps = {
   title: string;
   info: string;
   icon?: boolean;
+  itemsPerRow: any;
 };
