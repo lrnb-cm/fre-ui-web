@@ -3,19 +3,27 @@ import { styled } from '@mui/material/styles';
 import { withTheme } from '@mui/styles';
 import { Grid } from '@mui/material';
 import { ReportActivityTileProps } from '../types';
+import { useWindowWidth } from '@react-hook/window-size';
 
 const ReportActivityTile: FC<ReportActivityTileProps> = ({
   icon,
   desc,
   time,
 }): ReactElement => {
+  const windowWidth = useWindowWidth();
+
   const Icon = icon;
   const [fill, setFill] = useState('#3C3C3C');
+
+  const props = {
+    windowWidth: windowWidth,
+  };
   return (
     <ReportActivityTileWrapper
       item
       onMouseEnter={() => setFill('#fff')}
       onMouseLeave={() => setFill('#3C3C3C')}
+      {...props}
     >
       <Icon fill={fill} />
       <ReportDesc className="deschover">{desc}</ReportDesc>
@@ -25,34 +33,51 @@ const ReportActivityTile: FC<ReportActivityTileProps> = ({
 };
 
 export default ReportActivityTile;
+const mobileMixin = (windowWidth: number) => ({
+  justifyContent: 'space-between',
+  width: windowWidth > 568 ? '50%' : '100%',
+});
 
-const ReportActivityTileWrapper = styled(withTheme(Grid))(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding: theme.custom.pxToRem(24, 22),
+const desktopMixin = (windowWidth: number) => ({
   gap: '16px',
-  width: '100%',
-  // height: '96px',
-  background: '#FFFFFF',
-  border: '1px solid #E6E6E6',
-  cursor: 'pointer',
-  borderRadius: '16px',
-  '&:hover': {
-    background: '#3758CC',
-  },
-  '&:hover .deschover': {
-    color: '#ffffff',
-  },
-  '&:hover .timehover': {
-    color: '#ffffff',
-    opacity: 0.7,
-  },
-}));
+});
 
-const ReportTileIcon = styled('img')(({ theme }) => ({
-  // marginRight: theme.custom.pxToRem(20.25),
-}));
+const ReportActivityTileWrapper = styled(Grid, {
+  shouldForwardProp: (prop) => prop !== 'windowWidth',
+})((props: any) => {
+  const { theme, windowWidth } = props;
+  const isMobile = !(windowWidth > 1025);
+  return {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: theme.custom.pxToRem(24, 22),
+    // width: '100%',
+    // height: '96px',
+    background: '#FFFFFF',
+    border: '1px solid #E6E6E6',
+    cursor: 'pointer',
+    borderRadius: '16px',
+
+    ...(isMobile && {
+      ...mobileMixin(windowWidth),
+    }),
+    ...(!isMobile && {
+      ...desktopMixin(windowWidth),
+    }),
+
+    '&:hover': {
+      background: '#3758CC',
+    },
+    '&:hover .deschover': {
+      color: '#ffffff',
+    },
+    '&:hover .timehover': {
+      color: '#ffffff',
+      opacity: 0.7,
+    },
+  };
+});
 
 const ReportDesc = styled('span')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,

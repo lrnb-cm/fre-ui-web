@@ -31,7 +31,7 @@ export default ReportActivity;
 const ReportActivityWrapper = styled(withTheme(Grid))(() => ({
   display: 'flex',
   flexDirection: 'column',
-  width: '100%',
+  // width: '100%',
 }));
 
 const ReportActivityTitle = styled('div')(({ theme }) => ({
