@@ -5,6 +5,7 @@ import { Grid, Divider } from '@mui/material';
 import more from '../../../asset/img/more.svg';
 import ReportInfoDetails from './ReportInfoDetails';
 import ReportCustomer from './ReportCustomer';
+import ReportProduct from './ReportProduct';
 
 const ReportInfo: FC = (): ReactElement => {
   return (
@@ -23,6 +24,7 @@ const ReportInfo: FC = (): ReactElement => {
         variant="middle"
         sx={{ width: '100%', margin: '32px 0px', borderColor: '#E6E6E6' }}
       />
+      <ReportProduct />
     </ReportInfoWrapper>
   );
 };
