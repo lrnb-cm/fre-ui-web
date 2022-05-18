@@ -26,9 +26,9 @@ export default function SelectButton() {
         border: '1px solid #E6E6E6',
         borderRadius: '16px'
       }}>
-      <MenuItem value={10}>Ten</MenuItem>
-      <MenuItem value={20}>Twenty</MenuItem>
-      <MenuItem value={30}>Thirty</MenuItem>
+      <MenuItem value={1}>Shop-1</MenuItem>
+      <MenuItem value={2}>Shop-2</MenuItem>
+      <MenuItem value={3}>Shop-3</MenuItem>
     </Select>
   )
 }

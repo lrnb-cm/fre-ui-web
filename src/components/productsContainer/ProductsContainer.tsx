@@ -2,9 +2,9 @@ import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import { withTheme } from '@mui/styles'
 import Stack from '@mui/material/Stack'
-import ProductsTable from './componenets/ProductsTable'
-import ProductsTitle from './componenets/ProductsTitle'
-import SearchBox from './componenets/SearchBox'
+import ProductsTable from './components/ProductsTable'
+import ProductsTitle from './components/ProductsTitle'
+import SearchBox from './components/SearchBox'
 
 export default function ProductsContainer() {
   return (

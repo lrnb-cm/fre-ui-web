@@ -25,7 +25,8 @@ export default function SearchBox() {
             borderRadius: '16px',
             justifyContent: 'space-between',
             flexDirection: 'row',
-            border: '1px solid #E6E6E6'
+            border: '1px solid #E6E6E6',
+            boxShadow: 'none'
           }}>
           <IconButton sx={{ p: '10px' }} aria-label="menu">
             <SearchIcon />
@@ -48,7 +49,8 @@ export default function SearchBox() {
             flexDirection: 'row',
             border: '1px',
             borderColor: ' #E6E6E6',
-            borderStyle: 'solid'
+            borderStyle: 'solid',
+            boxShadow: 'none'
           }}>
           <IconButton sx={{ p: '10px' }} aria-label="menu">
             <SearchIcon />
@@ -57,7 +59,7 @@ export default function SearchBox() {
         </Paper>
       </SearchContent>
       <SearchContent>
-        <SearchTitle>By Shope</SearchTitle>
+        <SearchTitle>By Shop</SearchTitle>
         <SelectButton />
       </SearchContent>
       <SearchContent>
