@@ -9,25 +9,27 @@ const ReportProduct: FC = (): ReactElement => {
     <ReportProductWrapper>
       <ReportProductTitle>Product</ReportProductTitle>
       <ProductDetails container spacing={{ xs: 2, lg: 0 }}>
-        <ProductImageWrapper item xs={6} lg={2}>
-          <ProductImage src={productimage} alt="productimage" />
-        </ProductImageWrapper>
+        <Grid item xs={12} sm={6} lg={2}>
+          <ProductImageWrapper>
+            <ProductImage src={productimage} alt="productimage" />
+          </ProductImageWrapper>
+        </Grid>
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 2 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 2 }}
           title="Customer name"
           info="Bessie Cooper"
         />
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 2 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 2 }}
           title="Product ID"
           info="2939940319HT"
         />
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 2 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 2 }}
           title="Date of Purchase"
           info="05.12.2020"
         />
-        <ProductWarranty item xs={6} lg={3}>
+        <ProductWarranty item xs={12} sm={6} lg={3}>
           <ProductWarrantyTitle>Warranty Due Date</ProductWarrantyTitle>
           <ProductWarrantyDateWrapper>
             <ProductWarrantyDate>05.10.2021</ProductWarrantyDate>
@@ -63,17 +65,28 @@ const ProductDetails = styled(withTheme(Grid))(() => ({
   alignItems: 'center',
 }));
 
-const ProductImageWrapper = styled(withTheme(Grid))(({ theme }) => ({
+const ProductImageWrapper = styled('div')(({ theme }) => ({
   width: theme.custom.pxToRem(120),
   height: theme.custom.pxToRem(120),
   background: '#FFFFFF',
   border: '1px solid #E6E6E6',
   borderRadius: '8px',
   padding: '8.57px',
+  // [theme.breakpoints.down('lg')]: {
+  //   border: 'none',
+  // },
+  [theme.breakpoints.down('sm')]: {
+    border: '1px solid #E6E6E6',
+    width: '252.86px',
+    height: '252.86px',
+  },
 }));
 const ProductImage = styled('img')(({ theme }) => ({
-  width: '100%',
+  width: 'auto',
   height: '100%',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
 }));
 
 const ProductWarranty = styled(withTheme(Grid))(({ theme }) => ({

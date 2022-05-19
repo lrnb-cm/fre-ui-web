@@ -10,22 +10,22 @@ const ReportCustomer: FC = (): ReactElement => {
       <ReportCustomerTitle>Customer</ReportCustomerTitle>
       <CustomerDetails container spacing={{ xs: 2, lg: 0 }}>
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 2 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 2 }}
           title="Customer name"
           info="Bessie Cooper"
         />
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 2 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 2 }}
           title="Customer ID"
           info="2939940319HT"
         />
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 3 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 3 }}
           title="Email"
           info="bessie.cooper@gmail.com"
         />
         <ReportDetailTile
-          itemsPerRow={{ xs: 6, lg: 3 }}
+          itemsPerRow={{ xs: 12, sm: 6, lg: 3 }}
           title="Phone mumber"
           info="+1 321 387  657 839"
         />

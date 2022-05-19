@@ -14,7 +14,9 @@ const ReportInfo: FC = (): ReactElement => {
         <ReportInfoTitle>Report #43627</ReportInfoTitle>
         <ReportMoreIcon src={more} alt="more" />
       </ReportInfoHeader>
+
       <ReportInfoDetails />
+
       <Divider
         variant="middle"
         sx={{ width: '100%', margin: '32px 0px', borderColor: '#E6E6E6' }}

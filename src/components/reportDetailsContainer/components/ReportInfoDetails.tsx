@@ -10,7 +10,7 @@ import ReportDetailTile from './ReportDetailTile';
 const ReportInfoDetails: FC = (): ReactElement => {
   return (
     <Grid container columnSpacing={2}>
-      <ReportInfoDetailsLeft item xs={7}>
+      <ReportInfoDetailsLeft item xs={12} sm={7}>
         <ReportDetails container spacing={{ xs: 2, lg: 0 }}>
           <ReportDetailTile
             itemsPerRow={{ xs: 6, lg: 4 }}
@@ -39,7 +39,7 @@ const ReportInfoDetails: FC = (): ReactElement => {
           </ReportDescriptionInfo>
         </ReportDetailsDescription>
       </ReportInfoDetailsLeft>
-      <ReportInfoDetailsRight item xs={5}>
+      <ReportInfoDetailsRight item xs={12} sm={5}>
         <ReportContactWrapper>
           <ReportContactName>Good Shop</ReportContactName>
           <ReportContactAddress>
@@ -65,7 +65,11 @@ const ReportInfoDetailsRight = styled(withTheme(Grid))(() => ({}));
 const ReportDetails = styled(withTheme(Grid))(({ theme }) => ({
   marginBottom: theme.custom.pxToRem(32),
 }));
-const ReportDetailsDescription = styled(withTheme(Grid))(() => ({}));
+const ReportDetailsDescription = styled(withTheme(Grid))(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: '20px',
+  },
+}));
 const ReportDescriptionTitle = styled('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,
   fontStyle: 'normal',
