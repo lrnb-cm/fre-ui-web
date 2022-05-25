@@ -21,6 +21,13 @@ import { sidebarVar } from './state/sidebarState';
 import { toggleSideBar } from '../../redux/states/UI.slice';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { useSelector } from 'react-redux';
+import {
+  CUSTOMERS,
+  PRODUCTS,
+  REPORT,
+  DASHBOARD,
+  MY_SHOP,
+} from '../../constants/routes';
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
   transition: theme.transitions.create('width', {
@@ -101,27 +108,27 @@ export default function ResponsiveDrawer() {
     {
       text: 'Dashboard',
       icon: DashIcon,
-      onClick: () => navigate('/dashboard'),
+      onClick: () => navigate(DASHBOARD),
     },
     {
       text: 'Reports',
       icon: ReportIcon,
-      onClick: () => navigate('/dashboard/reports'),
+      onClick: () => navigate(REPORT),
     },
     {
       text: 'My Shop',
       icon: MyShopIcon,
-      onClick: () => navigate('/dashboard/myshop'),
+      onClick: () => navigate(MY_SHOP),
     },
     {
       text: 'Products',
       icon: ReportedProductIcon,
-      onClick: () => navigate('/dashboard/products'),
+      onClick: () => navigate(PRODUCTS),
     },
     {
       text: 'Customers',
       icon: CustomerIcon,
-      onClick: () => navigate('/dashboard/customers'),
+      onClick: () => navigate(CUSTOMERS),
     },
   ];
   const bottomNav = [

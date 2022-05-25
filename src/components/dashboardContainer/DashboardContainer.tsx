@@ -22,11 +22,7 @@ export default function dashboard() {
       </DashboardStatTile>
       <DashboardGraphReport container>
         <ChartSection barData={barData} total={1824} title="Report Summary" />
-        <ChartSection
-          barData={barData}
-          total={824}
-          title="Reporting Customers"
-        />
+        <ChartSection barData={barData} total={824} title="Reporting Customers" />
         <ChartSection barData={barData} total={84} title="Total Returns" />
       </DashboardGraphReport>
 

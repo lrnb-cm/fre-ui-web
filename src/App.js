@@ -56,13 +56,17 @@ export default function App() {
                   <Router>
                     <Routes>
                       <Route index element={<LoginContainer />} />
-                      <Route path="validated" element={<LoginCallback />} />
-                      <Route path="dashboard" element={<Layout />}>
+                      <Route path={VALIDATED} element={<LoginCallback />} />
+                      <Route path={DASHBOARD} element={<Layout />}>
                         <Route index element={<DashboardContainer />} />
                         <Route path="customers" element={<Customer />} />
                         <Route path="Products" element={<ProductsContainer />} />
                         <Route path="MyShop" element={<MyShopContainer />} />
                         <Route path="transactions" element={<Containers />} />
+                        <Route path={CUSTOMERS} element={<Customer />} />
+                        <Route path={PRODUCTS} element={<ProductsContainer />} />
+                        <Route path={REPORT_DETAILS} element={<ReportDetailsContainer />} />
+                        <Route path={TRANSACTIONS} element={<Containers />} />
 
                         {/* Using path="*"" means "match anything", so this route
             acts like a catch-all for URLs that we don't have explicit
