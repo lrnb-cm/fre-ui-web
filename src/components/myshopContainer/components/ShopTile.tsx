@@ -1,89 +1,112 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { experimentalStyled as styled } from '@mui/material/styles'
-//import { styled } from '@mui/material/styles'
-import { withTheme } from '@mui/styles'
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import PhoneIcon from '@mui/icons-material/Phone'
 import EmailIcon from '@mui/icons-material/Email'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import telephone from '../../../asset/img/telephone.svg'
+import mailbox from '../../../asset/img/mailbox.svg'
+import arrowRight from '../../../asset/img/arrow-right.svg'
 
 export default function ShopTile() {
   const data = {
     shops: [
-      { name: 'Good Shop', address: '2923 Sycamre Street Santa Clara CA ' },
-      { name: 2, address: 16500 },
-      { name: 3, address: 14250 },
-      { name: 4, address: 19000 }
+      { name: 'Good Shop', address: '2923 Sycamre Street  ', city: 'Santa Clara CA' },
+      { name: 'NiKe Store', address: '2923 Sycamre Street ', city: 'Santa Clara CA' },
+      { name: 'Store #361', address: '2923 Sycamre Street ', city: 'Santa Clara CA' },
+      { name: 'Nike official Retail', address: '2923 Sycamre Street', city: 'Santa Clara CA' },
+      { name: 'Good Shop', address: '2923 Sycamre Street ', city: 'Santa Clara CA' },
+      { name: 'All Stars', address: '2923 Sycamre Street ', city: 'Santa Clara CA' }
     ]
   }
+
+  const [fill, setFill] = useState('#3C3C3C')
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={{ xs: 2, md: 2, lg: 4 }}>
       {data.shops.map((element) => (
-        <Grid item xs={8} sm={3} md={3} sx={{ borderRadius: '16px', background: 'white', width: '288px', height: '202px ' }}>
-          <Item>{element.name}</Item>
-          <Address>{element.address}</Address>
-          <IconsDisplayContent>
-            <IconsRightContent>
-              <PhoneIcon />
-              <EmailIcon />
-            </IconsRightContent>
-            <IconsLeftContent>
-              <ArrowForwardIcon />
-            </IconsLeftContent>
-          </IconsDisplayContent>
+        <Grid item md={6} lg={3} xs={12}>
+          <ReportContactWrapper onMouseEnter={() => setFill('#fff')} onMouseLeave={() => setFill('#3C3C3C')}>
+            <ReportContactName className="deschover">{element.name}</ReportContactName>
+            <ReportContactAddress className="addresshover">{element.address}</ReportContactAddress>
+            <ReportContactCity className="addresshover">{element.city}</ReportContactCity>
+            <ReportContactIcons>
+              <div>
+                <TelIcon src={telephone} alt="telephone" />
+                <Mailbox src={mailbox} alt="mailbox" className="iconhover" />
+              </div>
+              <ArrowRight src={arrowRight} alt="arrowRight" className="iconhover" />
+            </ReportContactIcons>
+          </ReportContactWrapper>
         </Grid>
       ))}
     </Grid>
   )
 }
 
-const Item = styled('div')(({ theme }) => ({
-  fontFamily: 'Intro Bold',
+const ReportContactWrapper = styled('div')(({ theme }) => ({
+  background: '#FFFFFF',
+  border: '1px solid #E6E6E6',
+  borderRadius: theme.custom.pxToRem(16),
+  padding: theme.custom.pxToRem(24),
+
+  '&:hover': {
+    background: '#3758CC'
+  },
+  '&:hover .deschover': {
+    color: '#ffffff'
+  },
+  '&:hover .addresshover': {
+    color: '#ffffff',
+    opacity: 0.7
+  },
+  '.iconhover:hover': {
+    backgroundolor: '#FFF !important'
+  }
+}))
+const ReportContactName = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
-  fontWeight: 700,
-  fontSize: '24px',
+  fontWeight: theme.typography.fontWeightBold,
+  fontSize: theme.custom.pxToRem(24),
   lineHeight: '125%',
-  padding: theme.spacing(1)
+  color: '#3C3C3C',
+  marginBottom: theme.custom.pxToRem(12)
 }))
-
-const ShopDisplayContent = styled(withTheme(Grid))(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  flexDirection: 'row',
-  marginBottom: '25px'
-}))
-
-const Address = styled('div')(({ theme }) => ({
+const ReportContactAddress = styled('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,
   fontStyle: 'normal',
   fontWeight: theme.typography.fontWeightRegular,
-  fontSize: theme.custom.pxToRem(14),
-  padding: theme.spacing(1),
-  //textAlign: 'center',
+  fontSize: theme.custom.pxToRem(16),
+  lineHeight: '150%',
   color: theme.palette.text.secondary
 }))
-
-const IconsDisplayContent = styled(withTheme(Grid))(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  flexDirection: 'row',
-  marginBottom: '25px'
-}))
-const IconsRightContent = styled(withTheme(Grid))(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'row',
-  marginRight: theme.custom.pxToRem(1)
-}))
-
-const IconsLeftContent = styled('div')(({ theme }) => ({
-  ...theme.typography.h3,
-  fontFamily: 'Intro Bold',
+const ReportContactCity = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
   fontStyle: 'normal',
-  fontWeight: 400,
-  color: theme.palette.text.primary
+  fontWeight: theme.typography.fontWeightRegular,
+  fontSize: theme.custom.pxToRem(16),
+  lineHeight: '150%',
+  color: theme.palette.text.secondary,
+  marginBottom: theme.custom.pxToRem(35)
+}))
+const ReportContactIcons = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between'
+}))
+
+const TelIcon = styled('img')(({ theme }) => ({
+  marginRight: theme.custom.pxToRem(20.27),
+  cursor: 'pointer'
+}))
+
+const ArrowRight = styled('img')(({ theme }) => ({
+  cursor: 'pointer',
+  '.iconhover:hover': {
+    color: '#FFF !important'
+  }
+}))
+
+const Mailbox = styled('img')(({ theme }) => ({
+  cursor: 'pointer'
 }))
