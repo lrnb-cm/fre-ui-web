@@ -22,7 +22,7 @@ export default function ShopTile() {
     <Grid container spacing={{ xs: 2, md: 2, lg: 4 }}>
       {data.shops.map((element) => (
         <Grid item md={6} lg={3} xs={12}>
-          <ReportContactWrapper onMouseEnter={() => setFill('#fff')} onMouseLeave={() => setFill('#3C3C3C')} sx={{ '&:hover': { color: 'white' } }}>
+          <ReportContactWrapper onMouseEnter={() => setFill('#fff')} onMouseLeave={() => setFill('#3C3C3C')}>
             <ReportContactName className="deschover">{element.name}</ReportContactName>
             <ReportContactAddress className="addresshover">{element.address}</ReportContactAddress>
             <ReportContactCity className="addresshover">{element.city}</ReportContactCity>
@@ -99,10 +99,7 @@ const TelIcon = styled('img')(({ theme }) => ({
 }))
 
 const ArrowRight = styled('img')(({ theme }) => ({
-  cursor: 'pointer',
-  '.iconhover:hover img': {
-    color: '#FFF !important'
-  }
+  cursor: 'pointer'
 }))
 
 const Mailbox = styled('img')(({ theme }) => ({
