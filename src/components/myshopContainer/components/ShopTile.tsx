@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { experimentalStyled as styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
-import PhoneIcon from '@mui/icons-material/Phone'
-import EmailIcon from '@mui/icons-material/Email'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import telephone from '../../../asset/img/telephone.svg'
 import mailbox from '../../../asset/img/mailbox.svg'
 import arrowRight from '../../../asset/img/arrow-right.svg'
@@ -25,13 +22,13 @@ export default function ShopTile() {
     <Grid container spacing={{ xs: 2, md: 2, lg: 4 }}>
       {data.shops.map((element) => (
         <Grid item md={6} lg={3} xs={12}>
-          <ReportContactWrapper onMouseEnter={() => setFill('#fff')} onMouseLeave={() => setFill('#3C3C3C')}>
+          <ReportContactWrapper onMouseEnter={() => setFill('#fff')} onMouseLeave={() => setFill('#3C3C3C')} sx={{ '&:hover': { color: 'white' } }}>
             <ReportContactName className="deschover">{element.name}</ReportContactName>
             <ReportContactAddress className="addresshover">{element.address}</ReportContactAddress>
             <ReportContactCity className="addresshover">{element.city}</ReportContactCity>
             <ReportContactIcons>
               <div>
-                <TelIcon src={telephone} alt="telephone" />
+                <TelIcon src={telephone} alt="mailbox" className="iconhover" />
                 <Mailbox src={mailbox} alt="mailbox" className="iconhover" />
               </div>
               <ArrowRight src={arrowRight} alt="arrowRight" className="iconhover" />
@@ -59,8 +56,9 @@ const ReportContactWrapper = styled('div')(({ theme }) => ({
     color: '#ffffff',
     opacity: 0.7
   },
-  '.iconhover:hover': {
-    backgroundolor: '#FFF !important'
+  '&:hover .iconhover ': {
+    color: '#FFF !important',
+    filter: 'brightness(0) invert(1)'
   }
 }))
 const ReportContactName = styled('div')(({ theme }) => ({
@@ -102,7 +100,7 @@ const TelIcon = styled('img')(({ theme }) => ({
 
 const ArrowRight = styled('img')(({ theme }) => ({
   cursor: 'pointer',
-  '.iconhover:hover': {
+  '.iconhover:hover img': {
     color: '#FFF !important'
   }
 }))
