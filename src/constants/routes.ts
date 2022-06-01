@@ -6,3 +6,4 @@ export const REPORT = `${DASHBOARD}/reports`;
 export const REPORT_DETAILS = `${REPORT}/details`;
 export const TRANSACTIONS = `${DASHBOARD}/transactions`;
 export const MY_SHOP = `${DASHBOARD}/myshop`;
+export const SHOP_DETAILS = `${MY_SHOP}/details`
