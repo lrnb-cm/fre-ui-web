@@ -5,7 +5,7 @@ import { Grid } from '@mui/material'
 import arrowBack from '../../../asset/img/arrowBack.svg'
 import cursorPlay from '../../../asset/img/cursorPlay.svg'
 
-export default function ReportBreadCrumb() {
+export default function ShopBreadCrumb() {
   return (
     <BreadCrumbWrapper container>
       <Grid item>

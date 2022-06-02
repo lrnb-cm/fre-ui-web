@@ -3,7 +3,7 @@ import { withTheme } from '@mui/styles'
 import { Grid } from '@mui/material'
 import ShopBreadCrumb from './components/ShopBreadCrumb'
 import ShopDetails from './components/ShopDetails'
-import ProductsReport from './components/ProductsReport'
+import ProductDisplay from '../dashboardContainer/components/ProductDisplay'
 import ShopDetailsTable from './components/ShopDetailsTable'
 import profile_img from '../../asset/img/productImg.svg'
 export default function MyShopDetailsContainer() {
@@ -13,9 +13,9 @@ export default function MyShopDetailsContainer() {
       <ShopDetails />
       <DisplayTitle>Most Reported Products</DisplayTitle>
       <ProductReportWrapper container spacing={{ xs: 2, lg: 1 }}>
-        <ProductsReport img={profile_img} title="Nike Air Force 1" subTitle="Nike" price={92.0} />
-        <ProductsReport img={profile_img} title="Playstation 5" subTitle="Nike" price={320.2} />
-        <ProductsReport img={profile_img} title="Xbox Series X" subTitle="Foxmart" price={315.23} />
+        <ProductDisplay img={profile_img} title="Nike Air Force 1" subTitle="Nike" price={92.0} />
+        <ProductDisplay img={profile_img} title="Playstation 5" subTitle="Nike" price={320.2} />
+        <ProductDisplay img={profile_img} title="Xbox Series X" subTitle="Foxmart" price={315.23} />
       </ProductReportWrapper>
       <ShopDetailsTable />
     </ShopDetailsLayout>
@@ -43,12 +43,4 @@ const DisplayTitle = styled('div')(({ theme }) => ({
   lineHeight: '120%',
   color: theme.palette.text.primary,
   marginBottom: theme.custom.pxToRem(12)
-}))
-
-const ShopReportTableWrapper = styled(withTheme(Grid))(({ theme }) => ({
-  background: theme.palette.background.paper,
-  display: 'flex',
-  alignItems: 'center',
-  marginBottom: theme.custom.pxToRem(36)
-  //justifyContent: 'space-between'
 }))
