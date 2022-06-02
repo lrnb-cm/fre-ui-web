@@ -10,7 +10,6 @@ export default function MyShopDetailsContainer() {
   return (
     <ShopDetailsLayout>
       <ShopBreadCrumb />
-
       <ShopDetails />
       <DisplayTitle>Most Reported Products</DisplayTitle>
       <ProductReportWrapper container spacing={{ xs: 2, lg: 1 }}>
