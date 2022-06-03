@@ -31,11 +31,11 @@ export default function ShopDetailsTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead className="tableHeaderWraper">
           <TableRow>
-            <TableCell> Store ID </TableCell>
-            <TableCell>Region</TableCell>
-            <TableCell>District</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell>Phone</TableCell>
+            <TableCell> Report ID </TableCell>
+            <TableCell>Customer name</TableCell>
+            <TableCell>Customer ID</TableCell>
+            <TableCell>Product name</TableCell>
+            <TableCell>Report type</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
