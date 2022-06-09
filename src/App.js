@@ -17,11 +17,12 @@ import { FirebaseContext } from './contexts/FirebaseContext'
 import { initializeApp } from 'firebase/app'
 import Customer from './components/customerContainer/Customers'
 import ProductsContainer from './components/productsContainer/ProductsContainer'
+import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails'
 import MyShopContainer from './components/myshopContainer/MyShopContainer'
 import store, { persistor } from './redux/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-
+import { CUSTOMERS, VALIDATED, REPORT_DETAILS, REPORT, DASHBOARD, PRODUCTS, TRANSACTIONS, MY_SHOP } from './constants/routes'
 const firebaseConfig = {
   apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
   authDomain: 'freeing-returns.firebaseapp.com'
@@ -56,14 +57,14 @@ export default function App() {
                   <Router>
                     <Routes>
                       <Route index element={<LoginContainer />} />
-                      <Route path="validated" element={<LoginCallback />} />
-                      <Route path="dashboard" element={<Layout />}>
+                      <Route path={VALIDATED} element={<LoginCallback />} />
+                      <Route path={DASHBOARD} element={<Layout />}>
                         <Route index element={<DashboardContainer />} />
-                        <Route path="customers" element={<Customer />} />
-                        <Route path="Products" element={<ProductsContainer />} />
-                        <Route path="MyShop" element={<MyShopContainer />} />
-                        <Route path="transactions" element={<Containers />} />
-
+                        <Route path={CUSTOMERS} element={<Customer />} />
+                        <Route path={PRODUCTS} element={<ProductsContainer />} />
+                        <Route path={REPORT_DETAILS} element={<ReportDetailsContainer />} />
+                        <Route path={TRANSACTIONS} element={<Containers />} />
+                        <Route path={MY_SHOP} element={<MyShopContainer />} />
                         {/* Using path="*"" means "match anything", so this route
             acts like a catch-all for URLs that we don't have explicit
             routes for. */}

@@ -20,7 +20,7 @@ const bkPoints = {
 
 const pxToRem = (...args: number[]) => {
   return args.slice(0, 4).reduce((sum, size) => {
-    const increment = `${(size / htmlFontSize) * coef}rem`;
+    const increment: string = `${(size / htmlFontSize) * coef}rem`;
     return sum ? `${sum} ${increment}` : increment;
   }, '');
 };
