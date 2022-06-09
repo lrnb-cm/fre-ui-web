@@ -1,16 +1,11 @@
-import { FC, ReactElement } from 'react';
-import { styled } from '@mui/material/styles';
-import { ProductDisplayType } from '../types';
-import { withTheme } from '@mui/styles';
-import { Box, Grid, Stack } from '@mui/material';
-import MuiAvatar from '@mui/material/Avatar';
+import { FC, ReactElement } from 'react'
+import { styled } from '@mui/material/styles'
+import { ProductDisplayType } from '../types'
+import { withTheme } from '@mui/styles'
+import { Box, Grid, Stack } from '@mui/material'
+import MuiAvatar from '@mui/material/Avatar'
 
-const ProductDisplay: FC<ProductDisplayType> = ({
-  img,
-  title,
-  subTitle,
-  price,
-}): ReactElement => {
+const ProductDisplay: FC<ProductDisplayType> = ({ img, title, subTitle, price }): ReactElement => {
   return (
     <Grid item xs={12} sm={6} lg={3}>
       <ProductDisplayContent>
@@ -25,8 +20,8 @@ const ProductDisplay: FC<ProductDisplayType> = ({
         <ProductPrice>${price.toFixed(2)}</ProductPrice>
       </ProductDisplayContent>
     </Grid>
-  );
-};
+  )
+}
 
 const ProductDisplayContent = styled('div')(({ theme }) => ({
   padding: theme.custom.pxToRem(12, 24),
@@ -35,27 +30,27 @@ const ProductDisplayContent = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  flexDirection: 'row',
-}));
+  flexDirection: 'row'
+}))
 
 const ProductLeftContent = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
-  marginRight: theme.custom.pxToRem(18),
-}));
+  marginRight: theme.custom.pxToRem(18)
+}))
 
 const Avatar = styled(withTheme(MuiAvatar))(({ theme }) => ({
   width: theme.typography.pxToRem(32),
-  height: theme.typography.pxToRem(32),
-}));
+  height: theme.typography.pxToRem(32)
+}))
 
 const ProductContent = styled(withTheme(Stack))(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-start',
   flexDirection: 'column',
-  marginLeft: theme.custom.pxToRem(16),
-}));
+  marginLeft: theme.custom.pxToRem(16)
+}))
 
 const ProductTitle = styled('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,
@@ -63,16 +58,16 @@ const ProductTitle = styled('div')(({ theme }) => ({
   fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(14),
   lineHeight: '150%',
-  color: theme.palette.text.primary,
-}));
+  color: theme.palette.text.primary
+}))
 const ProductSubTitle = styled('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,
   fontStyle: 'normal',
   fontWeight: theme.typography.fontWeightRegular,
   fontSize: theme.custom.pxToRem(12),
   lineHeight: '120%',
-  color: theme.palette.text.secondary,
-}));
+  color: theme.palette.text.secondary
+}))
 
 const ProductPrice = styled('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamilyBold,
@@ -81,7 +76,7 @@ const ProductPrice = styled('div')(({ theme }) => ({
   fontSize: theme.custom.pxToRem(14),
   lineHeight: '140%',
   //   textAlign: 'right',
-  color: theme.palette.text.primary,
-}));
+  color: theme.palette.text.primary
+}))
 
-export default ProductDisplay;
+export default ProductDisplay
