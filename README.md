@@ -71,3 +71,9 @@ group_id
 
 id - PK
 name
+
+# User container
+
+- Validate access token
+- Get unique id from jwt if it's there, otherwise send it in the header
+- Get user's data and permissions
