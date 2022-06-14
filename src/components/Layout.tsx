@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import { styled, Theme } from '@mui/material/styles';
 import Header from './headerContainer/Header';
 import Sidebar from './sidebarContainer/Sidebar';
-import { useSelector } from 'react-redux';
 const Layout: FC = (): ReactElement => {
   const open: boolean = (sessionStorage.getItem('drawer') === 'true');
   const props = {

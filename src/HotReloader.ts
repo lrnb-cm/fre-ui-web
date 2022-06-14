@@ -1,5 +1,5 @@
 export class HotReloader {
-    static accept(componentPath: string, elemRoot: Document, render: React.ReactType) {
+    static accept(componentPath: string, elemRoot: Document, render: React.ComponentType) {
         // @ts-ignore
         if (module.hot === undefined) {
             return;
