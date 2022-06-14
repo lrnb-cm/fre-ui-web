@@ -4,10 +4,8 @@ import { styled, Theme } from '@mui/material/styles';
 import Header from './headerContainer/Header';
 import Sidebar from './sidebarContainer/Sidebar';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
 const Layout: FC = (): ReactElement => {
-  const open: boolean = useSelector((state: RootState) => state.UI.openSideBar);
-
+  const open: boolean = (sessionStorage.getItem('drawer') === 'true');
   const props = {
     open: open,
   };

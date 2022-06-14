@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect } from 'react'
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -7,6 +7,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import MenuItems from './MenuItem'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
 import logo from '../../asset/img/logo.png'
 import Avatar from '@mui/material/Avatar'
 import DashIcon from '../../asset/icons/dashboardIcon'
@@ -18,9 +19,6 @@ import DeployIcon from '../../asset/icons/deploy'
 import IntegrationIcon from '../../asset/icons/integration'
 import EyeIcon from '../../asset/icons/eyeIcon'
 import { sidebarVar } from './state/sidebarState'
-import { toggleSideBar } from '../../redux/states/UI.slice'
-import { RootState, useAppDispatch } from '../../redux/store'
-import { useSelector } from 'react-redux'
 import { CUSTOMERS, PRODUCTS, REPORT, DASHBOARD, MY_SHOP } from '../../constants/routes'
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
@@ -90,14 +88,14 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 export default function ResponsiveDrawer() {
+  const client = useApolloClient()
+  const state = useReactiveVar(sidebarVar);
+  const open: boolean | undefined = state.open;
+  const handleDrawerToogle = (e: any) => {
+    sidebarVar({ ...sidebarVar(), open: !state.open });
+  };
+  sessionStorage.setItem('drawer', String(open));
   let navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const open: boolean = useSelector((state: RootState) => state.UI.openSideBar)
-
-  const handleDrawerToogle = () => {
-    dispatch(toggleSideBar())
-  }
-
   const topNav = [
     {
       text: 'Dashboard',
