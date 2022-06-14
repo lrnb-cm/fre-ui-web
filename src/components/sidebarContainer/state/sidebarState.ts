@@ -2,7 +2,7 @@ import { makeVar } from '@apollo/client';
 
 // shape of your local state
 export interface state {
-  open: Boolean;
+  open: boolean;
   uistate?: string;
 }
 

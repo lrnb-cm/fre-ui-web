@@ -2,10 +2,15 @@
     "name": "enterprise-app",
     "version": "1.1.1",
     "description": "LilliiRnB Enterprise Fraud Boilerplate",
+    "license": "BSD-3-Clause",
     "keywords": [
         "lilliiRnB",
         "boilerplate"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lrnb-cm/fre-ui-web.git"
+    },
     "main": "src/index.js",
     "dependencies": {
         "@apollo/client": "^3.5.5",
@@ -32,20 +37,17 @@
         "mui-datatables": "^4.2.2",
         "nodemon": "^2.0.15",
         "npm-run-all": "^4.1.5",
-        "react": "17.0.2",
+        "react": "^17.0.2",
         "react-awesome-modal": "^2.0.5",
         "react-bootstrap": "1.5.2",
-        "react-dom": "17.0.2",
+        "react-dom": "^17.0.2",
         "react-firebase-hooks": "^5.0.3",
         "react-fontawesome": "^1.7.1",
         "react-progressbar.js": "^0.2.0",
-        "react-redux": "^7.2.6",
         "react-router": "^6.2.1",
         "react-router-dom": "^6.0.2",
-        "react-router-redux": "^4.0.8",
         "react-scripts": "^4.0.3",
         "recharts": "^2.1.9",
-        "redux-persist": "^6.0.0",
         "rxjs": "^6.5.4"
     },
     "devDependencies": {
@@ -80,5 +82,9 @@
         "not dead",
         "not ie <= 11",
         "not op_mini all"
-    ]
+    ],
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=16.0.0"
+    }
 }

@@ -6,8 +6,6 @@ import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import { ChartSectionProps } from '../types';
 import TotalSection from './TotalSection';
 import { useWindowWidth } from '@react-hook/window-size';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
 
 const ChartSection: FC<ChartSectionProps> = ({
   barData,
@@ -15,8 +13,7 @@ const ChartSection: FC<ChartSectionProps> = ({
   title,
 }): ReactElement => {
   const windowWidth = useWindowWidth();
-  const open: boolean = useSelector((state: RootState) => state.UI.openSideBar);
-
+  const open: boolean = (sessionStorage.getItem('drawer') === 'true');
   const chartRef = useRef(null);
   const current: any = chartRef.current;
   const [chartHeight, setChartHeight] = useState(250);
