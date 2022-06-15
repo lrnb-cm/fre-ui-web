@@ -1,49 +1,55 @@
-import { useEffect } from 'react'
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
-import MuiDrawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import IconButton from '@mui/material/IconButton'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import MenuItems from './MenuItem'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
-import logo from '../../asset/img/logo.png'
-import Avatar from '@mui/material/Avatar'
-import DashIcon from '../../asset/icons/dashboardIcon'
-import ReportIcon from '../../asset/icons/reportIcon'
-import MyShopIcon from '../../asset/icons/myshop'
-import ReportedProductIcon from '../../asset/icons/reportedproduct'
-import CustomerIcon from '../../asset/icons/customers'
-import DeployIcon from '../../asset/icons/deploy'
-import IntegrationIcon from '../../asset/icons/integration'
-import EyeIcon from '../../asset/icons/eyeIcon'
-import { sidebarVar } from './state/sidebarState'
-import { CUSTOMERS, PRODUCTS, REPORT, DASHBOARD, MY_SHOP } from '../../constants/routes'
+import { useEffect } from 'react';
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import MuiDrawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MenuItems from './MenuItem';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useApolloClient, useQuery, useReactiveVar } from '@apollo/client';
+import logo from '../../asset/img/logo.png';
+import Avatar from '@mui/material/Avatar';
+import DashIcon from '../../asset/icons/dashboardIcon';
+import ReportIcon from '../../asset/icons/reportIcon';
+import MyShopIcon from '../../asset/icons/myshop';
+import ReportedProductIcon from '../../asset/icons/reportedproduct';
+import CustomerIcon from '../../asset/icons/customers';
+import DeployIcon from '../../asset/icons/deploy';
+import IntegrationIcon from '../../asset/icons/integration';
+import EyeIcon from '../../asset/icons/eyeIcon';
+import { sidebarVar } from './state/sidebarState';
+import {
+  CUSTOMERS,
+  PRODUCTS,
+  REPORT,
+  DASHBOARD,
+  MY_SHOP,
+} from '../../constants/routes';
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen
+    duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
   display: 'flex  !important',
-  justifyContent: 'space-between  !important'
-})
+  justifyContent: 'space-between  !important',
+});
 
 const closedMixin = (theme: Theme): CSSObject => ({
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
+    duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
   width: theme.custom.sidebar.close,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
   display: 'flex  !important',
-  justifyContent: 'space-between  !important'
-})
+  justifyContent: 'space-between  !important',
+});
 
 // const AppBar = styled(MuiAppBar, {
 //   shouldForwardProp: (prop) => prop !== 'open',
@@ -64,7 +70,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 // }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open'
+  shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   width: theme.custom.sidebar.open,
   height: '100%',
@@ -75,93 +81,118 @@ const Drawer = styled(MuiDrawer, {
   flexDirection: 'row',
   justifyContent: 'space-between',
   [theme.breakpoints.down('md')]: {
-    display: 'none !important'
+    display: 'none !important',
   },
   ...(open && {
     ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme)
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
   ...(!open && {
     ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme)
-  })
-}))
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
 
 export default function ResponsiveDrawer() {
-  const client = useApolloClient()
+  const client = useApolloClient();
   const state = useReactiveVar(sidebarVar);
   const open: boolean | undefined = state.open;
   const handleDrawerToogle = (e: any) => {
     sidebarVar({ ...sidebarVar(), open: !state.open });
+    // sessionStorage.setItem('drawer', String(!state.open));
   };
-  sessionStorage.setItem('drawer', String(open));
-  let navigate = useNavigate()
+
+  let navigate = useNavigate();
   const topNav = [
     {
       text: 'Dashboard',
       icon: DashIcon,
-      onClick: () => navigate(DASHBOARD)
+      onClick: () => navigate(DASHBOARD),
     },
     {
       text: 'Reports',
       icon: ReportIcon,
-      onClick: () => navigate(REPORT)
+      onClick: () => navigate(REPORT),
     },
     {
       text: 'My Shop',
       icon: MyShopIcon,
-      onClick: () => navigate(MY_SHOP)
+      onClick: () => navigate(MY_SHOP),
     },
     {
       text: 'Products',
       icon: ReportedProductIcon,
-      onClick: () => navigate(PRODUCTS)
+      onClick: () => navigate(PRODUCTS),
     },
     {
       text: 'Customers',
       icon: CustomerIcon,
-      onClick: () => navigate(CUSTOMERS)
-    }
-  ]
+      onClick: () => navigate(CUSTOMERS),
+    },
+  ];
   const bottomNav = [
     {
       text: 'Deploy',
       icon: DeployIcon,
-      onClick: () => navigate('/dashboard/deploy')
+      onClick: () => navigate('/dashboard/deploy'),
     },
     {
       text: 'Integration',
       icon: IntegrationIcon,
-      onClick: () => navigate('/dashboard/integration')
+      onClick: () => navigate('/dashboard/integration'),
     },
     {
       text: 'Profile',
       icon: EyeIcon,
-      onClick: () => navigate('/dashboard/profile')
-    }
-  ]
+      onClick: () => navigate('/dashboard/profile'),
+    },
+  ];
 
   return (
     <Drawer variant="permanent" open={open}>
       <List
         sx={{
-          padding: '18px 8px'
-        }}>
-        <Avatar alt="Logo" variant="square" src={logo} sx={{ height: '16.75px', width: '51px', marginBottom: '39px' }} />
+          padding: '18px 8px',
+        }}
+      >
+        <Avatar
+          alt="Logo"
+          variant="square"
+          src={logo}
+          sx={{ height: '16.75px', width: '51px', marginBottom: '39px' }}
+        />
         {topNav.map((item, index) => {
-          const { text, icon, onClick } = item
-          return <MenuItems key={index} text={text} icon={icon} open={open} onClick={onClick} />
+          const { text, icon, onClick } = item;
+          return (
+            <MenuItems
+              key={index}
+              text={text}
+              icon={icon}
+              open={open}
+              onClick={onClick}
+            />
+          );
         })}
       </List>
       <BottomNav>
         {bottomNav.map((item, index) => {
-          const { text, icon, onClick } = item
-          return <MenuItems key={index} text={text} icon={icon} open={open} onClick={onClick} />
+          const { text, icon, onClick } = item;
+          return (
+            <MenuItems
+              key={index}
+              text={text}
+              icon={icon}
+              open={open}
+              onClick={onClick}
+            />
+          );
         })}
-        <IconButton onClick={handleDrawerToogle}>{open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
+        <IconButton onClick={handleDrawerToogle}>
+          {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
       </BottomNav>
     </Drawer>
-  )
+  );
 }
 
 const BottomNav = styled('div')(({ theme }) => ({
@@ -169,5 +200,5 @@ const BottomNav = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  flexDirection: 'column'
-}))
+  flexDirection: 'column',
+}));

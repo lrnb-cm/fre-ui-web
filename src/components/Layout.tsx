@@ -3,10 +3,13 @@ import { Outlet } from 'react-router-dom';
 import { styled, Theme } from '@mui/material/styles';
 import Header from './headerContainer/Header';
 import Sidebar from './sidebarContainer/Sidebar';
+import { useReactiveVar } from '@apollo/client';
+import { sidebarVar } from './sidebarContainer/state/sidebarState';
+
 const Layout: FC = (): ReactElement => {
-  const open: boolean = (sessionStorage.getItem('drawer') === 'true');
+  const state = useReactiveVar(sidebarVar);
   const props = {
-    open: open,
+    open: state.open,
   };
   return (
     <LayoutWrapper>
