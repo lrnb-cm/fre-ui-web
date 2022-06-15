@@ -6,6 +6,8 @@ import { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import { ChartSectionProps } from '../types';
 import TotalSection from './TotalSection';
 import { useWindowWidth } from '@react-hook/window-size';
+import { useReactiveVar } from '@apollo/client';
+import { sidebarVar } from '../../sidebarContainer/state/sidebarState';
 
 const ChartSection: FC<ChartSectionProps> = ({
   barData,
@@ -13,7 +15,8 @@ const ChartSection: FC<ChartSectionProps> = ({
   title,
 }): ReactElement => {
   const windowWidth = useWindowWidth();
-  const open: boolean = (sessionStorage.getItem('drawer') === 'true');
+  const open: boolean = useReactiveVar(sidebarVar).open;
+
   const chartRef = useRef(null);
   const current: any = chartRef.current;
   const [chartHeight, setChartHeight] = useState(250);
@@ -22,7 +25,9 @@ const ChartSection: FC<ChartSectionProps> = ({
   useEffect(() => {
     const newChartWidth = current?.offsetWidth || 0;
     // console.log('newChartWidth', newChartWidth);
-    const contentWidth = !open ? windowWidth : windowWidth - 50;
+    const contentWidth = 322;
+    // console.log('open', open);
+    // console.log('contentWidth', contentWidth);
     const newChartHeight = Math.floor(
       newChartWidth / (contentWidth > 768 ? 3 : windowWidth > 568 ? 2.5 : 1.4)
     );
@@ -30,7 +35,7 @@ const ChartSection: FC<ChartSectionProps> = ({
 
     setChartHeight(newChartHeight);
     setChartWidth(newChartWidth);
-  }, [windowWidth, current]);
+  }, [windowWidth, current, open]);
 
   return (
     <ChartSectionWrapper item xs={12} sm={6} md={6} lg={4} ref={chartRef}>
@@ -39,8 +44,8 @@ const ChartSection: FC<ChartSectionProps> = ({
         <div>Week</div>
       </ChartStats>
       <BarGraph
-        // width={322}
-        width={chartWidth}
+        width={322}
+        // width={chartWidth}
         height={chartHeight}
         data={barData}
       />
