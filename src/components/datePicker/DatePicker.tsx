@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 import { DatePicker } from 'antd';
 import { styled } from '@mui/material/styles';
 import { MinusOutlined } from '@ant-design/icons';
@@ -9,6 +9,8 @@ import { DateProps } from './types';
 const { RangePicker } = DatePicker;
 
 const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
+  const datePickerRef = useRef(null);
+
   const [open, setOpen] = useState(false);
   const [dateValue, setDateValue] = useState<any>([
     moment().startOf('week'),
@@ -16,6 +18,26 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
   ]);
 
   const [activeSelect, setActiveSelect] = useState('Custom');
+
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function checkClickOutsides(event: { target: any }) {
+      const current: any = datePickerRef.current;
+      if (current && !current?.contains(event.target)) {
+        setOpen(false);
+        console.log('event.target', event.target);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', checkClickOutsides);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', checkClickOutsides);
+    };
+  }, []);
   const onDateChange = (dates: any, dateStrings: [string, string]) => {
     // console.log('onDateChange', dates, dateStrings);
     setDateValue(dates);
@@ -29,8 +51,6 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
   //   ) => {
   //     console.log('onCalendarChange', dates, dateStrings, info);
   //   };
-
-  console.log('activeSelect', activeSelect);
 
   const handleRangeApply = () => {
     handleRangeValues(dateValue[0], dateValue[1]);
@@ -113,7 +133,7 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
       | undefined
   ) => {
     return (
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' }} ref={datePickerRef}>
         <div>{originalPanel}</div>
         <ExtraPanel>
           <SelectionTile
@@ -223,6 +243,7 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
       </FooterWrapper>
     );
   };
+
   return (
     <DateWrapper>
       <RangePicker
