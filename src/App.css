@@ -62,3 +62,19 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3758cc;
 }
+.calendarPop .ant-picker-cell .ant-picker-cell-inner {
+  line-height: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+}
+.calendarPop
+  .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+.calendarPop
+  .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before,
+.calendarPop .ant-picker-cell-in-view.ant-picker-cell-in-range::before,
+.calendarPop .ant-picker-cell-range-hover {
+  height: 30px !important;
+}
+.calendarPop .ant-picker-panels {
+  margin-top: 10px;
+}
