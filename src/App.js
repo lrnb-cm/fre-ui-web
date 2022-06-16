@@ -1,5 +1,12 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  from,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { CssBaseline } from "@mui/material";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,11 +28,41 @@ const firebaseConfig = {
   authDomain: "freeing-returns.firebaseapp.com",
 };
 
+const httpLink = new HttpLink({
+  //Todo: replace with environment variable
+  uri: "http://localhost:5009/graphql",
+});
+
+const errorLink = onError(
+  ({ graphQLErrors, networkError, forward, operation }) => {
+    if (graphQLErrors) {
+      console.log(graphQLErrors, "graphQLErrors in errorLink");
+    }
+    if (networkError) {
+      console.log(networkError, "networkError in errorLink");
+    }
+    forward(operation);
+  }
+);
+
+const authLink = setContext((_, { headers, ...context }) => {
+  const idToken = context.idToken || localStorage.getItem("idToken");
+  console.log(idToken, "idToken in authLink");
+  return {
+    headers: {
+      ...headers,
+      authorization: `Bearer ${idToken}`,
+    },
+    ...context,
+  };
+});
+
 export default function App() {
   const [userContext, setUserContext] = useState();
 
   // Setup Apollo Client
   const apolloClient = new ApolloClient({
+    link: from([authLink, errorLink, httpLink]),
     uri,
     cache: new InMemoryCache(),
   });
@@ -56,13 +93,28 @@ export default function App() {
   // Connect to Firebase
   const firebase = initializeApp(firebaseConfig);
 
+  const [idToken, setIdToken] = useState(localStorage.getItem("idToken"));
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  useEffect(() => {
+    const listenForLocalStorageChanges = window.addEventListener(
+      "storage",
+      () => {
+        setIdToken(localStorage.getItem("idToken"));
+        setEmail(localStorage.getItem("email"));
+      },
+      false
+    );
+
+    return () =>
+      window.removeEventListener("storage", listenForLocalStorageChanges);
+  }, []);
+
   // When userContext changes, load user data if it does not exist
   useEffect(() => {
-    const idToken = localStorage.getItem("idToken");
-    const email = localStorage.getItem("email");
+    //Fetch user data only if email and idToken exist in localStorage
+    //and if userContex has not been populated yet
     if (!idToken || !email || userContext) return;
 
-    console.log("ran userContext changed in App.js");
     apolloClient
       .query({
         query: GET_USER_DATA,
@@ -83,14 +135,6 @@ export default function App() {
   const permissions = useMemo(() => {
     if (!userContext) return {};
 
-    const idToken = localStorage.getItem("idToken");
-    if (idToken) {
-      //Add the GCP Identity Platform / Firebase idToken on Apollo context
-      setContext(() => ({
-        headers: { idToken },
-      }));
-    }
-
     // Todo: Add the ability to parse groups and add them to the permissions dictionary
     // Move this to a utility function and reduce groups with it also
     return userContext.roles.length
@@ -108,7 +152,7 @@ export default function App() {
           };
         }, {})
       : {};
-  }, [userContext]);
+  }, [userContext, idToken, email]);
 
   return (
     <StrictMode>

@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
 import { Button, Grid, IconButton, InputAdornment } from "@mui/material";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
@@ -36,10 +35,10 @@ export default function LoginComp() {
         localStorage.setItem("idToken", idToken);
         localStorage.setItem("email", res.user.email || "");
 
-        // Add the GCP Identity Platform / Firebase idToken on each ApolloClient request's context
-        setContext(() => ({
-          headers: { idToken },
-        }));
+        console.log(
+          idToken,
+          "idToken in signInWithEmailAndPassword.then - fetching data now.."
+        );
 
         // Todo: add error handling if user does not exist in our database?
         // Get basic user data and permissions and set them to the user context
@@ -49,7 +48,11 @@ export default function LoginComp() {
             filters: { email: res.user.email },
           },
         });
-        setUserContext({ ...userData.data.getUser, idToken });
+        setUserContext({
+          ...userData.data.getUser,
+          idToken,
+          userCredential: res,
+        });
 
         //Todo: where should the user be redirected to after logging in?
         navigate("/");
@@ -73,6 +76,7 @@ export default function LoginComp() {
           label="Email"
           id="email"
           type="email"
+          autoComplete="username"
           value={loginEmail}
           onChange={(e) => setLoginEmail(e.target.value)}
           inputProps={{ autoComplete: "username" }}
@@ -83,9 +87,9 @@ export default function LoginComp() {
           label="Password"
           id="password"
           type={showPassword ? "text" : "password"}
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          inputProps={{ autoComplete: "current-password" }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
