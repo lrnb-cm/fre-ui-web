@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { DatePicker } from 'antd';
 import { styled } from '@mui/material/styles';
 import { MinusOutlined } from '@ant-design/icons';
 import moment, { Moment } from 'moment';
 import 'antd/dist/antd.css';
+import { DateProps } from './types';
 
 const { RangePicker } = DatePicker;
 
-export default function CustomDatePicker() {
+const CustomDatePicker: FC<DateProps> = ({ handleRangeValues }) => {
   const [open, setOpen] = useState(false);
   const [dateValue, setDateValue] = useState<any>([
     moment().startOf('week'),
@@ -15,7 +16,7 @@ export default function CustomDatePicker() {
   ]);
   const onDateChange = (dates: any, dateStrings: [string, string]) => {
     console.log('onDateChange', dates, dateStrings);
-    // setOpen(false);
+    setDateValue(dates);
   };
 
   const onCalendarChange = (
@@ -28,6 +29,10 @@ export default function CustomDatePicker() {
 
   console.log('dateValue', dateValue);
 
+  const handleRangeApply = () => {
+    handleRangeValues(dateValue[0], dateValue[1]);
+    setOpen(false);
+  };
   const customRangeHandler = (range: string) => {
     switch (range) {
       case 'Today':
@@ -109,8 +114,8 @@ export default function CustomDatePicker() {
           </SelectionTile>
           <SelectionTile>Custom Range</SelectionTile>
           <ButtonWrapper>
-            <ApplyBtn>Apply</ApplyBtn>
-            <CancelBtn>Cancel</CancelBtn>
+            <ApplyBtn onClick={handleRangeApply}>Apply</ApplyBtn>
+            <CancelBtn onClick={() => setOpen(false)}>Cancel</CancelBtn>
           </ButtonWrapper>
         </ExtraPanel>
       </div>
@@ -119,8 +124,12 @@ export default function CustomDatePicker() {
   const footerRender = () => {
     return (
       <FooterWrapper>
-        <FooterTile>date 1</FooterTile>
-        <FooterTile>date 2</FooterTile>
+        <FooterTile>
+          {moment(dateValue[0]).format('ddd, MMM DD YYYY')}
+        </FooterTile>
+        <FooterTile>
+          {moment(dateValue[1]).format('ddd, MMM DD YYYY')}
+        </FooterTile>
       </FooterWrapper>
     );
   };
@@ -146,7 +155,7 @@ export default function CustomDatePicker() {
       />
     </DateWrapper>
   );
-}
+};
 
 const DateWrapper = styled('div')(({ theme }) => ({
   '& .ant-picker-range-separator': {
@@ -208,3 +217,5 @@ const FooterTile = styled('div')(({ theme }) => ({
   width: '50%',
   textAlign: 'center',
 }));
+
+export default CustomDatePicker;

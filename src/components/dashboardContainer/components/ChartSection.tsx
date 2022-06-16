@@ -13,6 +13,7 @@ const ChartSection: FC<ChartSectionProps> = ({
   barData,
   total,
   title,
+  handleRangeValues,
 }): ReactElement => {
   const windowWidth = useWindowWidth();
   const open: boolean = useReactiveVar(sidebarVar).open;
@@ -42,7 +43,7 @@ const ChartSection: FC<ChartSectionProps> = ({
       <ChartStats>
         <TotalSection title={title} total={total} />
         {/* <div>Week</div> */}
-        <DatePicker />
+        <DatePicker handleRangeValues={handleRangeValues} />
       </ChartStats>
       <BarGraph
         width={322}
