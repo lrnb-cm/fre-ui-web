@@ -8,26 +8,29 @@ import { DateProps } from './types';
 
 const { RangePicker } = DatePicker;
 
-const CustomDatePicker: FC<DateProps> = ({ handleRangeValues }) => {
+const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
   const [open, setOpen] = useState(false);
   const [dateValue, setDateValue] = useState<any>([
     moment().startOf('week'),
     moment().endOf('week'),
   ]);
+
+  const [activeSelect, setActiveSelect] = useState('Custom');
   const onDateChange = (dates: any, dateStrings: [string, string]) => {
-    console.log('onDateChange', dates, dateStrings);
+    // console.log('onDateChange', dates, dateStrings);
     setDateValue(dates);
+    setActiveSelect('Custom');
   };
 
-  const onCalendarChange = (
-    dates: any,
-    dateStrings: [string, string],
-    info: any
-  ) => {
-    console.log('onCalendarChange', dates, dateStrings, info);
-  };
+  //   const onCalendarChange = (
+  //     dates: any,
+  //     dateStrings: [string, string],
+  //     info: any
+  //   ) => {
+  //     console.log('onCalendarChange', dates, dateStrings, info);
+  //   };
 
-  console.log('dateValue', dateValue);
+  console.log('activeSelect', activeSelect);
 
   const handleRangeApply = () => {
     handleRangeValues(dateValue[0], dateValue[1]);
@@ -36,48 +39,70 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues }) => {
   const customRangeHandler = (range: string) => {
     switch (range) {
       case 'Today':
-        return setDateValue([moment().startOf('day'), moment().endOf('day')]);
+        return (() => {
+          setActiveSelect('Today');
+          setDateValue([moment().startOf('day'), moment().endOf('day')]);
+        })();
 
       case 'Yesterday':
-        return setDateValue([
-          moment().subtract(1, 'days').startOf('day'),
-          moment().subtract(1, 'days').endOf('day'),
-        ]);
+        return (() => {
+          setActiveSelect('Yesterday');
+          setDateValue([
+            moment().subtract(1, 'days').startOf('day'),
+            moment().subtract(1, 'days').endOf('day'),
+          ]);
+        })();
 
       case 'Last7Days':
-        return setDateValue([
-          moment().subtract(6, 'days').startOf('day'),
-          moment().endOf('day'),
-        ]);
+        return (() => {
+          setActiveSelect('Last7Days');
+          setDateValue([
+            moment().subtract(6, 'days').startOf('day'),
+            moment().endOf('day'),
+          ]);
+        })();
 
       case 'LastWeek':
-        return setDateValue([
-          moment().subtract(1, 'weeks').startOf('week'),
-          moment().subtract(1, 'weeks').endOf('week'),
-        ]);
+        return (() => {
+          setActiveSelect('LastWeek');
+          setDateValue([
+            moment().subtract(1, 'weeks').startOf('week'),
+            moment().subtract(1, 'weeks').endOf('week'),
+          ]);
+        })();
 
       case 'Last2Week':
-        return setDateValue([
-          moment().subtract(2, 'weeks').startOf('week'),
-          moment().subtract(2, 'weeks').endOf('week'),
-        ]);
+        return (() => {
+          setActiveSelect('Last2Week');
+          setDateValue([
+            moment().subtract(2, 'weeks').startOf('week'),
+            moment().subtract(2, 'weeks').endOf('week'),
+          ]);
+        })();
 
       case 'ThisMonth':
-        return setDateValue([
-          moment().startOf('month'),
-          moment().endOf('month'),
-        ]);
+        return (() => {
+          setActiveSelect('ThisMonth');
+          setDateValue([moment().startOf('month'), moment().endOf('month')]);
+        })();
 
       case 'LastMonth':
-        return setDateValue([
-          moment().subtract(1, 'months').startOf('month'),
-          moment().subtract(1, 'months').endOf('month'),
-        ]);
+        return (() => {
+          setActiveSelect('LastMonth');
+          setDateValue([
+            moment().subtract(1, 'months').startOf('month'),
+            moment().subtract(1, 'months').endOf('month'),
+          ]);
+        })();
 
       default:
-        return 'week';
+        return (() => {
+          setActiveSelect('Custom');
+          setDateValue([moment().startOf('week'), moment().endOf('week')]);
+        })();
     }
   };
+
   const panelRender = (
     originalPanel:
       | boolean
@@ -91,28 +116,93 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues }) => {
       <div style={{ display: 'flex' }}>
         <div>{originalPanel}</div>
         <ExtraPanel>
-          <SelectionTile onClick={() => customRangeHandler('Today')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'Today'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('Today')}
+          >
             Today
           </SelectionTile>
-          <SelectionTile onClick={() => customRangeHandler('Yesterday')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'Yesterday'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('Yesterday')}
+          >
             Yesterday
           </SelectionTile>
-          <SelectionTile onClick={() => customRangeHandler('Last7Days')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'Last7Days'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('Last7Days')}
+          >
             Last 7 Days
           </SelectionTile>
-          <SelectionTile onClick={() => customRangeHandler('LastWeek')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'LastWeek'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('LastWeek')}
+          >
             Last Week
           </SelectionTile>
-          <SelectionTile onClick={() => customRangeHandler('Last2Week')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'Last2Week'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('Last2Week')}
+          >
             Last 2 Weeks
           </SelectionTile>
-          <SelectionTile onClick={() => customRangeHandler('ThisMonth')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'ThisMonth'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('ThisMonth')}
+          >
             This Month
           </SelectionTile>
-          <SelectionTile onClick={() => customRangeHandler('LastMonth')}>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'LastMonth'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+            onClick={() => customRangeHandler('LastMonth')}
+          >
             Last Month
           </SelectionTile>
-          <SelectionTile>Custom Range</SelectionTile>
+          <SelectionTile
+            style={{
+              border:
+                activeSelect === 'Custom'
+                  ? '2px solid #3758CC'
+                  : '1px solid #e4e9ef',
+            }}
+          >
+            Custom Range
+          </SelectionTile>
           <ButtonWrapper>
             <ApplyBtn onClick={handleRangeApply}>Apply</ApplyBtn>
             <CancelBtn onClick={() => setOpen(false)}>Cancel</CancelBtn>
@@ -141,12 +231,12 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues }) => {
         format={'MMM-DD'}
         open={open}
         panelRender={panelRender}
-        bordered={false}
+        bordered={bordered}
         placeholder={['Start', 'End']}
         separator={
           <MinusOutlined style={{ fontSize: '6px', color: '#6c757d' }} />
         }
-        onCalendarChange={onCalendarChange}
+        // onCalendarChange={onCalendarChange}
         onChange={onDateChange}
         onClick={() => setOpen(true)}
         dropdownClassName="calendarPop"
@@ -172,7 +262,7 @@ const ExtraPanel = styled('div')(({ theme }) => ({
 }));
 
 const SelectionTile = styled('div')(({ theme }) => ({
-  border: '1px solid #e4e9ef',
+  border: '2px solid #e4e9ef',
   margin: '5px 0px',
   padding: '5px',
   borderRadius: '4px',

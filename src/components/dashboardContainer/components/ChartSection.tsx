@@ -43,7 +43,7 @@ const ChartSection: FC<ChartSectionProps> = ({
       <ChartStats>
         <TotalSection title={title} total={total} />
         {/* <div>Week</div> */}
-        <DatePicker handleRangeValues={handleRangeValues} />
+        <DatePicker handleRangeValues={handleRangeValues} bordered={false} />
       </ChartStats>
       <BarGraph
         width={322}

@@ -32,13 +32,16 @@
     transform: rotate(360deg);
   }
 }
+/* <---------------chart-styles--------> */
 
 .recharts-wrapper .recharts-cartesian-grid-horizontal line:nth-last-child(2),
 .recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child {
   stroke-opacity: 0;
   display: none;
 }
+/* <---------------chart-styles--------> */
 
+/* <---------------scrollbar-styles--------> */
 /* width */
 ::-webkit-scrollbar {
   width: 3px;
@@ -62,6 +65,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3758cc;
 }
+
+/* <---------------scrollbar-styles--------> */
+
+/* <---------------calendar-styles--------> */
 .calendarPop .ant-picker-cell .ant-picker-cell-inner {
   line-height: 30px !important;
   height: 30px !important;
@@ -81,3 +88,5 @@
 .ant-picker-footer {
   background-color: #f7f7f7;
 }
+
+/* <---------------calendar-styles--------> */
