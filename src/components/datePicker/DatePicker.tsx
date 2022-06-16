@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import { DatePicker } from 'antd';
 import { styled } from '@mui/material/styles';
 import { MinusOutlined } from '@ant-design/icons';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import 'antd/dist/antd.css';
+
 const { RangePicker } = DatePicker;
 
 export default function CustomDatePicker() {
   const [open, setOpen] = useState(false);
+  const [dateValue, setDateValue] = useState<any>([
+    moment().startOf('week'),
+    moment().endOf('week'),
+  ]);
   const onDateChange = (dates: any, dateStrings: [string, string]) => {
     console.log('onDateChange', dates, dateStrings);
-    setOpen(false);
+    // setOpen(false);
   };
 
   const onCalendarChange = (
@@ -21,6 +26,53 @@ export default function CustomDatePicker() {
     console.log('onCalendarChange', dates, dateStrings, info);
   };
 
+  console.log('dateValue', dateValue);
+
+  const customRangeHandler = (range: string) => {
+    switch (range) {
+      case 'Today':
+        return setDateValue([moment().startOf('day'), moment().endOf('day')]);
+
+      case 'Yesterday':
+        return setDateValue([
+          moment().subtract(1, 'days').startOf('day'),
+          moment().subtract(1, 'days').endOf('day'),
+        ]);
+
+      case 'Last7Days':
+        return setDateValue([
+          moment().subtract(6, 'days').startOf('day'),
+          moment().endOf('day'),
+        ]);
+
+      case 'LastWeek':
+        return setDateValue([
+          moment().subtract(1, 'weeks').startOf('week'),
+          moment().subtract(1, 'weeks').endOf('week'),
+        ]);
+
+      case 'Last2Week':
+        return setDateValue([
+          moment().subtract(2, 'weeks').startOf('week'),
+          moment().subtract(2, 'weeks').endOf('week'),
+        ]);
+
+      case 'ThisMonth':
+        return setDateValue([
+          moment().startOf('month'),
+          moment().endOf('month'),
+        ]);
+
+      case 'LastMonth':
+        return setDateValue([
+          moment().subtract(1, 'months').startOf('month'),
+          moment().subtract(1, 'months').endOf('month'),
+        ]);
+
+      default:
+        return 'week';
+    }
+  };
   const panelRender = (
     originalPanel:
       | boolean
@@ -34,13 +86,27 @@ export default function CustomDatePicker() {
       <div style={{ display: 'flex' }}>
         <div>{originalPanel}</div>
         <ExtraPanel>
-          <SelectionTile>Today</SelectionTile>
-          <SelectionTile>Yesterday</SelectionTile>
-          <SelectionTile>Last 7 Days</SelectionTile>
-          <SelectionTile>Last Week</SelectionTile>
-          <SelectionTile>Last 2 Weeks</SelectionTile>
-          <SelectionTile>This Month</SelectionTile>
-          <SelectionTile>Last Month</SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('Today')}>
+            Today
+          </SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('Yesterday')}>
+            Yesterday
+          </SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('Last7Days')}>
+            Last 7 Days
+          </SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('LastWeek')}>
+            Last Week
+          </SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('Last2Week')}>
+            Last 2 Weeks
+          </SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('ThisMonth')}>
+            This Month
+          </SelectionTile>
+          <SelectionTile onClick={() => customRangeHandler('LastMonth')}>
+            Last Month
+          </SelectionTile>
           <SelectionTile>Custom Range</SelectionTile>
           <ButtonWrapper>
             <ApplyBtn>Apply</ApplyBtn>
@@ -50,11 +116,18 @@ export default function CustomDatePicker() {
       </div>
     );
   };
-
+  const footerRender = () => {
+    return (
+      <FooterWrapper>
+        <FooterTile>date 1</FooterTile>
+        <FooterTile>date 2</FooterTile>
+      </FooterWrapper>
+    );
+  };
   return (
     <DateWrapper>
       <RangePicker
-        renderExtraFooter={() => 'extra footer'}
+        renderExtraFooter={footerRender}
         size="small"
         format={'MMM-DD'}
         open={open}
@@ -66,8 +139,10 @@ export default function CustomDatePicker() {
         }
         onCalendarChange={onCalendarChange}
         onChange={onDateChange}
-        onFocus={() => setOpen(true)}
+        onClick={() => setOpen(true)}
         dropdownClassName="calendarPop"
+        allowClear={false}
+        value={dateValue}
       />
     </DateWrapper>
   );
@@ -122,4 +197,14 @@ const CancelBtn = styled('div')(({ theme }) => ({
   '&:hover': {
     border: '1px solid #c4cfdc',
   },
+}));
+
+const FooterWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  backgroundColor: '#F7F7F7',
+}));
+
+const FooterTile = styled('div')(({ theme }) => ({
+  width: '50%',
+  textAlign: 'center',
 }));

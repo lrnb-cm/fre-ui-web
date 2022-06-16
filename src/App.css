@@ -78,3 +78,6 @@
 .calendarPop .ant-picker-panels {
   margin-top: 10px;
 }
+.ant-picker-footer {
+  background-color: #f7f7f7;
+}
