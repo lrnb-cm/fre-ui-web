@@ -1,13 +1,31 @@
 body {
   margin: 0;
-  font-family: "NTR", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
+  box-sizing: 'border-box';
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+* {
+  box-sizing: 'border-box';
+}
+
+@font-face {
+  font-family: 'Intro Bold';
+  /* font-weight: 400; */
+  src: local('Intro'),
+    url(./asset/fonts/Intro-bold-regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Intro Book';
+  /* font-weight: 400; */
+  src: local('Intro'),
+    url(./asset/fonts/Intro-book-regular.otf) format('opentype');
 }

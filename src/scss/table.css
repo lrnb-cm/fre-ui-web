@@ -1,0 +1,39 @@
+/* table border radius */
+
+.mui-amr0e1-MuiPaper-root {
+    border-radius: 16px;
+}
+
+
+/* table header */
+
+.MuiTableCell-head {
+    color: #969696;
+    font-family: 'Intro Book';
+    font-style: normal;
+}
+
+
+/* table pagination */
+
+.MuiTablePagination-displayedRows {
+    margin-top: 15px;
+}
+
+
+/* table pagination */
+
+.MuiTablePagination-selectLabel {
+    margin-top: 15px;
+}
+
+.datePickerWrapper {
+    display: flex;
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+}
+
+.selectButtonWrapper {
+    border: none;
+    box-shadow: 'none';
+}

@@ -8,20 +8,42 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { CssBaseline } from "@mui/material";
-import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  StyledEngineProvider,
+  ThemeProvider,
+} from "@mui/material/styles";
+import { deepmerge } from "@mui/utils";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { initializeApp } from "firebase/app";
 import { StrictMode, useEffect, useMemo, useState } from "react";
-import { Link, useRoutes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Containers, LoginContainer } from "./components";
 import AuthGuard from "./components/AuthGuard";
+import Customer from "./components/customerContainer/Customers";
+import DashboardContainer from "./components/dashboardContainer/DashboardContainer";
+import Layout from "./components/Layout";
 import LoginCallback from "./components/loginContainer/Callback";
+import MyShopContainer from "./components/myshopContainer/MyShopContainer";
+import MyShopDetailsContainer from "./components/myShopDetailsContainer/MyShopDetailsContainer";
+import ProductsContainer from "./components/productsContainer/ProductsContainer";
+import ReportDetailsContainer from "./components/reportDetailsContainer/ReportDetails";
 import { uri } from "./config";
+import {
+  CUSTOMERS,
+  DASHBOARD,
+  MY_SHOP,
+  PRODUCTS,
+  REPORT_DETAILS,
+  SHOP_DETAILS,
+  TRANSACTIONS,
+  VALIDATED,
+} from "./constants/routes";
 import { FirebaseContext } from "./contexts/FirebaseContext";
 import { UserContext } from "./contexts/UserContext";
 import GET_USER_DATA from "./queries/GET_USER_DATA";
-import { theme } from "./theme";
+import { customTheming, theme } from "./theme";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI",
@@ -29,8 +51,7 @@ const firebaseConfig = {
 };
 
 const httpLink = new HttpLink({
-  //Todo: replace with environment variable
-  uri: "http://localhost:5009/graphql",
+  uri,
 });
 
 const errorLink = onError(
@@ -58,6 +79,15 @@ const authLink = setContext((_, { headers, ...context }) => {
 });
 
 export default function App() {
+  // @ts-ignore
+  if (module.hot) {
+    // @ts-ignore
+    module.hot.accept("./components", (e) => {
+      const PageComponent = require("./components");
+      render(main(PageComponent), appRootElement);
+    });
+  }
+  const firebase = initializeApp(firebaseConfig);
   const [userContext, setUserContext] = useState();
 
   // Setup Apollo Client
@@ -67,32 +97,7 @@ export default function App() {
     cache: new InMemoryCache(),
   });
 
-  // Define routes
-  const routes = useRoutes([
-    {
-      path: "/",
-      element: (
-        <>
-          Home <br /> <Link to="/secure-route">Secret sauce</Link>
-        </>
-      ),
-    },
-    {
-      path: "/secure-route",
-      element: (
-        <AuthGuard>
-          <>Lillii RNB's Secret Sauce</>
-        </AuthGuard>
-      ),
-    },
-    { path: "/transactions", element: <Containers /> },
-    { path: "/login", element: <LoginContainer /> },
-    { path: "/validated", element: <LoginCallback /> },
-  ]);
-
-  // Connect to Firebase
-  const firebase = initializeApp(firebaseConfig);
-
+  //Get Firebase idToken and email from localStorage when set
   const [idToken, setIdToken] = useState(localStorage.getItem("idToken"));
   const [email, setEmail] = useState(localStorage.getItem("email"));
   useEffect(() => {
@@ -136,7 +141,7 @@ export default function App() {
     if (!userContext) return {};
 
     // Todo: Add the ability to parse groups and add them to the permissions dictionary
-    // Move this to a utility function and reduce groups with it also
+    // Todo: Move this to a utility function and reduce groups with it also
     return userContext.roles.length
       ? userContext.roles.reduce((parsedPermissions, currentRole) => {
           const currentPermissions = currentRole.permissions.reduce(
@@ -154,21 +159,63 @@ export default function App() {
       : {};
   }, [userContext, idToken, email]);
 
+  const mergeTheme = createTheme(deepmerge(theme, customTheming));
   return (
     <StrictMode>
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <ApolloProvider client={apolloClient}>
-            <FirebaseContext.Provider value={firebase}>
-              <UserContext.Provider
-                value={{ setUserContext, userContext, permissions }}
-              >
+        <ApolloProvider client={apolloClient}>
+          <FirebaseContext.Provider value={firebase}>
+            <UserContext.Provider
+              value={{ setUserContext, userContext, permissions }}
+            >
+              <ThemeProvider theme={mergeTheme}>
                 <CssBaseline />
-                {routes}
-              </UserContext.Provider>
-            </FirebaseContext.Provider>
-          </ApolloProvider>
-        </ThemeProvider>
+                <Routes>
+                  {/* Todo: these two routes are for demo purposes of the authentication and authorization
+                      Remove them, and wrap the AuthGuard component on routes which the user should be logged in
+                      And/Or add other permissions as neccessary
+                  */}
+                  <Route
+                    path="/not-top-secret"
+                    element={
+                      <>
+                        Home <br /> <Link to="/secure-route">Secret sauce</Link>
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/secure-route"
+                    element={
+                      <AuthGuard>
+                        <>Lillii RNB's Secret Sauce</>
+                      </AuthGuard>
+                    }
+                  />
+                  <Route index element={<LoginContainer />} />
+                  <Route path={VALIDATED} element={<LoginCallback />} />
+                  <Route path={DASHBOARD} element={<Layout />} />
+                  <Route index element={<DashboardContainer />} />
+                  <Route path={CUSTOMERS} element={<Customer />} />
+                  <Route path={PRODUCTS} element={<ProductsContainer />} />
+                  <Route
+                    path={REPORT_DETAILS}
+                    element={<ReportDetailsContainer />}
+                  />
+                  <Route path={TRANSACTIONS} element={<Containers />} />
+                  <Route path={MY_SHOP} element={<MyShopContainer />} />
+                  <Route
+                    path={SHOP_DETAILS}
+                    element={<MyShopDetailsContainer />}
+                  />
+                  {/* Using path="*"" means "match anything", so this route
+                  acts like a catch-all for URLs that we don't have explicit
+                  routes for. */}
+                  <Route path="*" element={<div>NO CONTENT YET</div>} />
+                </Routes>
+              </ThemeProvider>
+            </UserContext.Provider>
+          </FirebaseContext.Provider>
+        </ApolloProvider>
       </StyledEngineProvider>
     </StrictMode>
   );

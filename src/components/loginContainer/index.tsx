@@ -1,4 +1,4 @@
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useMutation, useReactiveVar } from "@apollo/client";
 import { Button, Grid, IconButton, InputAdornment } from "@mui/material";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
@@ -8,17 +8,57 @@ import { useUserContext } from "../../contexts/UserContext";
 import Lock from "../../icons/Lock";
 import SolidLock from "../../icons/SolidLock";
 import GET_USER_DATA from "../../queries/GET_USER_DATA";
+import Account from "../auth/Account";
 import TextInput from "../form/TextInput";
-import Account from "../layouts/Account";
+import { Google } from "./config";
+import { OIDC_LOGIN } from "./queries/mutations";
+import { localState } from "./state/loginState";
 
 export default function LoginComp() {
+  const [login, { data, loading, error }] = useMutation(OIDC_LOGIN);
+  const state = useReactiveVar(localState);
   const firebase = useFirebaseContext();
   const apolloClient = useApolloClient();
   const navigate = useNavigate();
   const { setUserContext } = useUserContext();
-  const [loginEmail, setLoginEmail] = useState("");
+  const [loginEmail, setLoginEmail] = useState(
+    localStorage.getItem("email") || ""
+  );
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  // useEffect(() => {
+  //   if (email === "" || (email && !email.match(mailformat)) || email === null) {
+  //     const newEmail = String(prompt("Enter Email Address:"));
+  //     if (newEmail.match(mailformat)) {
+  //       setEmail(newEmail);
+  //       localStorage.setItem("email", newEmail);
+  //     }
+  //   }
+  // }, [email]);
+
+  const payload = {
+    redirect_uri: Google.REDIRECT_URI,
+    scope: Google.SCOPE,
+    login_hint: email,
+    prompt: "consent",
+    state: state.provider || "google",
+  };
+
+  const handleLogin = () => {
+    login({
+      variables: {
+        provider: payload.state,
+        payload: JSON.stringify(payload),
+      },
+    }).then((d: any) => window.location.assign(d.data.loginProvider.url));
+  };
+
+  if (loading) return <p> loading</p>;
+  if (error) return <p> error</p>;
 
   const handleFirebaseLogin = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -56,7 +96,7 @@ export default function LoginComp() {
         });
 
         //Todo: where should the user be redirected to after logging in?
-        navigate("/");
+        navigate("/secure-route");
       })
       .catch((error) => {
         //Todo: handle login error
@@ -119,6 +159,11 @@ export default function LoginComp() {
             Login with Email
           </Button>
         </Grid>
+        {/* <Grid item>
+        <Button variant="contained" color="primary" onClick={handleLogin}>
+          Login with Google
+        </Button>
+      </Grid> */}
       </Account>
     </form>
   );
