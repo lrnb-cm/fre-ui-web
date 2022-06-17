@@ -88,21 +88,29 @@
 .ant-picker-footer {
   background-color: #f7f7f7;
 }
-@media screen and (max-width: 768px) {
-  .ant-picker-panels {
+@media screen and (max-width: 678px) {
+  .calendarPop .ant-picker-panels {
     display: flex !important;
     flex-direction: column !important;
   }
-  .ant-picker-panel-container > div {
+  .calendarPop .ant-picker-panel-container > div {
     display: flex !important;
     flex-direction: column-reverse !important;
   }
-  .ant-picker-panel-container .panel-calendar {
+  .calendarPop .ant-picker-panel-container .panel-calendar {
     width: auto;
   }
-  .ant-picker-panel-container .panel-calendar-btn {
+  .calendarPop .ant-picker-panel-container .panel-calendar-btn {
     width: 45%;
     text-align: center;
+  }
+}
+@media screen and (max-width: 770px) {
+  .calendarPop {
+    left: 30px !important;
+  }
+  .calendarPop .ant-picker-range-arrow {
+    display: none;
   }
 }
 
