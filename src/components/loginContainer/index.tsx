@@ -20,7 +20,8 @@ export default function LoginComp() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleFirebaseLogin = () => {
+  const handleFirebaseLogin = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (!firebase)
       throw new Error(
         "useFirebaseContext must be within FirebaseContext.Provider"
@@ -64,63 +65,61 @@ export default function LoginComp() {
   };
 
   return (
-    <Account
-      altLink="/register"
-      altText="Don't have an account?"
-      altLinkText="Register"
-      headingText="Welcome Back"
-      bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
-    >
-      <Grid item>
-        <TextInput
-          label="Email"
-          id="email"
-          type="email"
-          autoComplete="username"
-          value={loginEmail}
-          onChange={(e) => setLoginEmail(e.target.value)}
-          inputProps={{ autoComplete: "username" }}
-        />
-      </Grid>
-      <Grid item>
-        <TextInput
-          label="Password"
-          id="password"
-          type={showPassword ? "text" : "password"}
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={(e) => {
-                  //preventDefault so the input's active styles remain
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
-                onMouseDown={(e) => {
-                  //preventDefault so the input's active styles remain
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
-                edge="end"
-              >
-                {showPassword ? <Lock /> : <SolidLock />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </Grid>
-      <Grid item>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleFirebaseLogin}
-        >
-          Login with Email
-        </Button>
-      </Grid>
-    </Account>
+    <form onSubmit={handleFirebaseLogin}>
+      <Account
+        altLink="/register"
+        altText="Don't have an account?"
+        altLinkText="Register"
+        headingText="Welcome Back"
+        bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
+      >
+        <Grid item>
+          <TextInput
+            label="Email"
+            id="email"
+            type="email"
+            autoComplete="username"
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
+            inputProps={{ autoComplete: "username" }}
+          />
+        </Grid>
+        <Grid item>
+          <TextInput
+            label="Password"
+            id="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={(e) => {
+                    //preventDefault so the input's active styles remain
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                  onMouseDown={(e) => {
+                    //preventDefault so the input's active styles remain
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                  edge="end"
+                >
+                  {showPassword ? <Lock /> : <SolidLock />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </Grid>
+        <Grid item>
+          <Button type="submit" variant="contained" color="primary">
+            Login with Email
+          </Button>
+        </Grid>
+      </Account>
+    </form>
   );
 }
