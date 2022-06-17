@@ -1,5 +1,3 @@
-import { Moment } from 'moment';
-
 export type StatsPropsType = {
   count: number;
   title: string;
@@ -28,7 +26,6 @@ export type ChartSectionProps = {
   }[];
   total: number;
   title: string;
-  handleRangeValues: (startDate: Moment, endDate: Moment) => void;
 };
 
 export type TotalSectionType = {

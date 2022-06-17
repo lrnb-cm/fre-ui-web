@@ -8,12 +8,10 @@ import TotalSection from './TotalSection';
 import { useWindowWidth } from '@react-hook/window-size';
 import { useReactiveVar } from '@apollo/client';
 import { sidebarVar } from '../../sidebarContainer/state/sidebarState';
-import DatePicker from '../../datePicker/DatePicker';
 const ChartSection: FC<ChartSectionProps> = ({
   barData,
   total,
   title,
-  handleRangeValues,
 }): ReactElement => {
   const windowWidth = useWindowWidth();
   const open: boolean = useReactiveVar(sidebarVar).open;
@@ -42,8 +40,7 @@ const ChartSection: FC<ChartSectionProps> = ({
     <ChartSectionWrapper item xs={12} sm={6} md={6} lg={4} ref={chartRef}>
       <ChartStats>
         <TotalSection title={title} total={total} />
-        {/* <div>Week</div> */}
-        <DatePicker handleRangeValues={handleRangeValues} bordered={false} />
+        <div>Week</div>
       </ChartStats>
       <BarGraph
         width={322}

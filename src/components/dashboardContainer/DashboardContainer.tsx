@@ -10,26 +10,6 @@ import barData from './components/barData';
 import ChartSection from './components/ChartSection';
 
 export default function dashboard() {
-  const reportSummaryHandler = (
-    startDate: moment.Moment,
-    endDate: moment.Moment
-  ) => {
-    console.log('reportSummaryHandler', startDate, endDate);
-  };
-
-  const reportCustomerHandler = (
-    startDate: moment.Moment,
-    endDate: moment.Moment
-  ) => {
-    console.log('reportCustomerHandler', startDate, endDate);
-  };
-
-  const totalReturnsHandler = (
-    startDate: moment.Moment,
-    endDate: moment.Moment
-  ) => {
-    console.log('totalReturnsHandler', startDate, endDate);
-  };
   return (
     <DashboardLayout>
       <DashboardTitle>Dashboard</DashboardTitle>
@@ -41,24 +21,13 @@ export default function dashboard() {
         <Stats title="in progress" count={350} />
       </DashboardStatTile>
       <DashboardGraphReport container>
-        <ChartSection
-          barData={barData}
-          total={1824}
-          title="Report Summary"
-          handleRangeValues={reportSummaryHandler}
-        />
+        <ChartSection barData={barData} total={1824} title="Report Summary" />
         <ChartSection
           barData={barData}
           total={824}
           title="Reporting Customers"
-          handleRangeValues={reportCustomerHandler}
         />
-        <ChartSection
-          barData={barData}
-          total={84}
-          title="Total Returns"
-          handleRangeValues={totalReturnsHandler}
-        />
+        <ChartSection barData={barData} total={84} title="Total Returns" />
       </DashboardGraphReport>
 
       <DashboardProductReport>

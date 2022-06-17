@@ -3,8 +3,9 @@ import { DatePicker } from 'antd';
 import { styled } from '@mui/material/styles';
 import { MinusOutlined } from '@ant-design/icons';
 import moment, { Moment } from 'moment';
-import 'antd/dist/antd.css';
+import calenderIcon from '../../asset/img/Calendar.svg';
 import { DateProps } from './types';
+import './antd.css';
 
 const { RangePicker } = DatePicker;
 
@@ -249,13 +250,13 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
       <RangePicker
         renderExtraFooter={footerRender}
         size="small"
-        format={'MMM-DD'}
+        format={'MMM DD, YYYY'}
         open={open}
         panelRender={panelRender}
         bordered={bordered}
         placeholder={['Start', 'End']}
         separator={
-          <MinusOutlined style={{ fontSize: '6px', color: '#6c757d' }} />
+          <MinusOutlined style={{ fontSize: '12px', color: '#3C3C3C' }} />
         }
         // onCalendarChange={onCalendarChange}
         onChange={onDateChange}
@@ -263,6 +264,13 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
         dropdownClassName="calendarPop"
         allowClear={false}
         value={dateValue}
+        suffixIcon={
+          <img
+            src={calenderIcon}
+            alt="calendar-icon"
+            style={{ cursor: 'pointer', marginLeft: '10px' }}
+          />
+        }
       />
     </DateWrapper>
   );
@@ -271,10 +279,25 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
 const DateWrapper = styled('div')(({ theme }) => ({
   '& .ant-picker-range-separator': {
     padding: '0 5px !important',
+    paddingBottom: '2px !important',
+    color: '#3C3C3C !important',
+  },
+  '& .ant-picker-suffix': {
+    cursor: 'pointer',
+    pointerEvents: 'visible',
   },
   '& .ant-picker': {
-    width: '150px !important',
+    width: '240px !important',
   },
+  '& .ant-picker-input > input': {
+    fontFamily: theme.typography.fontFamily,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '14px',
+    lineHeight: '150%',
+    color: '#3C3C3C',
+  },
+  marginRight: theme.custom.pxToRem(51),
 }));
 
 const ExtraPanel = styled('div')(({ theme }) => ({
