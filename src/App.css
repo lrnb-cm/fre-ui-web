@@ -88,5 +88,22 @@
 .ant-picker-footer {
   background-color: #f7f7f7;
 }
+@media screen and (max-width: 768px) {
+  .ant-picker-panels {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .ant-picker-panel-container > div {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+  }
+  .ant-picker-panel-container .panel-calendar {
+    width: auto;
+  }
+  .ant-picker-panel-container .panel-calendar-btn {
+    width: 45%;
+    text-align: center;
+  }
+}
 
 /* <---------------calendar-styles--------> */

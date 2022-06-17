@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import EmojiIcon from '../../asset/img/Icon.svg';
 import CustomDatePicker from '../datePicker/DatePicker';
 import Divider from '@mui/material/Divider';
+import { withTheme } from '@mui/styles';
 
 export default function GlobalSearch() {
   const handleRangeValues = (
@@ -41,12 +42,7 @@ export default function GlobalSearch() {
         placeholder="Search"
         inputProps={{ 'aria-label': 'search google maps' }}
       />
-      <Divider
-        orientation="vertical"
-        variant="middle"
-        flexItem
-        style={{ marginRight: '21px' }}
-      />
+      <VerticalDivider orientation="vertical" variant="middle" flexItem />
 
       <CustomDatePicker
         bordered={false}
@@ -69,5 +65,12 @@ const MenuICon = styled('img')(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.down('md')]: {
     display: 'unset',
+  },
+}));
+
+const VerticalDivider = styled(withTheme(Divider))(({ theme }) => ({
+  marginRight: '21px',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
   },
 }));

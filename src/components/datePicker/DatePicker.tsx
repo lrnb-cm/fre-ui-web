@@ -14,11 +14,11 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
 
   const [open, setOpen] = useState(false);
   const [dateValue, setDateValue] = useState<any>([
-    moment().startOf('week'),
-    moment().endOf('week'),
+    moment().startOf('month'),
+    moment().endOf('month'),
   ]);
 
-  const [activeSelect, setActiveSelect] = useState('Custom');
+  const [activeSelect, setActiveSelect] = useState('ThisMonth');
 
   useEffect(() => {
     /**
@@ -118,8 +118,8 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
 
       default:
         return (() => {
-          setActiveSelect('Custom');
-          setDateValue([moment().startOf('week'), moment().endOf('week')]);
+          setActiveSelect('ThisMonth');
+          setDateValue([moment().startOf('month'), moment().endOf('month')]);
         })();
     }
   };
@@ -136,7 +136,7 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
     return (
       <div style={{ display: 'flex' }} ref={datePickerRef}>
         <div>{originalPanel}</div>
-        <ExtraPanel>
+        <ExtraPanel className="panel-calendar">
           <SelectionTile
             style={{
               border:
@@ -225,8 +225,15 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
             Custom Range
           </SelectionTile>
           <ButtonWrapper>
-            <ApplyBtn onClick={handleRangeApply}>Apply</ApplyBtn>
-            <CancelBtn onClick={() => setOpen(false)}>Cancel</CancelBtn>
+            <ApplyBtn onClick={handleRangeApply} className="panel-calendar-btn">
+              Apply
+            </ApplyBtn>
+            <CancelBtn
+              onClick={() => setOpen(false)}
+              className="panel-calendar-btn"
+            >
+              Cancel
+            </CancelBtn>
           </ButtonWrapper>
         </ExtraPanel>
       </div>
@@ -264,13 +271,7 @@ const CustomDatePicker: FC<DateProps> = ({ handleRangeValues, bordered }) => {
         dropdownClassName="calendarPop"
         allowClear={false}
         value={dateValue}
-        suffixIcon={
-          <img
-            src={calenderIcon}
-            alt="calendar-icon"
-            style={{ cursor: 'pointer', marginLeft: '10px' }}
-          />
-        }
+        suffixIcon={<CalendarIcon src={calenderIcon} alt="calendar-icon" />}
       />
     </DateWrapper>
   );
@@ -281,6 +282,9 @@ const DateWrapper = styled('div')(({ theme }) => ({
     padding: '0 5px !important',
     paddingBottom: '2px !important',
     color: '#3C3C3C !important',
+    [theme.breakpoints.down('md')]: {
+      display: 'none !important',
+    },
   },
   '& .ant-picker-suffix': {
     cursor: 'pointer',
@@ -288,6 +292,14 @@ const DateWrapper = styled('div')(({ theme }) => ({
   },
   '& .ant-picker': {
     width: '240px !important',
+    [theme.breakpoints.down('md')]: {
+      width: '20px !important',
+    },
+  },
+  '& .ant-picker-input': {
+    [theme.breakpoints.down('md')]: {
+      display: 'none !important',
+    },
   },
   '& .ant-picker-input > input': {
     fontFamily: theme.typography.fontFamily,
@@ -297,7 +309,11 @@ const DateWrapper = styled('div')(({ theme }) => ({
     lineHeight: '150%',
     color: '#3C3C3C',
   },
+
   marginRight: theme.custom.pxToRem(51),
+  [theme.breakpoints.down('md')]: {
+    marginRight: theme.custom.pxToRem(21),
+  },
 }));
 
 const ExtraPanel = styled('div')(({ theme }) => ({
@@ -305,6 +321,10 @@ const ExtraPanel = styled('div')(({ theme }) => ({
   width: '160px',
 }));
 
+const CalendarIcon = styled('img')(({ theme }) => ({
+  cursor: 'pointer',
+  marginLeft: '10px',
+}));
 const SelectionTile = styled('div')(({ theme }) => ({
   border: '2px solid #e4e9ef',
   margin: '5px 0px',
