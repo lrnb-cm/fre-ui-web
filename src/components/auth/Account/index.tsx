@@ -18,15 +18,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   mainContainer: {
-    maxHeight: '100vh',
+    minHeight: '100vh',
     height: '100vh',
     position: 'relative',
     backgroundColor: '#F7F7F7',
+    // [theme.breakpoints.down('md')]: {
+    //   height: '100%',
+    // },
   },
   logoContainer: {
     position: 'absolute',
     top: '15px',
     left: '40px',
+    [theme.breakpoints.down('md')]: {
+      left: '40px',
+    },
     [theme.breakpoints.down('sm')]: {
       left: '10px',
     },
@@ -34,19 +40,30 @@ const useStyles = makeStyles((theme: Theme) => ({
   imgContainer: {
     height: '100%',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none',
     },
   },
   image: {
     width: '100%',
     height: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none',
     },
   },
   mainText: {
     padding: theme.custom.pxToRem(110, 10, 80, 80),
+
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.custom.pxToRem(64),
+      // paddingBottom: theme.custom.pxToRem(5),
+      paddingBottom: '0px',
+      flexDirection: 'unset',
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: theme.custom.pxToRem(110, 50, 10, 50),
+      flexDirection: 'unset !important',
+    },
     [theme.breakpoints.down('sm')]: {
       padding: theme.custom.pxToRem(110, 20, 10, 20),
       flexDirection: 'unset !important',
@@ -55,6 +72,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   alternateText: {
     paddingLeft: theme.custom.pxToRem(48),
     paddingTop: theme.custom.pxToRem(60),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.custom.pxToRem(100),
+      // paddingBottom: theme.custom.pxToRem(5),
+    },
     [theme.breakpoints.down('sm')]: {
       padding: theme.custom.pxToRem(10),
       paddingTop: theme.custom.pxToRem(30),
@@ -68,19 +89,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   showOnMobileOnly: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
   sidebar: {
     backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none',
     },
   },
   svgContainer: {
     overflow: 'hidden',
-    [`${theme.breakpoints.down('sm')}`]: {
+    [`${theme.breakpoints.down('md')}`]: {
       display: 'none',
     },
   },
@@ -111,6 +132,7 @@ const Account: React.FunctionComponent<Props> = ({
       <Grid item md={2} className={classes.logoContainer}>
         <Logo />
       </Grid>
+
       <Grid
         item
         container
@@ -124,36 +146,38 @@ const Account: React.FunctionComponent<Props> = ({
         <img src={image} className={classes.image} />
       </Grid>
 
-      <Grid
-        item
-        container
-        direction="column"
-        justifyContent="flex-start"
-        flexGrow={2}
-        className={classes.mainText}
-        spacing={2}
-        sm={24}
-        md={5}
-      >
-        <Grid item>
-          <Typography variant="h2">{headingText}</Typography>
+      <Grid item container md={8} sm={24}>
+        <Grid
+          item
+          container
+          direction="column"
+          justifyContent="flex-start"
+          flexGrow={2}
+          className={classes.mainText}
+          spacing={2}
+          sm={24}
+          lg={8}
+        >
+          <Grid item>
+            <Typography variant="h2">{headingText}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="body1" pr={8}>
+              {bodyText}
+            </Typography>
+          </Grid>
+          <Grid item container direction="row" spacing={2}>
+            {children}
+          </Grid>
         </Grid>
-        <Grid item>
-          <Typography variant="body1" pr={8}>
-            {bodyText}
-          </Typography>
-        </Grid>
-        <Grid item container direction="row" spacing={2}>
-          {children}
-        </Grid>
-      </Grid>
 
-      <Grid item container md={3} sm={24} className={classes.alternateText}>
-        <AlternativeText
-          altText={altText}
-          altLink={altLink}
-          altLinkText={altLinkText}
-        />
+        <Grid item container lg={4} sm={24} className={classes.alternateText}>
+          <AlternativeText
+            altText={altText}
+            altLink={altLink}
+            altLinkText={altLinkText}
+          />
+        </Grid>
       </Grid>
     </Grid>
   );

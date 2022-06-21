@@ -66,7 +66,11 @@ const useStyles = makeStyles((theme) => ({
 const TextInput = ({ id, label, endAdornment, ...rest }: TextInputProps) => {
   const classes = useStyles();
   return (
-    <FormControl variant="standard" sx={{ width: '100%' }}>
+    <FormControl
+      variant="standard"
+      sx={{ width: '100%' }}
+      style={{ marginTop: '10px' }}
+    >
       <InputLabel shrink htmlFor={id}>
         <Typography variant="h5" color="black">
           {label}

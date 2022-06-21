@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
@@ -148,7 +148,8 @@ export default function LoginComp() {
       >
         <Grid item xs={24}>
           <TextInput
-            label="Email"
+            label="Your email address"
+            placeholder="Enter email address"
             id="email"
             type="email"
             autoComplete="username"
@@ -159,7 +160,8 @@ export default function LoginComp() {
         </Grid>
         <Grid item xs={24}>
           <TextInput
-            label="Password"
+            label="Your password"
+            placeholder="Enter password"
             id="password"
             type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
@@ -181,7 +183,7 @@ export default function LoginComp() {
                   }}
                   edge="end"
                 >
-                  {showPassword ? <VisibilityOff  /> : <Visibility />}
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
