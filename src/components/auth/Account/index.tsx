@@ -21,29 +21,46 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxHeight: '100vh',
     height: '100vh',
     position: 'relative',
+    backgroundColor: '#F7F7F7',
   },
   logoContainer: {
     position: 'absolute',
     top: '15px',
     left: '40px',
+    [theme.breakpoints.down('sm')]: {
+      left: '10px',
+    },
   },
   imgContainer: {
     height: '100%',
     width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   image: {
     width: '100%',
     height: '100%',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   mainText: {
     padding: theme.custom.pxToRem(110, 10, 80, 80),
     [theme.breakpoints.down('sm')]: {
-      paddingTop: 0,
+      padding: theme.custom.pxToRem(110, 20, 10, 20),
+      flexDirection: 'unset !important',
     },
   },
   alternateText: {
     paddingLeft: theme.custom.pxToRem(48),
     paddingTop: theme.custom.pxToRem(60),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.custom.pxToRem(10),
+      paddingTop: theme.custom.pxToRem(30),
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   showOnDesktopOnly: {
     [theme.breakpoints.down('md')]: {
@@ -91,6 +108,9 @@ const Account: React.FunctionComponent<Props> = ({
   const classes = useStyles();
   return (
     <Grid container className={classes.mainContainer}>
+      <Grid item md={2} className={classes.logoContainer}>
+        <Logo />
+      </Grid>
       <Grid
         item
         container
@@ -101,11 +121,9 @@ const Account: React.FunctionComponent<Props> = ({
         sm={0}
         className={classes.imgContainer}
       >
-        <Grid item md={2} className={classes.logoContainer}>
-          <Logo />
-        </Grid>
         <img src={image} className={classes.image} />
       </Grid>
+
       <Grid
         item
         container
@@ -130,7 +148,7 @@ const Account: React.FunctionComponent<Props> = ({
         </Grid>
       </Grid>
 
-      <Grid item md={3} sm={24} className={classes.alternateText}>
+      <Grid item container md={3} sm={24} className={classes.alternateText}>
         <AlternativeText
           altText={altText}
           altLink={altLink}

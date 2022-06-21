@@ -17,6 +17,8 @@ import loginImage from '../../asset/img/signin.png';
 import { makeStyles } from '@mui/styles';
 import { Link } from 'react-router-dom';
 import { FORGOT_PASSWORD } from '../../constants/routes';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const useStyles = makeStyles((theme: Theme) => ({
   btn: {
@@ -34,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   pwdLink: {
     textDecoration: 'underline',
@@ -176,7 +181,7 @@ export default function LoginComp() {
                   }}
                   edge="end"
                 >
-                  {showPassword ? <Lock /> : <SolidLock />}
+                  {showPassword ? <VisibilityOff  /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }

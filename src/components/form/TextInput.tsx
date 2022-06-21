@@ -31,7 +31,7 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
     border: '1px solid #ced4da',
     fontSize: 16,
     padding: '10px 12px',
-    width: '450px !important',
+    width: '100% !important',
     // boxShadow: '0px 3px 0px rgba(55, 88, 204, 0.1)',
     borderRadius: '16px',
     transition: theme.transitions.create([
@@ -60,7 +60,7 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
 }));
 
 const useStyles = makeStyles((theme) => ({
-  endAdornment: { transform: 'translateX(-50px) !important' },
+  endAdornment: { right: '10px', position: 'absolute' },
 }));
 
 const TextInput = ({ id, label, endAdornment, ...rest }: TextInputProps) => {
