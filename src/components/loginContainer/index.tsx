@@ -1,56 +1,51 @@
-import {
-  alpha,
-  Button,
-  FormControl,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputBase,
-  InputLabel,
-  Link,
-  OutlinedInput,
-  styled,
-  Typography,
-} from '@mui/material';
-import { Google } from './config';
-import { localState } from './state/loginState';
-import { OIDC_LOGIN } from './queries/mutations';
-import { useEffect, useState } from 'react';
-import { useMutation, useReactiveVar } from '@apollo/client';
-import Account from '../auth/Account';
-import TextInput from '../form/TextInput';
-import { useFirebaseContext } from '../../contexts/FirebaseContext';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import Lock from '../../icons/Lock';
-import SolidLock from '../../icons/SolidLock';
+import { useApolloClient, useMutation, useReactiveVar } from "@apollo/client";
+import { Button, Grid, IconButton, InputAdornment } from "@mui/material";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFirebaseContext } from "../../contexts/FirebaseContext";
+import { useUserContext } from "../../contexts/UserContext";
+import Lock from "../../icons/Lock";
+import SolidLock from "../../icons/SolidLock";
+import GET_USER_DATA from "../../queries/GET_USER_DATA";
+import Account from "../auth/Account";
+import TextInput from "../form/TextInput";
+import { Google } from "./config";
+import { OIDC_LOGIN } from "./queries/mutations";
+import { localState } from "./state/loginState";
 
 export default function LoginComp() {
   const [login, { data, loading, error }] = useMutation(OIDC_LOGIN);
   const state = useReactiveVar(localState);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const firebase = useFirebaseContext();
+  const apolloClient = useApolloClient();
+  const navigate = useNavigate();
+  const { setUserContext } = useUserContext();
+  const [loginEmail, setLoginEmail] = useState(
+    localStorage.getItem("email") || ""
+  );
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [email, setEmail] = useState(localStorage.getItem('email'));
+  const [email, setEmail] = useState(localStorage.getItem("email"));
   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  useEffect(() => {
-    if (email === '' || (email && !email.match(mailformat)) || email === null) {
-      const newEmail = String(prompt('Enter Email Address:'));
-      if (newEmail.match(mailformat)) {
-        setEmail(newEmail);
-        localStorage.setItem('email', newEmail);
-      }
-    }
-  }, [email]);
+  // useEffect(() => {
+  //   if (email === "" || (email && !email.match(mailformat)) || email === null) {
+  //     const newEmail = String(prompt("Enter Email Address:"));
+  //     if (newEmail.match(mailformat)) {
+  //       setEmail(newEmail);
+  //       localStorage.setItem("email", newEmail);
+  //     }
+  //   }
+  // }, [email]);
 
   const payload = {
     redirect_uri: Google.REDIRECT_URI,
     scope: Google.SCOPE,
     login_hint: email,
-    prompt: 'consent',
-    state: state.provider || 'google',
+    prompt: "consent",
+    state: state.provider || "google",
   };
 
   const handleLogin = () => {
@@ -65,84 +60,111 @@ export default function LoginComp() {
   if (loading) return <p> loading</p>;
   if (error) return <p> error</p>;
 
-  const handleFirebaseLogin = () => {
+  const handleFirebaseLogin = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (!firebase)
       throw new Error(
-        'useFirebaseContext must be within FirebaseContext.Provider'
+        "useFirebaseContext must be within FirebaseContext.Provider"
       );
 
+    // GCP Identity Platform / Firebase email/password authentication
     const auth = getAuth(firebase);
     signInWithEmailAndPassword(auth, loginEmail, password)
-      .then((res) => {
-        console.log(res, 'res');
+      .then(async (res) => {
+        // Get then set the idToken (& email) in localStorage
+        const idToken = await res.user.getIdToken();
+        localStorage.setItem("idToken", idToken);
+        localStorage.setItem("email", res.user.email || "");
+
+        console.log(
+          idToken,
+          "idToken in signInWithEmailAndPassword.then - fetching data now.."
+        );
+
+        // Todo: add error handling if user does not exist in our database?
+        // Get basic user data and permissions and set them to the user context
+        const userData = await apolloClient.query({
+          query: GET_USER_DATA,
+          variables: {
+            filters: { email: res.user.email },
+          },
+        });
+        setUserContext({
+          ...userData.data.getUser,
+          idToken,
+          userCredential: res,
+        });
+
+        //Todo: where should the user be redirected to after logging in?
+        navigate("/secure-route");
       })
       .catch((error) => {
         //Todo: handle login error
         console.error(error.message);
       });
   };
+
   return (
-    <Account
-      altLink="/register"
-      altText="Don't have an account?"
-      altLinkText="Register"
-      headingText="Welcome Back"
-      bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
-    >
-      <Grid item>
-        <TextInput
-          label="Email"
-          id="email"
-          type="email"
-          value={loginEmail}
-          onChange={(e) => setLoginEmail(e.target.value)}
-          inputProps={{ autoComplete: 'username' }}
-        />
-      </Grid>
-      <Grid item>
-        <TextInput
-          label="Password"
-          id="password"
-          type={showPassword ? 'text' : 'password'}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          inputProps={{ autoComplete: 'current-password' }}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={(e) => {
-                  //preventDefault so the input's active styles remain
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
-                onMouseDown={(e) => {
-                  //preventDefault so the input's active styles remain
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
-                edge="end"
-              >
-                {showPassword ? <Lock /> : <SolidLock />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </Grid>
-      <Grid item>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleFirebaseLogin}
-        >
-          Login with Email
-        </Button>
-      </Grid>
-      {/* <Grid item>
+    <form onSubmit={handleFirebaseLogin}>
+      <Account
+        altLink="/register"
+        altText="Don't have an account?"
+        altLinkText="Register"
+        headingText="Welcome Back"
+        bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
+      >
+        <Grid item>
+          <TextInput
+            label="Email"
+            id="email"
+            type="email"
+            autoComplete="username"
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
+            inputProps={{ autoComplete: "username" }}
+          />
+        </Grid>
+        <Grid item>
+          <TextInput
+            label="Password"
+            id="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={(e) => {
+                    //preventDefault so the input's active styles remain
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                  onMouseDown={(e) => {
+                    //preventDefault so the input's active styles remain
+                    e.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
+                  edge="end"
+                >
+                  {showPassword ? <Lock /> : <SolidLock />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </Grid>
+        <Grid item>
+          <Button type="submit" variant="contained" color="primary">
+            Login with Email
+          </Button>
+        </Grid>
+        {/* <Grid item>
         <Button variant="contained" color="primary" onClick={handleLogin}>
           Login with Google
         </Button>
       </Grid> */}
-    </Account>
+      </Account>
+    </form>
   );
 }
