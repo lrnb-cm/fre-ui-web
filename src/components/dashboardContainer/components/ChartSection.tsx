@@ -8,7 +8,6 @@ import TotalSection from './TotalSection';
 import { useWindowWidth } from '@react-hook/window-size';
 import { useReactiveVar } from '@apollo/client';
 import { sidebarVar } from '../../sidebarContainer/state/sidebarState';
-
 const ChartSection: FC<ChartSectionProps> = ({
   barData,
   total,
