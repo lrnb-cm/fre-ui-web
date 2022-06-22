@@ -21,7 +21,11 @@ import { Formik } from 'formik';
 import { loginInitialValues, loginValidationSchema } from './loginSchema';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import ReCAPTCHA from 'react-google-recaptcha';
 
+const CAPTCHA_KEY = '6LeMY44gAAAAALcXMfA5lB-t0AuypZTs5PqB9I-b';
+
+// '6Lc5cY4gAAAAAIji4TT4AeYKkRZnyVjTSrk7O9zf';
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -133,7 +137,9 @@ export default function LoginComp() {
   };
 
   const handleClose = () => setOpen(false);
-
+  const onCaptchaChange = (val: any) => {
+    console.log('onCaptchaChange', val);
+  };
   return (
     <Formik
       initialValues={loginInitialValues}
@@ -261,6 +267,14 @@ export default function LoginComp() {
                 Forgot Password?
               </Link>
             </Grid>
+            <Grid item xs={24}>
+              <ReCAPTCHA
+                sitekey={CAPTCHA_KEY}
+                onChange={onCaptchaChange}
+                size="normal"
+              />
+            </Grid>
+
             <Grid item xs={24}>
               <button className={classes.btn} type="submit">
                 Login

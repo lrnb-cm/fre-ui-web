@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   mainContainer: {
     minHeight: '100vh',
-    height: '100vh',
+    // height: '100vh',
     position: 'relative',
     backgroundColor: '#F7F7F7',
     // [theme.breakpoints.down('md')]: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   imgContainer: {
-    height: '100%',
+    // height: '100%',
     width: '100%',
     [theme.breakpoints.down('md')]: {
       display: 'none',
