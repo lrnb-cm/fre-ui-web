@@ -1,3 +1,4 @@
+import React from 'react';
 import { useApolloClient, useMutation, useReactiveVar } from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -16,6 +17,14 @@ import { makeStyles } from '@mui/styles';
 import { FORGOT_PASSWORD } from '../../constants/routes';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Formik } from 'formik';
+import { loginInitialValues, loginValidationSchema } from './loginSchema';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props: any, ref: any) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const useStyles = makeStyles((theme: Theme) => ({
   btn: {
@@ -33,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'pointer',
+    border: 'none',
     [theme.breakpoints.down('md')]: {
       width: '100%',
     },
@@ -57,18 +67,7 @@ export default function LoginComp() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [email, setEmail] = useState(localStorage.getItem('email'));
-  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-  // useEffect(() => {
-  //   if (email === "" || (email && !email.match(mailformat)) || email === null) {
-  //     const newEmail = String(prompt("Enter Email Address:"));
-  //     if (newEmail.match(mailformat)) {
-  //       setEmail(newEmail);
-  //       localStorage.setItem("email", newEmail);
-  //     }
-  //   }
-  // }, [email]);
-
+  const [open, setOpen] = useState(false);
   const payload = {
     redirect_uri: Google.REDIRECT_URI,
     scope: Google.SCOPE,
@@ -133,73 +132,143 @@ export default function LoginComp() {
       });
   };
 
+  const handleClose = () => setOpen(false);
+
   return (
-    <form onSubmit={handleFirebaseLogin}>
-      <Account
-        altLink="/register"
-        altText="Don't have an account?"
-        altLinkText="Register"
-        headingText="Welcome Back"
-        bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
-        image={loginImage}
-      >
-        <Grid item xs={24}>
-          <TextInput
-            label="Your email address"
-            placeholder="Enter email address"
-            id="email"
-            type="email"
-            autoComplete="username"
-            value={loginEmail}
-            onChange={(e) => setLoginEmail(e.target.value)}
-            inputProps={{ autoComplete: 'username' }}
-          />
-        </Grid>
-        <Grid item xs={24}>
-          <TextInput
-            label="Your password"
-            placeholder="Enter password"
-            id="password"
-            type={showPassword ? 'text' : 'password'}
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={(e) => {
-                    //preventDefault so the input's active styles remain
-                    e.preventDefault();
-                    setShowPassword(!showPassword);
-                  }}
-                  onMouseDown={(e) => {
-                    //preventDefault so the input's active styles remain
-                    e.preventDefault();
-                    setShowPassword(!showPassword);
-                  }}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Grid>
-        <Grid
-          item
-          xs={24}
-          alignItems="flex-end"
-          sx={{ display: 'flex', justifyContent: 'flex-end' }}
-        >
-          <Link to={FORGOT_PASSWORD} className={classes.pwdLink}>
-            Forgot Password?
-          </Link>
-        </Grid>
-        <Grid item xs={24}>
-          <div className={classes.btn}>Login</div>
-        </Grid>
-      </Account>
-    </form>
+    <Formik
+      initialValues={loginInitialValues}
+      validationSchema={loginValidationSchema}
+      validate={(values) => {
+        const errors: any = {};
+        if (!values.email) {
+          errors.email = 'Required';
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+        ) {
+          errors.email = 'Invalid email address';
+        }
+        return errors;
+      }}
+      onSubmit={(values) => {
+        console.log({ values });
+        setOpen(true);
+      }}
+    >
+      {({ handleChange, handleSubmit, touched, errors, values }) => (
+        <form onSubmit={handleSubmit}>
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: '100%' }}
+            >
+              Incorrect Email or Password!
+            </Alert>
+          </Snackbar>
+          <Account
+            altLink="/register"
+            altText="Don't have an account?"
+            altLinkText="Register"
+            headingText="Welcome Back"
+            bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
+            image={loginImage}
+          >
+            <Grid item xs={24}>
+              <TextInput
+                label="Your email address"
+                placeholder="Enter email address"
+                id="email"
+                autoComplete="username"
+                value={values.email}
+                onChange={handleChange('email')}
+                sx={{
+                  '.MuiInputBase-input': {
+                    border:
+                      touched.email && errors.email
+                        ? '1px solid red'
+                        : '1px solid #ced4da',
+                  },
+                  '.MuiInputBase-input:focus': {
+                    borderColor:
+                      touched.email && errors.email ? 'red' : '#3758CC',
+                    boxShadow:
+                      touched.email && errors.email
+                        ? 'none'
+                        : 'rgb(55 88 204 / 25%) 0 0 0 0.2rem',
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={24}>
+              <TextInput
+                label="Your password"
+                placeholder="Enter password"
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={(e) => {
+                        //preventDefault so the input's active styles remain
+                        e.preventDefault();
+                        setShowPassword(!showPassword);
+                      }}
+                      onMouseDown={(e) => {
+                        //preventDefault so the input's active styles remain
+                        e.preventDefault();
+                        setShowPassword(!showPassword);
+                      }}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                sx={{
+                  '.MuiInputBase-input': {
+                    border:
+                      touched.password && errors.password
+                        ? '1px solid red'
+                        : '1px solid #ced4da',
+                  },
+                  '.MuiInputBase-input:focus': {
+                    borderColor:
+                      touched.password && errors.password ? 'red' : '#3758CC',
+                    boxShadow:
+                      touched.password && errors.password
+                        ? 'none'
+                        : 'rgb(55 88 204 / 25%) 0 0 0 0.2rem',
+                  },
+                }}
+              />
+            </Grid>
+            <Grid
+              item
+              xs={24}
+              alignItems="flex-end"
+              sx={{ display: 'flex', justifyContent: 'flex-end' }}
+            >
+              <Link to={FORGOT_PASSWORD} className={classes.pwdLink}>
+                Forgot Password?
+              </Link>
+            </Grid>
+            <Grid item xs={24}>
+              <button className={classes.btn} type="submit">
+                Login
+              </button>
+            </Grid>
+          </Account>
+        </form>
+      )}
+    </Formik>
   );
 }
