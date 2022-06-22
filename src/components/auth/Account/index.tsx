@@ -74,12 +74,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       padding: theme.custom.pxToRem(100),
       // paddingBottom: theme.custom.pxToRem(5),
+      justifyContent: 'center',
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.custom.pxToRem(10),
-      paddingTop: theme.custom.pxToRem(30),
+      padding: theme.custom.pxToRem(30, 10),
+      // paddingTop: theme.custom.pxToRem(30),
       display: 'flex',
       justifyContent: 'center',
+      alignContent: 'end',
     },
   },
   showOnDesktopOnly: {
