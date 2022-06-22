@@ -2,7 +2,6 @@ import { Grid, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AlternativeText from './AlternativeText';
 import Logo from './Logo';
-import forgotpassword from '../../../asset/img/forgotpassword.svg';
 
 const useStyles = makeStyles((theme: Theme) => ({
   contentContainer: {
