@@ -95,7 +95,7 @@ export default function LoginComp() {
       );
     const loginEmail = 'sample@yahoo.com';
 
-    const password = 'gghhj';
+    const password = '';
     // GCP Identity Platform / Firebase email/password authentication
     const auth = getAuth(firebase);
     signInWithEmailAndPassword(auth, loginEmail, password)
