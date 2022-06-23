@@ -40,6 +40,7 @@ import {
   TRANSACTIONS,
   FORGOT_PASSWORD,
   DATA_STUDIO,
+  LOGIN,
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
 import { UserContext } from './contexts/UserContext';
@@ -175,6 +176,12 @@ export default function App() {
                 <Router>
                   <Routes>
                     <Route index element={<LoginContainer />} />
+                    <Route path={LOGIN} element={<LoginContainer />} />
+                    <Route
+                      path="/register"
+                      element={() => <div>register here!!!</div>}
+                    />
+
                     <Route
                       path={FORGOT_PASSWORD}
                       element={<ForgotPassword />}
