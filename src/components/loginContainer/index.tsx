@@ -57,24 +57,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function LoginComp() {
   const classes = useStyles();
 
-  const [login, { data, loading, error }] = useMutation(OIDC_LOGIN);
+  const [login, { loading, error }] = useMutation(OIDC_LOGIN);
   const state = useReactiveVar(localState);
   const firebase = useFirebaseContext();
   const apolloClient = useApolloClient();
   const navigate = useNavigate();
   const { setUserContext } = useUserContext();
-  // const [loginEmail, setLoginEmail] = useState(
-  //   localStorage.getItem('email') || ''
-  // );
-  // const [password, setPassword] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const [email, setEmail] = useState(localStorage.getItem('email'));
   const [open, setOpen] = useState(false);
   const payload = {
     redirect_uri: Google.REDIRECT_URI,
     scope: Google.SCOPE,
-    login_hint: email,
+    login_hint: 'email',
     prompt: 'consent',
     state: state.provider || 'google',
   };
@@ -97,7 +93,8 @@ export default function LoginComp() {
       throw new Error(
         'useFirebaseContext must be within FirebaseContext.Provider'
       );
-
+    const loginEmail = 'sample@yahoo.com';
+    const password = 'gghhj';
     // GCP Identity Platform / Firebase email/password authentication
     const auth = getAuth(firebase);
     signInWithEmailAndPassword(auth, loginEmail, password)
@@ -157,6 +154,7 @@ export default function LoginComp() {
       onSubmit={(values) => {
         console.log({ values });
         setOpen(true);
+        handleLogin();
       }}
     >
       {({ handleChange, handleSubmit, touched, errors, values }) => (

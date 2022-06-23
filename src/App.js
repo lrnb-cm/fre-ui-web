@@ -17,15 +17,9 @@ import { deepmerge } from '@mui/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { initializeApp } from 'firebase/app';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  useRoutes,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Containers, LoginContainer } from './components';
-import AuthGuard from './components/AuthGuard';
 import Customer from './components/customerContainer/Customers';
 import DashboardContainer from './components/dashboardContainer/DashboardContainer';
 import Layout from './components/Layout';
@@ -43,7 +37,6 @@ import {
   REPORT_DETAILS,
   SHOP_DETAILS,
   TRANSACTIONS,
-  VALIDATED,
   FORGOT_PASSWORD,
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
