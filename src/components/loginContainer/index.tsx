@@ -94,6 +94,7 @@ export default function LoginComp() {
         'useFirebaseContext must be within FirebaseContext.Provider'
       );
     const loginEmail = 'sample@yahoo.com';
+
     const password = 'gghhj';
     // GCP Identity Platform / Firebase email/password authentication
     const auth = getAuth(firebase);
