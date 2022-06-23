@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApolloClient, useMutation, useReactiveVar } from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { useUserContext } from '../../contexts/UserContext';
@@ -64,10 +63,10 @@ export default function LoginComp() {
   const apolloClient = useApolloClient();
   const navigate = useNavigate();
   const { setUserContext } = useUserContext();
-  const [loginEmail, setLoginEmail] = useState(
-    localStorage.getItem('email') || ''
-  );
-  const [password, setPassword] = useState('');
+  // const [loginEmail, setLoginEmail] = useState(
+  //   localStorage.getItem('email') || ''
+  // );
+  // const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const [email, setEmail] = useState(localStorage.getItem('email'));

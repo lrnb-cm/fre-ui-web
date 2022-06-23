@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
+import { Grid, Theme } from '@mui/material';
 
 import { Formik } from 'formik';
 import Account from '../auth/Account';
