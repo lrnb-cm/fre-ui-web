@@ -17,7 +17,12 @@ import { deepmerge } from '@mui/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { initializeApp } from 'firebase/app';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  useRoutes,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import './App.css';
 import { Containers, LoginContainer } from './components';
 import AuthGuard from './components/AuthGuard';
@@ -172,49 +177,45 @@ export default function App() {
             >
               <ThemeProvider theme={mergeTheme}>
                 <CssBaseline />
-                <Routes>
-                  {/* Todo: these two routes are for demo purposes of the authentication and authorization
-                      Remove them, and wrap the AuthGuard component on routes which the user should be logged in
-                      And/Or add other permissions as neccessary
-                  */}
-                  <Route
-                    path="/not-top-secret"
-                    element={
-                      <>
-                        Home <br /> <Link to="/secure-route">Secret sauce</Link>
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/secure-route"
-                    element={
-                      <AuthGuard>
-                        <>Lillii RNB's Secret Sauce</>
-                      </AuthGuard>
-                    }
-                  />
-                  <Route index element={<LoginContainer />} />
-                  <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
-                  <Route path={VALIDATED} element={<LoginCallback />} />
-                  <Route path={DASHBOARD} element={<Layout />} />
-                  <Route index element={<DashboardContainer />} />
-                  <Route path={CUSTOMERS} element={<Customer />} />
-                  <Route path={PRODUCTS} element={<ProductsContainer />} />
-                  <Route
-                    path={REPORT_DETAILS}
-                    element={<ReportDetailsContainer />}
-                  />
-                  <Route path={TRANSACTIONS} element={<Containers />} />
-                  <Route path={MY_SHOP} element={<MyShopContainer />} />
-                  <Route
-                    path={SHOP_DETAILS}
-                    element={<MyShopDetailsContainer />}
-                  />
-                  {/* Using path="*"" means "match anything", so this route
-                  acts like a catch-all for URLs that we don't have explicit
-                  routes for. */}
-                  <Route path="*" element={<div>NO CONTENT YET</div>} />
-                </Routes>
+                <Router>
+                  <Routes>
+                    <Route index element={<LoginContainer />} />
+                    <Route
+                      path={FORGOT_PASSWORD}
+                      element={<ForgotPassword />}
+                    />
+
+                    <Route path="validated" element={<LoginCallback />} />
+
+                    {/* <Route
+                      path="/secure-route"
+                      element={
+                        <AuthGuard>
+                          <>Lillii RNB's Secret Sauce</>
+                        </AuthGuard>
+                      }
+                    /> */}
+                    <Route path={DASHBOARD} element={<Layout />}>
+                      <Route index element={<DashboardContainer />} />
+                      <Route path={CUSTOMERS} element={<Customer />} />
+                      <Route path={PRODUCTS} element={<ProductsContainer />} />
+                      <Route
+                        path={REPORT_DETAILS}
+                        element={<ReportDetailsContainer />}
+                      />
+                      <Route path={TRANSACTIONS} element={<Containers />} />
+                      <Route path={MY_SHOP} element={<MyShopContainer />} />
+                      <Route
+                        path={SHOP_DETAILS}
+                        element={<MyShopDetailsContainer />}
+                      />
+                      {/* Using path="*"" means "match anything", so this route
+            acts like a catch-all for URLs that we don't have explicit
+            routes for. */}
+                      <Route path="*" element={<div>NO CONTENT YET</div>} />
+                    </Route>
+                  </Routes>
+                </Router>
               </ThemeProvider>
             </UserContext.Provider>
           </FirebaseContext.Provider>
