@@ -22,7 +22,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const CAPTCHA_KEY = '6LeMY44gAAAAALcXMfA5lB-t0AuypZTs5PqB9I-b';
+const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
 // '6Lc5cY4gAAAAAIji4TT4AeYKkRZnyVjTSrk7O9zf';
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
