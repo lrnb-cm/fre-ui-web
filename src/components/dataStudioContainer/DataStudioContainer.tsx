@@ -5,8 +5,8 @@ export default function DataStudioContainer() {
     <div>
       <iframe
         // width="600"
-        height="450"
-        src="https://datastudio.google.com/embed/reporting/a618cf88-dcde-4d03-a65d-b36a68f37b9e/page/vb1uC"
+        height="500"
+        src="https://datastudio.google.com/embed/reporting/d4720445-c07a-46c7-a954-896cfde70b7a/page/xDDwC"
         frameBorder="0"
         style={{
           border: '0px',
