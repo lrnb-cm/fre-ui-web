@@ -28,6 +28,7 @@ import MyShopContainer from './components/myshopContainer/MyShopContainer';
 import MyShopDetailsContainer from './components/myShopDetailsContainer/MyShopDetailsContainer';
 import ProductsContainer from './components/productsContainer/ProductsContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
+import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
 import { uri } from './config';
 import {
   CUSTOMERS,
@@ -38,6 +39,8 @@ import {
   SHOP_DETAILS,
   TRANSACTIONS,
   FORGOT_PASSWORD,
+  DATA_STUDIO,
+  LOGIN,
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
 import { UserContext } from './contexts/UserContext';
@@ -173,6 +176,12 @@ export default function App() {
                 <Router>
                   <Routes>
                     <Route index element={<LoginContainer />} />
+                    <Route path={LOGIN} element={<LoginContainer />} />
+                    <Route
+                      path="/register"
+                      element={() => <div>register here!!!</div>}
+                    />
+
                     <Route
                       path={FORGOT_PASSWORD}
                       element={<ForgotPassword />}
@@ -202,6 +211,11 @@ export default function App() {
                         path={SHOP_DETAILS}
                         element={<MyShopDetailsContainer />}
                       />
+                      <Route
+                        path={DATA_STUDIO}
+                        element={<DataStudioContainer />}
+                      />
+
                       {/* Using path="*"" means "match anything", so this route
             acts like a catch-all for URLs that we don't have explicit
             routes for. */}
