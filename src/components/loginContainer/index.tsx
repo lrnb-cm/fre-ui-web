@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useApolloClient,
   useLazyQuery,
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function LoginComp() {
   const classes = useStyles();
 
-  const [login, { loading, error }] = useMutation(OIDC_LOGIN);
+  const [login] = useMutation(OIDC_LOGIN);
   const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
   const state = useReactiveVar(localState);
   const firebase = useFirebaseContext();
@@ -74,6 +74,7 @@ export default function LoginComp() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [open, setOpen] = useState(false);
+
   const payload = {
     redirect_uri: Google.REDIRECT_URI,
     scope: Google.SCOPE,
@@ -82,17 +83,20 @@ export default function LoginComp() {
     state: state.provider || 'google',
   };
 
-  const handleLogin = () => {
+  const handleLogin = (payload: any) => {
     login({
       variables: {
         provider: payload.state,
         payload: JSON.stringify(payload),
       },
-    }).then((d: any) => window.location.assign(d.data.loginProvider.url));
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        setOpen(true);
+      });
   };
-
-  if (loading) return <p> loading</p>;
-  if (error) return <p> error</p>;
 
   const handleFirebaseLogin = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -167,8 +171,8 @@ export default function LoginComp() {
       }}
       onSubmit={(values) => {
         console.log({ values });
-        setOpen(true);
-        handleLogin();
+        // setOpen(true);
+        handleLogin({ ...values, state: 'standard' });
       }}
     >
       {({ handleChange, handleSubmit, touched, errors, values }) => (

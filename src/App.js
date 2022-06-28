@@ -1,12 +1,4 @@
-import {
-  ApolloClient,
-  ApolloProvider,
-  from,
-  HttpLink,
-  InMemoryCache,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { onError } from '@apollo/client/link/error';
+import { ApolloProvider } from '@apollo/client';
 import { CssBaseline } from '@mui/material';
 import {
   createTheme,
@@ -29,7 +21,6 @@ import MyShopDetailsContainer from './components/myShopDetailsContainer/MyShopDe
 import ProductsContainer from './components/productsContainer/ProductsContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
 import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
-import { uri } from './config';
 import {
   CUSTOMERS,
   DASHBOARD,
@@ -47,39 +38,11 @@ import { UserContext } from './contexts/UserContext';
 import GET_USER_DATA from './queries/GET_USER_DATA';
 import { customTheming, theme } from './theme';
 import ForgotPassword from './components/forgotPasswordContainer/ForgotPasswordContainer';
-
+import apolloClient from './ApolloClient';
 const firebaseConfig = {
   apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
   authDomain: 'freeing-returns.firebaseapp.com',
 };
-
-const httpLink = new HttpLink({
-  uri,
-});
-
-const errorLink = onError(
-  ({ graphQLErrors, networkError, forward, operation }) => {
-    if (graphQLErrors) {
-      console.log(graphQLErrors, 'graphQLErrors in errorLink');
-    }
-    if (networkError) {
-      console.log(networkError, 'networkError in errorLink');
-    }
-    forward(operation);
-  }
-);
-
-const authLink = setContext((_, { headers, ...context }) => {
-  const idToken = context.idToken || localStorage.getItem('idToken');
-  console.log(idToken, 'idToken in authLink');
-  return {
-    headers: {
-      ...headers,
-      authorization: `Bearer ${idToken}`,
-    },
-    ...context,
-  };
-});
 
 export default function App() {
   // @ts-ignore
@@ -92,13 +55,6 @@ export default function App() {
   }
   const firebase = initializeApp(firebaseConfig);
   const [userContext, setUserContext] = useState();
-
-  // Setup Apollo Client
-  const apolloClient = new ApolloClient({
-    link: from([authLink, errorLink, httpLink]),
-    uri,
-    cache: new InMemoryCache(),
-  });
 
   //Get Firebase idToken and email from localStorage when set
   const [idToken, setIdToken] = useState(localStorage.getItem('idToken'));
