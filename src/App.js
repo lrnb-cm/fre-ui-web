@@ -8,7 +8,7 @@ import {
 import { deepmerge } from '@mui/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { initializeApp } from 'firebase/app';
-import { StrictMode, useEffect, useMemo, useState } from 'react';
+import { StrictMode } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Containers, LoginContainer } from './components';
@@ -33,12 +33,12 @@ import {
   DATA_STUDIO,
   LOGIN,
 } from './constants/routes';
-import { FirebaseContext } from './contexts/FirebaseContext';
-import { UserContext } from './contexts/UserContext';
-import GET_USER_DATA from './queries/GET_USER_DATA';
+import { FirebaseContext } from './components/auth/firebase/FirebaseContext';
+import AuthProvider from './components/auth/authProvider/AuthProvider';
 import { customTheming, theme } from './theme';
 import ForgotPassword from './components/forgotPasswordContainer/ForgotPasswordContainer';
 import apolloClient from './ApolloClient';
+import AuthGuard from './components/auth/authGuard/AuthGuard';
 const firebaseConfig = {
   apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
   authDomain: 'freeing-returns.firebaseapp.com',
@@ -54,69 +54,6 @@ export default function App() {
     });
   }
   const firebase = initializeApp(firebaseConfig);
-  const [userContext, setUserContext] = useState();
-
-  //Get Firebase idToken and email from localStorage when set
-  const [idToken, setIdToken] = useState(localStorage.getItem('idToken'));
-  const [email, setEmail] = useState(localStorage.getItem('email'));
-  useEffect(() => {
-    const listenForLocalStorageChanges = window.addEventListener(
-      'storage',
-      () => {
-        setIdToken(localStorage.getItem('idToken'));
-        setEmail(localStorage.getItem('email'));
-      },
-      false
-    );
-
-    return () =>
-      window.removeEventListener('storage', listenForLocalStorageChanges);
-  }, []);
-
-  // When userContext changes, load user data if it does not exist
-  useEffect(() => {
-    //Fetch user data only if email and idToken exist in localStorage
-    //and if userContex has not been populated yet
-    if (!idToken || !email || userContext) return;
-
-    apolloClient
-      .query({
-        query: GET_USER_DATA,
-        variables: {
-          filters: { email },
-        },
-      })
-      .then((res) => {
-        setUserContext({ ...res.data.getUser, idToken });
-      })
-      .catch((err) => {
-        // Todo: handle error
-        console.log(err);
-      });
-  }, [userContext]);
-
-  // Parse permissions from user context
-  const permissions = useMemo(() => {
-    if (!userContext) return {};
-
-    // Todo: Add the ability to parse groups and add them to the permissions dictionary
-    // Todo: Move this to a utility function and reduce groups with it also
-    return userContext.roles.length
-      ? userContext.roles.reduce((parsedPermissions, currentRole) => {
-          const currentPermissions = currentRole.permissions.reduce(
-            (previousPermission, currentPermission) => ({
-              ...previousPermission,
-              [currentPermission.name]: true,
-            }),
-            {}
-          );
-          return {
-            ...parsedPermissions,
-            ...currentPermissions,
-          };
-        }, {})
-      : {};
-  }, [userContext, idToken, email]);
 
   const mergeTheme = createTheme(deepmerge(theme, customTheming));
   return (
@@ -124,9 +61,7 @@ export default function App() {
       <StyledEngineProvider injectFirst>
         <ApolloProvider client={apolloClient}>
           <FirebaseContext.Provider value={firebase}>
-            <UserContext.Provider
-              value={{ setUserContext, userContext, permissions }}
-            >
+            <AuthProvider>
               <ThemeProvider theme={mergeTheme}>
                 <CssBaseline />
                 <Router>
@@ -145,15 +80,14 @@ export default function App() {
 
                     <Route path="validated" element={<LoginCallback />} />
 
-                    {/* <Route
-                      path="/secure-route"
+                    <Route
+                      path={DASHBOARD}
                       element={
                         <AuthGuard>
-                          <>Lillii RNB's Secret Sauce</>
+                          <Layout />
                         </AuthGuard>
                       }
-                    /> */}
-                    <Route path={DASHBOARD} element={<Layout />}>
+                    >
                       <Route index element={<DashboardContainer />} />
                       <Route path={CUSTOMERS} element={<Customer />} />
                       <Route path={PRODUCTS} element={<ProductsContainer />} />
@@ -180,7 +114,7 @@ export default function App() {
                   </Routes>
                 </Router>
               </ThemeProvider>
-            </UserContext.Provider>
+            </AuthProvider>
           </FirebaseContext.Provider>
         </ApolloProvider>
       </StyledEngineProvider>

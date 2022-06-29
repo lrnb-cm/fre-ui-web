@@ -15,8 +15,8 @@ export const OIDC_LOGIN = gql`
       group
       district
       email
-      username
       session
+      token
     }
   }
 `;

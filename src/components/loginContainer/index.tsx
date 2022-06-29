@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   useApolloClient,
   useLazyQuery,
   useMutation,
-  useQuery,
   useReactiveVar,
 } from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
-import { useFirebaseContext } from '../../contexts/FirebaseContext';
-import { useUserContext } from '../../contexts/UserContext';
+import { useFirebaseContext } from '../auth/firebase/FirebaseContext';
+import { useAuthContext } from '../auth/authProvider/AuthContext';
 import GET_USER_DATA from '../../queries/GET_USER_DATA';
 import Account from '../auth/Account';
 import TextInput from '../form/TextInput';
-import { Google } from './config';
 import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
 import { localState } from './state/loginState';
 import loginImage from '../../asset/img/signin.png';
 import { makeStyles } from '@mui/styles';
-import { FORGOT_PASSWORD } from '../../constants/routes';
+import { DASHBOARD, FORGOT_PASSWORD } from '../../constants/routes';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Formik } from 'formik';
@@ -30,7 +28,6 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
-// '6Lc5cY4gAAAAAIji4TT4AeYKkRZnyVjTSrk7O9zf';
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -69,19 +66,12 @@ export default function LoginComp() {
   const firebase = useFirebaseContext();
   const apolloClient = useApolloClient();
   const navigate = useNavigate();
-  const { setUserContext } = useUserContext();
+  const { setUser } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [open, setOpen] = useState(false);
-
-  const payload = {
-    redirect_uri: Google.REDIRECT_URI,
-    scope: Google.SCOPE,
-    login_hint: 'email',
-    prompt: 'consent',
-    state: state.provider || 'google',
-  };
 
   const handleLogin = (payload: any) => {
     login({
@@ -92,6 +82,16 @@ export default function LoginComp() {
     })
       .then((data) => {
         console.log(data);
+
+        setUser({
+          ...data.data.loginProvider,
+        });
+
+        //store session token
+        sessionStorage.setItem('token', data.data.loginProvider.token);
+
+        //navigate to dashboard
+        navigate(DASHBOARD);
       })
       .catch((err) => {
         setOpen(true);
@@ -129,7 +129,7 @@ export default function LoginComp() {
             filters: { email: res.user.email },
           },
         });
-        setUserContext({
+        setUser({
           ...userData.data.getUser,
           idToken,
           userCredential: res,
@@ -151,8 +151,9 @@ export default function LoginComp() {
         captchaToken: val,
       },
     });
-
-    console.log('onCaptchaChange', response);
+    if (response) {
+      setIsDisabled(false);
+    }
   };
   return (
     <Formik
@@ -291,7 +292,14 @@ export default function LoginComp() {
             </Grid>
 
             <Grid item xs={24}>
-              <button className={classes.btn} type="submit">
+              <button
+                className={classes.btn}
+                type="submit"
+                disabled={isDisabled}
+                style={{
+                  cursor: isDisabled ? 'not-allowed' : 'pointer',
+                }}
+              >
                 Login
               </button>
             </Grid>
