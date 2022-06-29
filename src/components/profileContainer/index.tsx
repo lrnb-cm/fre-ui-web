@@ -1,7 +1,16 @@
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
-import { Button, Grid, Paper, Typography } from "@mui/material";
+import { useTheme } from "@material-ui/core";
+import {
+  Badge,
+  Button,
+  Grid,
+  Paper,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
+import MailIcon from "../../asset/icons/mailIcon";
+import PhoneIcon from "../../asset/icons/phoneIcon";
+import PremiumIcon from "../../asset/icons/premiumIcon";
 import { getMockData } from "./getMockData";
 
 export type UserData = {
@@ -17,6 +26,7 @@ export type UserData = {
 };
 
 const ProfileContainer = () => {
+  const theme = useTheme();
   const [userData, setUserData] = useState<UserData>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -36,6 +46,9 @@ const ProfileContainer = () => {
           item
           xs={3}
           sx={{
+            [theme.breakpoints.down("sm")]: {
+              marginTop: theme.spacing(1),
+            },
             backgroundImage: `url("/${userData?.picture}")`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -45,7 +58,7 @@ const ProfileContainer = () => {
           }}
           order={[2, 2, 1]}
         >
-          <img src={userData?.picture} />
+          {loading ? <Skeleton height={384} /> : null}
         </Grid>
         <Grid
           container
@@ -53,36 +66,182 @@ const ProfileContainer = () => {
           xs={9}
           direction="column"
           spacing={3}
-          sx={{ padding: 4 }}
+          sx={{ [theme.breakpoints.up("md")]: { padding: theme.spacing(1) } }}
           order={[1, 1, 2]}
         >
           <Grid item sx={{ marginLeft: "auto" }}>
-            <Button variant="text" sx={{ color: "text.secondary" }}>
+            <Button
+              variant="text"
+              disabled={loading}
+              sx={{ color: "text.secondary" }}
+            >
               Edit Profile
             </Button>
           </Grid>
           <Grid item>
-            <Typography variant="h2">{userData?.name}</Typography>
+            <Typography variant="h2">
+              {loading ? <Skeleton width="30%" height={70} /> : userData?.name}
+            </Typography>
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" color="secondary">
-              {userData?.position}
+              {loading ? (
+                <Skeleton width="30%" height={50} />
+              ) : (
+                userData?.position
+              )}
             </Typography>
           </Grid>
-          <Grid container item direction="row" spacing={2}>
+          <Grid container item direction="row" spacing={2} alignItems="center">
             <Grid item>
-              <EmailIcon />
+              <MailIcon />
             </Grid>{" "}
             <Grid item>
-              <Typography variant="body1">{userData?.email}</Typography>
+              <Typography variant="body1">
+                {loading ? (
+                  <Skeleton height={50} width={150} />
+                ) : (
+                  userData?.email
+                )}
+              </Typography>
             </Grid>
           </Grid>
-          <Grid container item direction="row" spacing={2}>
+          <Grid container item direction="row" spacing={2} alignItems="center">
             <Grid item>
               <PhoneIcon />
             </Grid>
             <Grid item>
-              <Typography variant="body1">{userData?.phone}</Typography>
+              <Typography variant="body1">
+                {loading ? (
+                  <Skeleton height={50} width={150} />
+                ) : (
+                  userData?.phone
+                )}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid container sx={{ padding: 2 }}>
+        <Grid item xs={0} md={3}></Grid>
+        <Grid container item direction="column" xs={12} md={9}>
+          <Grid container>
+            <Grid
+              item
+              sx={{
+                [theme.breakpoints.up("md")]: { marginLeft: theme.spacing(1) },
+              }}
+            >
+              <hr />
+            </Grid>
+            <Grid
+              container
+              item
+              spacing={3}
+              alignItems="center"
+              sx={{
+                [theme.breakpoints.up("md")]: { padding: theme.spacing(1) },
+              }}
+            >
+              <Grid item>
+                <Typography variant="h2">Membership</Typography>
+              </Grid>
+              <Grid item>
+                {loading ? (
+                  <Skeleton
+                    width={157}
+                    height={70}
+                    sx={{ borderRadius: theme.shape.borderRadius }}
+                  />
+                ) : (
+                  <Badge
+                    sx={{
+                      backgroundColor: "#EBC052",
+                      borderRadius: 4,
+                      paddingX: 3,
+                      paddingY: 0.5,
+                    }}
+                  >
+                    <Grid container alignItems="center">
+                      <Grid item>
+                        <PremiumIcon />
+                      </Grid>
+                      <Grid item>
+                        {userData?.membership === "premium" && (
+                          <Typography variant="h6">Premium</Typography>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Badge>
+                )}
+              </Grid>
+              <Grid item sx={{ marginLeft: "auto" }}>
+                <Button
+                  variant="text"
+                  disabled={loading}
+                  sx={{ color: "text.secondary" }}
+                >
+                  Edit Membership
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              sx={{
+                [theme.breakpoints.up("md")]: { padding: theme.spacing(1) },
+              }}
+              direction="row"
+            >
+              <Grid container direction="column" sm={4}>
+                <Grid item>
+                  <Typography color="secondary" variant="body1">
+                    Next Payment
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1">
+                    {loading ? (
+                      <Skeleton width="35%" height={50} />
+                    ) : (
+                      userData?.nextPayment
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container direction="column" sm={4}>
+                <Grid item>
+                  <Typography color="secondary" variant="body1">
+                    Subscription ID
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1">
+                    {loading ? (
+                      <Skeleton width="35%" height={50} />
+                    ) : (
+                      userData?.subscriptionId
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container direction="column" sm={4}>
+                <Grid item>
+                  <Typography color="secondary" variant="body1">
+                    Price
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1">
+                    {loading ? (
+                      <Skeleton width="35%" height={50} />
+                    ) : (
+                      userData?.price
+                    )}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
