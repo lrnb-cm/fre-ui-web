@@ -1,50 +1,109 @@
-import { Grid, Theme, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import AlternativeText from "./AlternativeText";
-import Logo from "./Logo";
+import { Grid, Theme, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import AlternativeText from './AlternativeText';
+import Logo from './Logo';
 
 const useStyles = makeStyles((theme: Theme) => ({
   contentContainer: {
     background: theme.palette.background.default,
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up('md')]: {
       paddingLeft: theme.spacing(15),
     },
     paddingLeft: theme.spacing(5),
   },
   mobileLogoContainer: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
     },
   },
   mainContainer: {
-    minHeight: "100vh",
+    minHeight: '100vh',
+    // height: '100vh',
+    position: 'relative',
+    backgroundColor: '#F7F7F7',
+    // [theme.breakpoints.down('md')]: {
+    //   height: '100%',
+    // },
+  },
+  logoContainer: {
+    position: 'absolute',
+    top: '15px',
+    left: '40px',
+    [theme.breakpoints.down('md')]: {
+      left: '40px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      left: '10px',
+    },
+  },
+  imgContainer: {
+    // height: '100%',
+    width: '100%',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
   },
   mainText: {
-    [theme.breakpoints.down("sm")]: {
-      paddingTop: 0,
+    padding: theme.custom.pxToRem(110, 10, 80, 80),
+
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.custom.pxToRem(64),
+      // paddingBottom: theme.custom.pxToRem(5),
+      paddingBottom: '0px',
+      flexDirection: 'unset',
     },
-    marginTop: theme.spacing(5),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.custom.pxToRem(110, 50, 10, 50),
+      flexDirection: 'unset !important',
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.custom.pxToRem(110, 20, 10, 20),
+      flexDirection: 'unset !important',
+    },
+  },
+  alternateText: {
+    paddingLeft: theme.custom.pxToRem(48),
+    paddingTop: theme.custom.pxToRem(60),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.custom.pxToRem(100),
+      // paddingBottom: theme.custom.pxToRem(5),
+      justifyContent: 'center',
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.custom.pxToRem(30, 10),
+      // paddingTop: theme.custom.pxToRem(30),
+      display: 'flex',
+      justifyContent: 'center',
+      alignContent: 'end',
+    },
   },
   showOnDesktopOnly: {
-    [theme.breakpoints.down("md")]: {
-      display: "none",
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
   showOnMobileOnly: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
   },
   sidebar: {
     backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
   svgContainer: {
-    overflow: "hidden",
-    [`${theme.breakpoints.down("sm")}`]: {
-      display: "none",
+    overflow: 'hidden',
+    [`${theme.breakpoints.down('md')}`]: {
+      display: 'none',
     },
   },
 }));
@@ -56,6 +115,7 @@ export interface Props {
   bodyText: string;
   headingText: string;
   children: JSX.Element | JSX.Element[];
+  image: any;
 }
 
 const Account: React.FunctionComponent<Props> = ({
@@ -65,68 +125,29 @@ const Account: React.FunctionComponent<Props> = ({
   bodyText,
   headingText,
   children,
+  image,
 }: Props) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.mainContainer}>
+      <Grid item md={2} className={classes.logoContainer}>
+        <Logo />
+      </Grid>
+
       <Grid
         item
         container
         direction="column"
         justifyContent="space-around"
         alignItems="flex-start"
-        className={classes.sidebar}
-        sm={4}
+        md={4}
+        sm={0}
+        className={classes.imgContainer}
       >
-        <Grid item md={2} pt={2} pl={5}>
-          <Logo />
-        </Grid>
-        <Grid item container justifyContent="space-between" md={2} pl={5}>
-          <Grid item>
-            <Typography variant="h2" color="white">
-              Freeing Returns
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6" color="white" pr={5}>
-              Empowers Retailers to Master Returns Management and Reduce Total
-              Retail Loss
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid item alignSelf="flex-end" md={8} className={classes.svgContainer}>
-          <img src="/Big Shoes Hero.svg" height="auto" width="100%" />
-        </Grid>
+        <img src={image} className={classes.image} />
       </Grid>
-      <Grid
-        container
-        item
-        bgcolor="default"
-        direction="column"
-        justifyContent="flex-start"
-        sm={8}
-        py={5}
-        className={classes.contentContainer}
-      >
-        <Grid
-          item
-          alignSelf="flex-end"
-          pr={5}
-          className={classes.showOnDesktopOnly}
-        >
-          <AlternativeText
-            altText={altText}
-            altLink={altLink}
-            altLinkText={altLinkText}
-          />
-        </Grid>
-        <Grid
-          item
-          className={classes.mobileLogoContainer}
-          alignSelf="flex-start"
-        >
-          <Logo />
-        </Grid>
+
+      <Grid item container md={8} sm={24}>
         <Grid
           item
           container
@@ -135,16 +156,23 @@ const Account: React.FunctionComponent<Props> = ({
           flexGrow={2}
           className={classes.mainText}
           spacing={2}
+          sm={24}
+          lg={8}
         >
           <Grid item>
             <Typography variant="h2">{headingText}</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="body1">{bodyText}</Typography>
+            <Typography variant="body1" pr={8}>
+              {bodyText}
+            </Typography>
           </Grid>
-          {children}
+          <Grid item container direction="row" spacing={2}>
+            {children}
+          </Grid>
         </Grid>
-        <Grid item alignSelf="center" className={classes.showOnMobileOnly}>
+
+        <Grid item container lg={4} sm={24} className={classes.alternateText}>
           <AlternativeText
             altText={altText}
             altLink={altLink}
