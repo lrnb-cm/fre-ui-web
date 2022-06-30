@@ -25,6 +25,7 @@ import {
   REPORT,
   DASHBOARD,
   MY_SHOP,
+  DATA_STUDIO,
 } from '../../constants/routes';
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.custom.sidebar.open,
@@ -128,6 +129,11 @@ export default function ResponsiveDrawer() {
       text: 'Customers',
       icon: CustomerIcon,
       onClick: () => navigate(CUSTOMERS),
+    },
+    {
+      text: 'Data Studio',
+      icon: DashIcon,
+      onClick: () => navigate(DATA_STUDIO),
     },
   ];
   const bottomNav = [
