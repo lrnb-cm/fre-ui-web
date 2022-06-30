@@ -14,7 +14,7 @@ import {
   forgotPwdValidationSchema,
 } from './forgotPwdSchema';
 import forgotPwdImage from '../../asset/img/forgotpassword.png';
-
+import { LOGIN } from '../../constants/routes';
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -90,7 +90,7 @@ export default function ForgotPassword() {
             </Alert>
           </Snackbar>
           <Account
-            altLink="/login"
+            altLink={LOGIN}
             altText="Already have an account?"
             altLinkText="Login"
             headingText="Forgot Password?"
