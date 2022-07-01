@@ -3,7 +3,7 @@ import {
   ApolloProvider,
   from,
   HttpLink,
-  InMemoryCache,
+  InMemoryCache
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
@@ -11,7 +11,7 @@ import { CssBaseline } from '@mui/material';
 import {
   createTheme,
   StyledEngineProvider,
-  ThemeProvider,
+  ThemeProvider
 } from '@mui/material/styles';
 import { deepmerge } from '@mui/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,31 +22,27 @@ import './App.css';
 import { Containers, LoginContainer } from './components';
 import Customer from './components/customerContainer/Customers';
 import DashboardContainer from './components/dashboardContainer/DashboardContainer';
+import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
+import ForgotPassword from './components/forgotPasswordContainer/ForgotPasswordContainer';
 import Layout from './components/Layout';
 import LoginCallback from './components/loginContainer/Callback';
 import MyShopContainer from './components/myshopContainer/MyShopContainer';
 import MyShopDetailsContainer from './components/myShopDetailsContainer/MyShopDetailsContainer';
 import ProductsContainer from './components/productsContainer/ProductsContainer';
+import { ReportContainer } from './components/reportContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
-import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
 import { uri } from './config';
 import {
   CUSTOMERS,
-  DASHBOARD,
-  MY_SHOP,
-  PRODUCTS,
-  REPORT_DETAILS,
+  DASHBOARD, DATA_STUDIO, FORGOT_PASSWORD, LOGIN, MY_SHOP,
+  PRODUCTS, REPORT, REPORT_DETAILS,
   SHOP_DETAILS,
-  TRANSACTIONS,
-  FORGOT_PASSWORD,
-  DATA_STUDIO,
-  LOGIN,
+  TRANSACTIONS
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
 import { UserContext } from './contexts/UserContext';
 import GET_USER_DATA from './queries/GET_USER_DATA';
 import { customTheming, theme } from './theme';
-import ForgotPassword from './components/forgotPasswordContainer/ForgotPasswordContainer';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
@@ -201,6 +197,10 @@ export default function App() {
                       <Route index element={<DashboardContainer />} />
                       <Route path={CUSTOMERS} element={<Customer />} />
                       <Route path={PRODUCTS} element={<ProductsContainer />} />
+                      <Route
+                        path={REPORT}
+                        element={<ReportContainer />}
+                      />
                       <Route
                         path={REPORT_DETAILS}
                         element={<ReportDetailsContainer />}

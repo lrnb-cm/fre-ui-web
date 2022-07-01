@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { withTheme } from '@mui/styles'
-import React from 'react'
 import mailbox from '../../../asset/img/mailbox.svg'
 import more from '../../../asset/img/more.svg'
 import image from '../../../asset/img/shopImage.png'
@@ -55,12 +54,17 @@ const ShopImage = styled('img')(({ theme }) => ({
    width: '100%',
    height: '100%',
 }))
+
 const ShopImageWrapper = styled(withTheme(Grid))(({ theme }) => ({
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'center',
    paddingTop: '0px !important',
    paddingLeft: '0px !important',
    borderRadius: '16px',
    overflow: 'hidden',
-   height: '264px',
+   width: '100%',
+   height: 'auto',
 }))
 
 const ShopContent = styled(withTheme(Grid))(({ theme }) => ({
