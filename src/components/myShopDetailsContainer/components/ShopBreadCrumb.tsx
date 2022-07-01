@@ -1,17 +1,18 @@
-import React, { FC, ReactElement } from 'react'
+import { Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { withTheme } from '@mui/styles'
-import { Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import arrowBack from '../../../asset/img/arrowBack.svg'
 import cursorPlay from '../../../asset/img/cursorPlay.svg'
 
 export default function ShopBreadCrumb() {
+  const navigate = useNavigate()
   return (
     <BreadCrumbWrapper container>
-      <Grid item>
+      <Grid item onClick={() => navigate(-1)}>
         <BackIcon src={arrowBack} alt="back-icon" />
       </Grid>
-      <Grid item>
+      <Grid item onClick={() => navigate("/dashboard/myshops")}>
         <ShopTitle>My shops</ShopTitle>
       </Grid>
       <Grid item>
