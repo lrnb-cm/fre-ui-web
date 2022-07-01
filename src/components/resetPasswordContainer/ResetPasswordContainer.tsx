@@ -15,13 +15,15 @@ import {
 } from './resetPasswordSchema';
 import resetPwdImage from '../../asset/img/resetpassword.png';
 import { LOGIN } from '../../constants/routes';
+import PasswordStrengthBar from 'react-password-strength-bar';
+import LoadingButton from '@mui/lab/LoadingButton';
+
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const useStyles = makeStyles((theme: Theme) => ({
-   btn: {
-      // width: '79px',
+   resetbtn: {
       padding: '15px 16px',
       height: '48px',
       background: '#3758CC',
@@ -40,6 +42,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       [theme.breakpoints.down('md')]: {
          width: '100%',
       },
+      '&:hover': {
+         backgroundColor: '#3758CC',
+      },
    },
    pwdLink: {
       textDecoration: 'underline',
@@ -50,21 +55,30 @@ export default function ResetPassword() {
    const classes = useStyles();
 
    const [open, setOpen] = useState(false);
+   const [isDisabled, setIsDisabled] = useState(true);
+   const [loading, setLoading] = useState(false);
 
    const handleClose = () => setOpen(false);
 
+   const passwordScore = (score: number) => {
+      if (score >= 3) {
+         setIsDisabled(false);
+      } else {
+         setIsDisabled(true);
+      }
+   };
    return (
       <Formik
          initialValues={resetPwdInitialValues}
          validationSchema={resetPwdValidationSchema}
-         validate={(values) => {
-            const errors: any = {};
-
-            return errors;
-         }}
          onSubmit={(values) => {
             console.log({ values });
-            setOpen(true);
+            setLoading(true);
+            if (values.password !== values.passwordConfirm) {
+               setLoading(false);
+               return setOpen(true);
+            }
+            setLoading(false);
          }}
       >
          {({ handleChange, handleSubmit, touched, errors, values }) => (
@@ -118,7 +132,23 @@ export default function ResetPassword() {
                         }}
                      />
                   </Grid>
-                  <Grid item xs={24}>
+                  <Grid item xs={24} sx={{ height: '20px' }}>
+                     {values.password && (
+                        <PasswordStrengthBar
+                           password={values.password}
+                           onChangeScore={passwordScore}
+                        />
+                     )}
+                  </Grid>
+                  <Grid
+                     item
+                     xs={24}
+                     sx={{
+                        '&.MuiGrid-item': {
+                           paddingTop: '0px',
+                        },
+                     }}
+                  >
                      <TextInput
                         label="Confirm new password"
                         placeholder="Confirm new pasword"
@@ -149,9 +179,20 @@ export default function ResetPassword() {
                      />
                   </Grid>
                   <Grid item xs={24}>
-                     <button className={classes.btn} type="submit">
-                        Send Reset Instruction
-                     </button>
+                     <LoadingButton
+                        type="submit"
+                        loading={loading}
+                        disabled={isDisabled}
+                        className={classes.resetbtn}
+                        sx={{
+                           '.MuiLoadingButton-root': {},
+                           '&.MuiLoadingButton-loadingIndicator': {
+                              color: '#fff',
+                           },
+                        }}
+                     >
+                        Reset Password
+                     </LoadingButton>
                   </Grid>
                </Account>
             </form>
