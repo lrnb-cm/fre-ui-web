@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { experimentalStyled as styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
-import telephone from '../../../asset/img/telephone.svg'
-import mailbox from '../../../asset/img/mailbox.svg'
+import { experimentalStyled as styled } from '@mui/material/styles'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import arrowRight from '../../../asset/img/arrow-right.svg'
+import mailbox from '../../../asset/img/mailbox.svg'
+import telephone from '../../../asset/img/telephone.svg'
 
 export default function ShopTile() {
   const data = {
@@ -16,6 +17,10 @@ export default function ShopTile() {
       { name: 'All Stars', address: '2923 Sycamre Street ', city: 'Santa Clara CA' }
     ]
   }
+  const navigate = useNavigate()
+
+  //Todo: during api integration, pass the shop id to the MyShopDetailsContainer via the url
+  const handleShopNavigation = (url = '') => navigate(url ? url : '/dashboard/myshops/details')
 
   const [fill, setFill] = useState('#3C3C3C')
   return (
@@ -31,7 +36,7 @@ export default function ShopTile() {
                 <TelIcon src={telephone} alt="mailbox" className="iconhover" />
                 <Mailbox src={mailbox} alt="mailbox" className="iconhover" />
               </div>
-              <ArrowRight src={arrowRight} alt="arrowRight" className="iconhover" />
+              <ArrowRight src={arrowRight} alt="arrowRight" className="iconhover" onClick={() => handleShopNavigation()} />
             </ReportContactIcons>
           </ReportContactWrapper>
         </Grid>
