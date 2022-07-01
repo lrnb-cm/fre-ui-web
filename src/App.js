@@ -89,6 +89,11 @@ export default function App() {
                       }
                     >
                       <Route index element={<DashboardContainer />} />
+                      <Route
+                        path={DATA_STUDIO}
+                        element={<DataStudioContainer />}
+                      />
+
                       <Route path={CUSTOMERS} element={<Customer />} />
                       <Route path={PRODUCTS} element={<ProductsContainer />} />
                       <Route
@@ -100,10 +105,6 @@ export default function App() {
                       <Route
                         path={SHOP_DETAILS}
                         element={<MyShopDetailsContainer />}
-                      />
-                      <Route
-                        path={DATA_STUDIO}
-                        element={<DataStudioContainer />}
                       />
 
                       {/* Using path="*"" means "match anything", so this route

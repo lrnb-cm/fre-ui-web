@@ -95,7 +95,7 @@ export default function LoginComp() {
         });
 
         //store session token
-        sessionStorage.setItem('token', data.data.loginProvider.token);
+        sessionStorage.setItem('user', JSON.stringify(data.data.loginProvider));
 
         setLoading(false);
 

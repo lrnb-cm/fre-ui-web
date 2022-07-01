@@ -3,18 +3,17 @@ import { AuthContext } from './AuthContext';
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<any | null>(null);
+  const userData = sessionStorage.getItem('user') || '';
 
   useEffect(() => {
     (async () => {
-      const token = sessionStorage.getItem('token') || '';
-
       try {
-        if (token !== '') {
+        if (userData !== '') {
           //get user and user token
           /**
            * @todo // once authentication flow is finalized and also keep williams code for future reference regarding permissions
            */
-          setUser(null);
+          setUser(JSON.parse(userData));
         } else {
           //if no token setuser null
           setUser(null);
@@ -31,7 +30,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
-        authenticated: user !== null,
+        authenticated: userData !== null,
         setUser,
       }}
     >

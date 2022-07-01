@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAuthContext } from '../auth/authProvider/AuthContext';
 
 type indexType = { [key: string]: string };
@@ -27,7 +26,7 @@ export default function DataStudioContainer() {
           width: '100%',
         }}
         allowFullScreen
-      ></iframe>
+      />
     </div>
   );
 }
