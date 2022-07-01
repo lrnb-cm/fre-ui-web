@@ -3,6 +3,7 @@ export const DASHBOARD = '/dashboard';
 export const LOGIN = '/';
 export const CUSTOMERS = `${DASHBOARD}/customers`;
 export const PRODUCTS = `${DASHBOARD}/products`;
+export const PROFILE = `${DASHBOARD}/profile`;
 export const REPORT = `${DASHBOARD}/reports`;
 export const REPORT_DETAILS = `${REPORT}/details`;
 export const TRANSACTIONS = `${DASHBOARD}/transactions`;

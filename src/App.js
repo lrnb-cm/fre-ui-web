@@ -24,18 +24,22 @@ import ProductsContainer from './components/productsContainer/ProductsContainer'
 import { ReportContainer } from './components/reportContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
 import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
+
+import ProfileContainer from './components/profileContainer';
+
 import {
    CUSTOMERS,
    DASHBOARD,
+   DATA_STUDIO,
    FORGOT_PASSWORD,
+   LOGIN,
    MY_SHOP,
    PRODUCTS,
    REPORT,
    REPORT_DETAILS,
    SHOP_DETAILS,
    TRANSACTIONS,
-   DATA_STUDIO,
-   LOGIN,
+   PROFILE,
    RESET_PASSWORD,
 } from './constants/routes';
 import { FirebaseContext } from './components/auth/firebase/FirebaseContext';
@@ -139,6 +143,10 @@ export default function App() {
                                  <Route
                                     path={SHOP_DETAILS}
                                     element={<MyShopDetailsContainer />}
+                                 />
+                                 <Route
+                                    path={PROFILE}
+                                    element={<ProfileContainer />}
                                  />
 
                                  {/* Using path="*"" means "match anything", so this route
