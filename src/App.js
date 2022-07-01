@@ -31,12 +31,14 @@ import MyShopDetailsContainer from './components/myShopDetailsContainer/MyShopDe
 import ProductsContainer from './components/productsContainer/ProductsContainer';
 import { ReportContainer } from './components/reportContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
+import ShopReportsContainer from './components/shopReportsContainer/shopReportsContainer';
 import { uri } from './config';
 import {
   CUSTOMERS,
   DASHBOARD, DATA_STUDIO, FORGOT_PASSWORD, LOGIN, MY_SHOP,
   PRODUCTS, REPORT, REPORT_DETAILS,
   SHOP_DETAILS,
+  SHOP_REPORTS,
   TRANSACTIONS
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
@@ -207,6 +209,7 @@ export default function App() {
                       />
                       <Route path={TRANSACTIONS} element={<Containers />} />
                       <Route path={MY_SHOP} element={<MyShopContainer />} />
+                      <Route path={SHOP_REPORTS} element={<ShopReportsContainer />} />
                       <Route
                         path={SHOP_DETAILS}
                         element={<MyShopDetailsContainer />}

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import arrowBack from '../../../asset/img/arrowBack.svg'
 import cursorPlay from '../../../asset/img/cursorPlay.svg'
 
-export default function ShopBreadCrumb() {
+export default function ShopReportsBreadCrumb() {
   const navigate = useNavigate()
   return (
     <BreadCrumbWrapper container>
@@ -13,13 +13,20 @@ export default function ShopBreadCrumb() {
         <BackIcon src={arrowBack} alt="back-icon" />
       </Grid>
       <Grid item onClick={() => navigate("/dashboard/myshops")}>
-        <ShopTitle>My shops</ShopTitle>
+        <BreadCrumbSegment>My shops</BreadCrumbSegment>
+      </Grid>
+      <Grid item>
+        <CursorPlayIcon src={cursorPlay} alt="arrowback-icon" />
+      </Grid>
+      {/* Todo: make url and name dynamic during API integration */}
+      <Grid item onClick={() => navigate("/dashboard/myshops/details")}>
+        <BreadCrumbSegment>Good Shop</BreadCrumbSegment>
       </Grid>
       <Grid item>
         <CursorPlayIcon src={cursorPlay} alt="arrowback-icon" />
       </Grid>
       <Grid item>
-        <ShopName>Nike Factory Store</ShopName>
+        <ShopName>All Reports</ShopName>
       </Grid>
     </BreadCrumbWrapper>
   )
@@ -39,7 +46,7 @@ const BackIcon = styled('img')(({ theme }) => ({
 const CursorPlayIcon = styled('img')(({ theme }) => ({
   marginRight: theme.custom.pxToRem(15.5)
 }))
-const ShopTitle = styled('button')(({ theme }) => ({
+const BreadCrumbSegment = styled('button')(({ theme }) => ({
   fontFamily: theme.typography.fontFamilyBold,
   fontStyle: 'normal',
   fontWeight: theme.typography.fontWeightBold,

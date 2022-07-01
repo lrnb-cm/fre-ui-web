@@ -8,5 +8,6 @@ export const REPORT_DETAILS = `${REPORT}/details`;
 export const TRANSACTIONS = `${DASHBOARD}/transactions`;
 export const MY_SHOP = `${DASHBOARD}/myshops`;
 export const SHOP_DETAILS = `${MY_SHOP}/details`;
+export const SHOP_REPORTS = `${SHOP_DETAILS}/reports`;
 export const FORGOT_PASSWORD = '/forgot_password';
 export const DATA_STUDIO = `${DASHBOARD}/data_studio`;
