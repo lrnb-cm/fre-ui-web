@@ -1,6 +1,5 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react'
 
-// Todo: strongly type the user context
-export const AuthContext = createContext<any | null>(null);
+export const AuthContext = createContext<any | null>(null)
 
-export const useAuthContext = () => useContext(AuthContext);
+export const useAuthContext = () => useContext(AuthContext)
