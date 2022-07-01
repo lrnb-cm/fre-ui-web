@@ -25,6 +25,7 @@ import { loginInitialValues, loginValidationSchema } from './loginSchema';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ReCAPTCHA from 'react-google-recaptcha';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
@@ -49,8 +50,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     cursor: 'pointer',
     border: 'none',
+    textTransform: 'capitalize',
     [theme.breakpoints.down('md')]: {
       width: '100%',
+    },
+    '&:hover': {
+      backgroundColor: '#3758CC',
     },
   },
   pwdLink: {
@@ -70,10 +75,12 @@ export default function LoginComp() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
   const handleLogin = (payload: any) => {
+    setLoading(true);
     login({
       variables: {
         provider: payload.state,
@@ -90,11 +97,14 @@ export default function LoginComp() {
         //store session token
         sessionStorage.setItem('token', data.data.loginProvider.token);
 
+        setLoading(false);
+
         //navigate to dashboard
         navigate(DASHBOARD);
       })
       .catch((err) => {
         setOpen(true);
+        setLoading(false);
       });
   };
 
@@ -292,16 +302,20 @@ export default function LoginComp() {
             </Grid>
 
             <Grid item xs={24}>
-              <button
-                className={classes.btn}
+              <LoadingButton
                 type="submit"
+                loading={loading}
                 disabled={isDisabled}
-                style={{
-                  cursor: isDisabled ? 'not-allowed' : 'pointer',
+                className={classes.btn}
+                sx={{
+                  '.MuiLoadingButton-root': {},
+                  '.MuiLoadingButton-loadingIndicator': {
+                    color: '#fff',
+                  },
                 }}
               >
                 Login
-              </button>
+              </LoadingButton>
             </Grid>
           </Account>
         </form>
