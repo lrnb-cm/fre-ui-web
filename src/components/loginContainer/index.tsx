@@ -1,37 +1,31 @@
-import React, { useState } from 'react'
-import {
-   useApolloClient,
-   useLazyQuery,
-   useMutation,
-   useReactiveVar,
-} from '@apollo/client'
-import { Grid, Theme, IconButton, InputAdornment } from '@mui/material'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { useNavigate, Link } from 'react-router-dom'
-import { useFirebaseContext } from '../auth/firebase/FirebaseContext'
-import { useAuthContext } from '../auth/authProvider/AuthContext'
-import GET_USER_DATA from '../../queries/GET_USER_DATA'
-import Account from '../auth/Account'
-import TextInput from '../form/TextInput'
-import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations'
-import { localState } from './state/loginState'
-import loginImage from '../../asset/img/signin.png'
-import { makeStyles } from '@mui/styles'
-import { DASHBOARD, FORGOT_PASSWORD } from '../../constants/routes'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { Formik } from 'formik'
-import { loginInitialValues, loginValidationSchema } from './loginSchema'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert from '@mui/material/Alert'
-import ReCAPTCHA from 'react-google-recaptcha'
-import LoadingButton from '@mui/lab/LoadingButton'
+import React, { useState } from 'react';
+import { useApolloClient, useLazyQuery, useMutation } from '@apollo/client';
+import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate, Link } from 'react-router-dom';
+import { useFirebaseContext } from '../auth/firebase/FirebaseContext';
+import { useAuthContext } from '../auth/authProvider/AuthContext';
+import GET_USER_DATA from '../../queries/GET_USER_DATA';
+import Account from '../auth/Account';
+import TextInput from '../form/TextInput';
+import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
+import loginImage from '../../asset/img/signin.png';
+import { makeStyles } from '@mui/styles';
+import { DASHBOARD, FORGOT_PASSWORD } from '../../constants/routes';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Formik } from 'formik';
+import { loginInitialValues, loginValidationSchema } from './loginSchema';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import ReCAPTCHA from 'react-google-recaptcha';
+import LoadingButton from '@mui/lab/LoadingButton';
 
-const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i'
+const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
-   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const useStyles = makeStyles((theme: Theme) => ({
    btn: {
@@ -61,26 +55,25 @@ const useStyles = makeStyles((theme: Theme) => ({
    pwdLink: {
       textDecoration: 'underline',
    },
-}))
+}));
 export default function LoginComp() {
-   const classes = useStyles()
+   const classes = useStyles();
 
-   const [login] = useMutation(OIDC_LOGIN)
-   const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA)
-   const state = useReactiveVar(localState)
-   const firebase = useFirebaseContext()
-   const apolloClient = useApolloClient()
-   const navigate = useNavigate()
-   const { setUser } = useAuthContext()
+   const [login] = useMutation(OIDC_LOGIN);
+   const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
+   const firebase = useFirebaseContext();
+   const apolloClient = useApolloClient();
+   const navigate = useNavigate();
+   const { setUser } = useAuthContext();
 
-   const [showPassword, setShowPassword] = useState(false)
-   const [isDisabled, setIsDisabled] = useState(true)
-   const [loading, setLoading] = useState(false)
+   const [showPassword, setShowPassword] = useState(false);
+   const [isDisabled, setIsDisabled] = useState(true);
+   const [loading, setLoading] = useState(false);
 
-   const [open, setOpen] = useState(false)
+   const [open, setOpen] = useState(false);
 
    const handleLogin = (payload: any) => {
-      setLoading(true)
+      setLoading(true);
       login({
          variables: {
             provider: payload.state,
@@ -90,47 +83,47 @@ export default function LoginComp() {
          .then((data) => {
             setUser({
                ...data.data.loginProvider,
-            })
+            });
 
             //store session token
             sessionStorage.setItem(
                'user',
                JSON.stringify(data.data.loginProvider)
-            )
+            );
 
-            setLoading(false)
+            setLoading(false);
 
             //navigate to dashboard
-            navigate(DASHBOARD)
+            navigate(DASHBOARD);
          })
          .catch(() => {
-            setOpen(true)
-            setLoading(false)
-         })
-   }
+            setOpen(true);
+            setLoading(false);
+         });
+   };
 
    const handleFirebaseLogin = (e: React.SyntheticEvent) => {
-      e.preventDefault()
+      e.preventDefault();
       if (!firebase)
          throw new Error(
             'useFirebaseContext must be within FirebaseContext.Provider'
-         )
-      const loginEmail = 'sample@yahoo.com'
+         );
+      const loginEmail = 'sample@yahoo.com';
 
-      const password = ''
+      const password = '';
       // GCP Identity Platform / Firebase email/password authentication
-      const auth = getAuth(firebase)
+      const auth = getAuth(firebase);
       signInWithEmailAndPassword(auth, loginEmail, password)
          .then(async (res) => {
             // Get then set the idToken (& email) in localStorage
-            const idToken = await res.user.getIdToken()
-            localStorage.setItem('idToken', idToken)
-            localStorage.setItem('email', res.user.email || '')
+            const idToken = await res.user.getIdToken();
+            localStorage.setItem('idToken', idToken);
+            localStorage.setItem('email', res.user.email || '');
 
             console.log(
                idToken,
                'idToken in signInWithEmailAndPassword.then - fetching data now..'
-            )
+            );
 
             // Todo: add error handling if user does not exist in our database?
             // Get basic user data and permissions and set them to the user context
@@ -139,51 +132,51 @@ export default function LoginComp() {
                variables: {
                   filters: { email: res.user.email },
                },
-            })
+            });
             setUser({
                ...userData.data.getUser,
                idToken,
                userCredential: res,
-            })
+            });
 
             //Todo: where should the user be redirected to after logging in?
-            navigate('/secure-route')
+            navigate('/secure-route');
          })
          .catch((error) => {
             //Todo: handle login error
-            console.error(error.message)
-         })
-   }
+            console.error(error.message);
+         });
+   };
 
-   const handleClose = () => setOpen(false)
+   const handleClose = () => setOpen(false);
    const onCaptchaChange = async (val: any) => {
       const response = await verifyCaptcha({
          variables: {
             captchaToken: val,
          },
-      })
+      });
       if (response) {
-         setIsDisabled(false)
+         setIsDisabled(false);
       }
-   }
+   };
    return (
       <Formik
          initialValues={loginInitialValues}
          validationSchema={loginValidationSchema}
          validate={(values) => {
-            const errors: any = {}
+            const errors: any = {};
             if (!values.email) {
-               errors.email = 'Required'
+               errors.email = 'Required';
             } else if (
                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-               errors.email = 'Invalid email address'
+               errors.email = 'Invalid email address';
             }
-            return errors
+            return errors;
          }}
          onSubmit={(values) => {
-            console.log({ values })
-            handleLogin({ ...values, state: 'standard' })
+            console.log({ values });
+            handleLogin({ ...values, state: 'standard' });
          }}
       >
          {({ handleChange, handleSubmit, touched, errors, values }) => (
@@ -253,13 +246,13 @@ export default function LoginComp() {
                                  aria-label="toggle password visibility"
                                  onClick={(e) => {
                                     //preventDefault so the input's active styles remain
-                                    e.preventDefault()
-                                    setShowPassword(!showPassword)
+                                    e.preventDefault();
+                                    setShowPassword(!showPassword);
                                  }}
                                  onMouseDown={(e) => {
                                     //preventDefault so the input's active styles remain
-                                    e.preventDefault()
-                                    setShowPassword(!showPassword)
+                                    e.preventDefault();
+                                    setShowPassword(!showPassword);
                                  }}
                                  edge="end"
                               >
@@ -329,5 +322,5 @@ export default function LoginComp() {
             </form>
          )}
       </Formik>
-   )
+   );
 }

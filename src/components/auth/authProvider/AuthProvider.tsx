@@ -1,30 +1,27 @@
-import { useEffect, useState, ReactNode } from 'react'
-import { AuthContext } from './AuthContext'
+import { useEffect, useState, ReactNode } from 'react';
+import { AuthContext } from './AuthContext';
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-   const [user, setUser] = useState<any | null>(null)
-   const userData = sessionStorage.getItem('user') || ''
+   const [user, setUser] = useState<any | null>(null);
+   const userData = sessionStorage.getItem('user') || '';
 
    useEffect(() => {
-      ;(async () => {
+      (async () => {
          try {
             if (userData !== '') {
                //get user and user token
-               /**
-                * @//todo // once authentication flow is finalized and also keep williams code for future reference regarding permissions
-                */
-               setUser(JSON.parse(userData))
+               setUser(JSON.parse(userData));
             } else {
                //if no token setuser null
-               setUser(null)
+               setUser(null);
             }
          } catch (error) {
-            setUser(null)
+            setUser(null);
          }
-      })()
+      })();
 
       // eslint-disable-next-line
-   }, [])
+   }, []);
 
    return (
       <AuthContext.Provider
@@ -36,5 +33,5 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       >
          {children}
       </AuthContext.Provider>
-   )
+   );
 }
