@@ -22,6 +22,7 @@ import './App.css';
 import { Containers, LoginContainer } from './components';
 import Customer from './components/customerContainer/Customers';
 import DashboardContainer from './components/dashboardContainer/DashboardContainer';
+import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
 import ForgotPassword from './components/forgotPasswordContainer/ForgotPasswordContainer';
 import Layout from './components/Layout';
 import LoginCallback from './components/loginContainer/Callback';
@@ -30,17 +31,13 @@ import MyShopDetailsContainer from './components/myShopDetailsContainer/MyShopDe
 import ProductsContainer from './components/productsContainer/ProductsContainer';
 import { ReportContainer } from './components/reportContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
-import DataStudioContainer from './components/dataStudioContainer/DataStudioContainer';
 import { uri } from './config';
 import {
   CUSTOMERS,
-  DASHBOARD, FORGOT_PASSWORD, MY_SHOP,
+  DASHBOARD, DATA_STUDIO, FORGOT_PASSWORD, LOGIN, MY_SHOP,
   PRODUCTS, REPORT, REPORT_DETAILS,
   SHOP_DETAILS,
-  TRANSACTIONS,
-  FORGOT_PASSWORD,
-  DATA_STUDIO,
-  LOGIN,
+  TRANSACTIONS
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
 import { UserContext } from './contexts/UserContext';
