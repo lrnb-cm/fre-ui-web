@@ -32,6 +32,7 @@ import ProductsContainer from './components/productsContainer/ProductsContainer'
 import { ReportContainer } from './components/reportContainer';
 import ReportDetailsContainer from './components/reportDetailsContainer/ReportDetails';
 import ShopReportsContainer from './components/shopReportsContainer/shopReportsContainer';
+import ProfileContainer from './components/profileContainer';
 import { uri } from './config';
 import {
   CUSTOMERS,
@@ -39,7 +40,8 @@ import {
   PRODUCTS, REPORT, REPORT_DETAILS,
   SHOP_DETAILS,
   SHOP_REPORTS,
-  TRANSACTIONS
+  TRANSACTIONS,
+  PROFILE
 } from './constants/routes';
 import { FirebaseContext } from './contexts/FirebaseContext';
 import { UserContext } from './contexts/UserContext';
@@ -47,8 +49,8 @@ import GET_USER_DATA from './queries/GET_USER_DATA';
 import { customTheming, theme } from './theme';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
-  authDomain: 'freeing-returns.firebaseapp.com',
+  apiKey: "AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI",
+  authDomain: "freeing-returns.firebaseapp.com",
 };
 
 const httpLink = new HttpLink({
@@ -58,18 +60,18 @@ const httpLink = new HttpLink({
 const errorLink = onError(
   ({ graphQLErrors, networkError, forward, operation }) => {
     if (graphQLErrors) {
-      console.log(graphQLErrors, 'graphQLErrors in errorLink');
+      console.log(graphQLErrors, "graphQLErrors in errorLink");
     }
     if (networkError) {
-      console.log(networkError, 'networkError in errorLink');
+      console.log(networkError, "networkError in errorLink");
     }
     forward(operation);
   }
 );
 
 const authLink = setContext((_, { headers, ...context }) => {
-  const idToken = context.idToken || localStorage.getItem('idToken');
-  console.log(idToken, 'idToken in authLink');
+  const idToken = context.idToken || localStorage.getItem("idToken");
+  console.log(idToken, "idToken in authLink");
   return {
     headers: {
       ...headers,
@@ -83,8 +85,8 @@ export default function App() {
   // @ts-ignore
   if (module.hot) {
     // @ts-ignore
-    module.hot.accept('./components', (e) => {
-      const PageComponent = require('./components');
+    module.hot.accept("./components", (e) => {
+      const PageComponent = require("./components");
       render(main(PageComponent), appRootElement);
     });
   }
@@ -99,20 +101,20 @@ export default function App() {
   });
 
   //Get Firebase idToken and email from localStorage when set
-  const [idToken, setIdToken] = useState(localStorage.getItem('idToken'));
-  const [email, setEmail] = useState(localStorage.getItem('email'));
+  const [idToken, setIdToken] = useState(localStorage.getItem("idToken"));
+  const [email, setEmail] = useState(localStorage.getItem("email"));
   useEffect(() => {
     const listenForLocalStorageChanges = window.addEventListener(
-      'storage',
+      "storage",
       () => {
-        setIdToken(localStorage.getItem('idToken'));
-        setEmail(localStorage.getItem('email'));
+        setIdToken(localStorage.getItem("idToken"));
+        setEmail(localStorage.getItem("email"));
       },
       false
     );
 
     return () =>
-      window.removeEventListener('storage', listenForLocalStorageChanges);
+      window.removeEventListener("storage", listenForLocalStorageChanges);
   }, []);
 
   // When userContext changes, load user data if it does not exist
@@ -210,6 +212,7 @@ export default function App() {
                       <Route path={TRANSACTIONS} element={<Containers />} />
                       <Route path={MY_SHOP} element={<MyShopContainer />} />
                       <Route path={SHOP_REPORTS} element={<ShopReportsContainer />} />
+                      <Route path={PROFILE} element={<ProfileContainer />} />
                       <Route
                         path={SHOP_DETAILS}
                         element={<MyShopDetailsContainer />}
