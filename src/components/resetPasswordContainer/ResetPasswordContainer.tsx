@@ -70,6 +70,26 @@ export default function ResetPassword() {
          setIsDisabled(true);
       }
    };
+   const eyeIcon = (
+      <InputAdornment position="end">
+         <IconButton
+            aria-label="toggle password visibility"
+            onClick={(e) => {
+               //preventDefault so the input's active styles remain
+               e.preventDefault();
+               setShowPassword(!showPassword);
+            }}
+            onMouseDown={(e) => {
+               //preventDefault so the input's active styles remain
+               e.preventDefault();
+               setShowPassword(!showPassword);
+            }}
+            edge="end"
+         >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+         </IconButton>
+      </InputAdornment>
+   );
    return (
       <Formik
          initialValues={resetPwdInitialValues}
@@ -116,30 +136,7 @@ export default function ResetPassword() {
                         type={showPassword ? 'text' : 'password'}
                         value={values.password}
                         onChange={handleChange('password')}
-                        endAdornment={
-                           <InputAdornment position="end">
-                              <IconButton
-                                 aria-label="toggle password visibility"
-                                 onClick={(e) => {
-                                    //preventDefault so the input's active styles remain
-                                    e.preventDefault();
-                                    setShowPassword(!showPassword);
-                                 }}
-                                 onMouseDown={(e) => {
-                                    //preventDefault so the input's active styles remain
-                                    e.preventDefault();
-                                    setShowPassword(!showPassword);
-                                 }}
-                                 edge="end"
-                              >
-                                 {showPassword ? (
-                                    <VisibilityOff />
-                                 ) : (
-                                    <Visibility />
-                                 )}
-                              </IconButton>
-                           </InputAdornment>
-                        }
+                        endAdornment={eyeIcon}
                         sx={{
                            '.MuiInputBase-input': {
                               border:
@@ -184,30 +181,7 @@ export default function ResetPassword() {
                         value={values.passwordConfirm}
                         onChange={handleChange('passwordConfirm')}
                         type={showPassword ? 'text' : 'password'}
-                        endAdornment={
-                           <InputAdornment position="end">
-                              <IconButton
-                                 aria-label="toggle password visibility"
-                                 onClick={(e) => {
-                                    //preventDefault so the input's active styles remain
-                                    e.preventDefault();
-                                    setShowPassword(!showPassword);
-                                 }}
-                                 onMouseDown={(e) => {
-                                    //preventDefault so the input's active styles remain
-                                    e.preventDefault();
-                                    setShowPassword(!showPassword);
-                                 }}
-                                 edge="end"
-                              >
-                                 {showPassword ? (
-                                    <VisibilityOff />
-                                 ) : (
-                                    <Visibility />
-                                 )}
-                              </IconButton>
-                           </InputAdornment>
-                        }
+                        endAdornment={eyeIcon}
                         sx={{
                            '.MuiInputBase-input': {
                               border:
