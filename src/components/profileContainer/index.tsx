@@ -5,13 +5,13 @@ import {
   Grid,
   Paper,
   Skeleton,
-  Typography,
+  Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import MailIcon from "../../asset/icons/mailIcon";
 import PhoneIcon from "../../asset/icons/phoneIcon";
 import PremiumIcon from "../../asset/icons/premiumIcon";
-import { getMockData } from "./getMockData";
+import { getMockData } from "../../utils/getMockData";
 
 export type UserData = {
   picture: string;
@@ -30,7 +30,17 @@ const ProfileContainer = () => {
   const [userData, setUserData] = useState<UserData>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getMockData().then((userData) => {
+    getMockData({
+      picture: "profilePicture.png",
+      name: "Thomas Thompson",
+      position: "Director Complaint Management",
+      email: "thomas.thopmson@gmail.com",
+      phone: "+1 3039 3494 4949",
+      membership: "premium",
+      nextPayment: "15.10.2021",
+      subscriptionId: "Monthly",
+      price: "$30.00",
+    }).then((userData) => {
       setUserData(userData);
       setLoading(false);
     });
