@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const OIDC_LOGIN = gql`
   mutation loginProvider($provider: String!, $payload: String!) {
@@ -14,5 +14,11 @@ export const OIDC_LOGIN = gql`
       ApiKey
       email
     }
+  }
+`;
+
+export const VERIFY_CAPTCHA = gql`
+  query verifyCaptcha($captchaToken: String!) {
+    verifyCaptcha(captchaToken: $captchaToken)
   }
 `;

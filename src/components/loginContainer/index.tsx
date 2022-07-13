@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { useApolloClient, useMutation, useReactiveVar } from '@apollo/client';
+import {
+  useApolloClient,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+  useReactiveVar,
+} from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -9,7 +15,7 @@ import GET_USER_DATA from '../../queries/GET_USER_DATA';
 import Account from '../auth/Account';
 import TextInput from '../form/TextInput';
 import { Google } from './config';
-import { OIDC_LOGIN } from './queries/mutations';
+import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
 import { localState } from './state/loginState';
 import loginImage from '../../asset/img/signin.png';
 import { makeStyles } from '@mui/styles';
@@ -22,7 +28,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const CAPTCHA_KEY = '6LeMY44gAAAAALcXMfA5lB-t0AuypZTs5PqB9I-b';
+const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
 // '6Lc5cY4gAAAAAIji4TT4AeYKkRZnyVjTSrk7O9zf';
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
@@ -58,6 +64,7 @@ export default function LoginComp() {
   const classes = useStyles();
 
   const [login, { loading, error }] = useMutation(OIDC_LOGIN);
+  const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
   const state = useReactiveVar(localState);
   const firebase = useFirebaseContext();
   const apolloClient = useApolloClient();
@@ -134,8 +141,14 @@ export default function LoginComp() {
   };
 
   const handleClose = () => setOpen(false);
-  const onCaptchaChange = (val: any) => {
-    console.log('onCaptchaChange', val);
+  const onCaptchaChange = async (val: any) => {
+    const response = await verifyCaptcha({
+      variables: {
+        captchaToken: val,
+      },
+    });
+
+    console.log('onCaptchaChange', response);
   };
   return (
     <Formik
