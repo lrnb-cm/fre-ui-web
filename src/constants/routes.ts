@@ -10,4 +10,5 @@ export const TRANSACTIONS = `${DASHBOARD}/transactions`;
 export const MY_SHOP = `${DASHBOARD}/myshops`;
 export const SHOP_DETAILS = `${MY_SHOP}/details`;
 export const FORGOT_PASSWORD = '/forgot_password';
-export const DATA_STUDIO = `${DASHBOARD}/data_studio`;
+export const RESET_PASSWORD = '/reset_password';
+export const DATA_STUDIO = `${DASHBOARD}/studio`;

@@ -10,9 +10,13 @@ export const OIDC_LOGIN = gql`
       #   prompt: "consent",
       #   state: "google"
       # }) {
-      url
-      ApiKey
+      id
+      company
+      group
+      district
       email
+      session
+      token
     }
   }
 `;

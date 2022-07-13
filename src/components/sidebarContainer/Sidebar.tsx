@@ -131,7 +131,7 @@ export default function ResponsiveDrawer() {
       onClick: () => navigate(CUSTOMERS),
     },
     {
-      text: 'Data Studio',
+      text: 'Studio',
       icon: DashIcon,
       onClick: () => navigate(DATA_STUDIO),
     },
