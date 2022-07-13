@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { useApolloClient, useLazyQuery, useMutation } from '@apollo/client';
+import {
+  useApolloClient,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+  useReactiveVar,
+} from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
@@ -8,7 +14,9 @@ import { useAuthContext } from '../auth/authProvider/AuthContext';
 import GET_USER_DATA from '../../queries/GET_USER_DATA';
 import Account from '../auth/Account';
 import TextInput from '../form/TextInput';
+import { Google } from './config';
 import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
+import { localState } from './state/loginState';
 import loginImage from '../../asset/img/signin.png';
 import { makeStyles } from '@mui/styles';
 import { DASHBOARD, FORGOT_PASSWORD } from '../../constants/routes';
@@ -58,14 +66,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 export default function LoginComp() {
    const classes = useStyles();
-
-   const [login] = useMutation(OIDC_LOGIN);
-   const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
-   const firebase = useFirebaseContext();
-   const apolloClient = useApolloClient();
-   const navigate = useNavigate();
-   const { setUser } = useAuthContext();
-
+  const [login, { loading, error }] = useMutation(OIDC_LOGIN);
+  const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
+  const state = useReactiveVar(localState);
+  const firebase = useFirebaseContext();
+  const apolloClient = useApolloClient();
+  const navigate = useNavigate();
+  const { setUserContext } = useUserContext();
    const [showPassword, setShowPassword] = useState(false);
    const [isDisabled, setIsDisabled] = useState(true);
    const [loading, setLoading] = useState(false);
@@ -139,7 +146,7 @@ export default function LoginComp() {
                userCredential: res,
             });
 
-            //Todo: where should the user be redirected to after logging in?
+  //Todo: where should the user be redirected to after logging in?
             navigate('/secure-route');
          })
          .catch((error) => {
@@ -301,7 +308,6 @@ export default function LoginComp() {
                         size="normal"
                      />
                   </Grid>
-
                   <Grid item xs={24}>
                      <LoadingButton
                         type="submit"
