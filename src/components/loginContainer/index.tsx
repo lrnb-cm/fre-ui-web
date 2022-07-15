@@ -119,7 +119,7 @@ export default function LoginComp() {
          },
       });
 
-      console.log('identity', identity?.data?.getCompanyProvider);
+      // console.log('identity', identity?.data?.getCompanyProvider);
       if (!identity?.data?.getCompanyProvider) {
          return setNotify({
             open: true,
