@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useApolloClient, useLazyQuery, useMutation } from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate, Link } from 'react-router-dom';
-import { useFirebaseContext } from '../auth/firebase/FirebaseContext';
+// import { useFirebaseContext } from '../auth/firebase/FirebaseContext';
 import { useAuthContext } from '../auth/authProvider/AuthContext';
 import GET_USER_DATA from '../../queries/GET_USER_DATA';
 import Account from '../auth/Account';
 import TextInput from '../form/TextInput';
 import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
+import { COMPANY_PROVIDER } from './queries/queries';
+
 import loginImage from '../../asset/img/signin.png';
 import { makeStyles } from '@mui/styles';
 import { DASHBOARD, FORGOT_PASSWORD } from '../../constants/routes';
@@ -20,7 +21,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import ReCAPTCHA from 'react-google-recaptcha';
 import LoadingButton from '@mui/lab/LoadingButton';
-
+import companyIdentity from './externalIDPs/companyIdentity';
 const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
@@ -61,7 +62,9 @@ export default function LoginComp() {
 
    const [login] = useMutation(OIDC_LOGIN);
    const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
-   const firebase = useFirebaseContext();
+   const [getCompanyProvider] = useLazyQuery(COMPANY_PROVIDER);
+
+   // const firebase = useFirebaseContext();
    const apolloClient = useApolloClient();
    const navigate = useNavigate();
    const { setUser } = useAuthContext();
@@ -70,7 +73,10 @@ export default function LoginComp() {
    const [isDisabled, setIsDisabled] = useState(true);
    const [loading, setLoading] = useState(false);
 
-   const [open, setOpen] = useState(false);
+   const [notify, setNotify] = useState({
+      open: false,
+      error: 'Incorrect Email or Password!',
+   });
 
    const handleLogin = (payload: any) => {
       setLoading(true);
@@ -97,58 +103,39 @@ export default function LoginComp() {
             navigate(DASHBOARD);
          })
          .catch(() => {
-            setOpen(true);
+            setNotify({
+               open: true,
+               error: 'Incorrect Email or Password!',
+            });
             setLoading(false);
          });
    };
 
-   const handleFirebaseLogin = (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      if (!firebase)
-         throw new Error(
-            'useFirebaseContext must be within FirebaseContext.Provider'
-         );
-      const loginEmail = 'sample@yahoo.com';
+   const handleCompanyIdp = async (values: any) => {
+      //1. query for company identity provider
+      const identity = await getCompanyProvider({
+         variables: {
+            identity: values.company,
+         },
+      });
 
-      const password = '';
-      // GCP Identity Platform / Firebase email/password authentication
-      const auth = getAuth(firebase);
-      signInWithEmailAndPassword(auth, loginEmail, password)
-         .then(async (res) => {
-            // Get then set the idToken (& email) in localStorage
-            const idToken = await res.user.getIdToken();
-            localStorage.setItem('idToken', idToken);
-            localStorage.setItem('email', res.user.email || '');
-
-            console.log(
-               idToken,
-               'idToken in signInWithEmailAndPassword.then - fetching data now..'
-            );
-
-            // Todo: add error handling if user does not exist in our database?
-            // Get basic user data and permissions and set them to the user context
-            const userData = await apolloClient.query({
-               query: GET_USER_DATA,
-               variables: {
-                  filters: { email: res.user.email },
-               },
-            });
-            setUser({
-               ...userData.data.getUser,
-               idToken,
-               userCredential: res,
-            });
-
-            //Todo: where should the user be redirected to after logging in?
-            navigate('/secure-route');
-         })
-         .catch((error) => {
-            //Todo: handle login error
-            console.error(error.message);
+      console.log('identity', identity?.data?.getCompanyProvider);
+      if (!identity?.data?.getCompanyProvider) {
+         return setNotify({
+            open: true,
+            error: 'Company not yet register, contact your administrator.',
          });
-   };
+      }
+      //2.instantiates company identity
+      const data = await companyIdentity(
+         identity?.data?.getCompanyProvider,
+         values
+      );
+      console.log('data', data);
 
-   const handleClose = () => setOpen(false);
+      //3. send both token and Saml details for validation to server
+   };
+   const handleClose = () => setNotify({ open: false, error: '' });
    const onCaptchaChange = async (val: any) => {
       const response = await verifyCaptcha({
          variables: {
@@ -176,13 +163,18 @@ export default function LoginComp() {
          }}
          onSubmit={(values) => {
             console.log({ values });
+            if (values.company) {
+               return handleCompanyIdp(values);
+            }
+            console.log('after-company');
+
             handleLogin({ ...values, state: 'standard' });
          }}
       >
          {({ handleChange, handleSubmit, touched, errors, values }) => (
             <form onSubmit={handleSubmit}>
                <Snackbar
-                  open={open}
+                  open={notify.open}
                   autoHideDuration={6000}
                   onClose={handleClose}
                   anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -192,7 +184,7 @@ export default function LoginComp() {
                      severity="error"
                      sx={{ width: '100%' }}
                   >
-                     Incorrect Email or Password!
+                     {notify.error}
                   </Alert>
                </Snackbar>
                <Account
@@ -203,6 +195,24 @@ export default function LoginComp() {
                   bodyText="We look forward you are a part of our awesome product helping you Master Returns Management."
                   image={loginImage}
                >
+                  <Grid item xs={24}>
+                     <TextInput
+                        label="Company identity"
+                        placeholder="Enter company identity"
+                        id="company"
+                        value={values.company}
+                        onChange={handleChange('company')}
+                        sx={{
+                           '.MuiInputBase-input': {
+                              border: '1px solid #ced4da',
+                           },
+                           '.MuiInputBase-input:focus': {
+                              borderColor: '#3758CC',
+                              boxShadow: 'rgb(55 88 204 / 25%) 0 0 0 0.2rem',
+                           },
+                        }}
+                     />
+                  </Grid>
                   <Grid item xs={24}>
                      <TextInput
                         label="Your email address"
