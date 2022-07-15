@@ -1,12 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import {
-   getFirestore,
-   collection,
-   getDocs,
-   doc,
-   getDoc,
-} from 'firebase/firestore';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default async (firebaseConfig: string, credentials: any) => {
    const app = initializeApp(JSON.parse(firebaseConfig));
@@ -20,14 +14,15 @@ export default async (firebaseConfig: string, credentials: any) => {
          credentials.email,
          credentials.password
       );
+      //   const idToken = await user.getIdToken();
+
       //2. get user SAML/profile access details
       const userRef = doc(db, `users/`, `${user?.uid}`);
       const snapshot = await getDoc(userRef);
-      //   console.log('snapshot', snapshot.data());
 
       return {
-         email: user.email,
          ...snapshot.data(),
+         ...user,
       };
    } catch (err) {
       return err;
