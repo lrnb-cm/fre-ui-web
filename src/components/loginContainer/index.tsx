@@ -8,7 +8,7 @@ import GET_USER_DATA from '../../queries/GET_USER_DATA';
 import Account from '../auth/Account';
 import TextInput from '../form/TextInput';
 import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
-import { COMPANY_PROVIDER } from './queries/queries';
+import { COMPANY_PROVIDER, VALIDATE_COMPANY_TOKEN } from './queries/queries';
 
 import loginImage from '../../asset/img/signin.png';
 import { makeStyles } from '@mui/styles';
@@ -63,6 +63,7 @@ export default function LoginComp() {
    const [login] = useMutation(OIDC_LOGIN);
    const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
    const [getCompanyProvider] = useLazyQuery(COMPANY_PROVIDER);
+   const [validateCompanyToken] = useLazyQuery(VALIDATE_COMPANY_TOKEN);
 
    // const firebase = useFirebaseContext();
    const apolloClient = useApolloClient();
@@ -127,13 +128,27 @@ export default function LoginComp() {
          });
       }
       //2.instantiates company identity
-      const data = await companyIdentity(
+      const data: any = await companyIdentity(
          identity?.data?.getCompanyProvider,
          values
       );
-      console.log('data', data);
 
       //3. send both token and Saml details for validation to server
+      const userDetails = JSON.stringify({
+         ...data,
+         ...identity?.data?.getCompanyProvider,
+      });
+
+      const isValid = await validateCompanyToken({
+         variables: {
+            payload: userDetails,
+         },
+      });
+
+      console.log(
+         'isValid?.data?.validateCompanyToken',
+         isValid?.data?.validateCompanyToken
+      );
    };
    const handleClose = () => setNotify({ open: false, error: '' });
    const onCaptchaChange = async (val: any) => {

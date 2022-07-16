@@ -20,3 +20,9 @@ export const COMPANY_PROVIDER = gql`
       }
    }
 `;
+
+export const VALIDATE_COMPANY_TOKEN = gql`
+   query validateCompanyToken($payload: String!) {
+      validateCompanyToken(payload: $payload)
+   }
+`;
