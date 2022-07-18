@@ -131,6 +131,8 @@ export default function LoginComp() {
 
          // console.log('identity', identity?.data?.getCompanyProvider);
          if (!identity?.data?.getCompanyProvider) {
+            setLoading(false);
+
             return setNotify({
                open: true,
                error: 'Company not yet register, contact your administrator.',
