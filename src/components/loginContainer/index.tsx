@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { useApolloClient, useLazyQuery, useMutation } from '@apollo/client';
+import {
+   useApolloClient,
+   useLazyQuery,
+   useMutation,
+   useQuery,
+   useReactiveVar,
+} from '@apollo/client';
 import { Grid, Theme, IconButton, InputAdornment } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 // import { useFirebaseContext } from '../auth/firebase/FirebaseContext';
@@ -7,6 +13,7 @@ import { useAuthContext } from '../auth/authProvider/AuthContext';
 import GET_USER_DATA from '../../queries/GET_USER_DATA';
 import Account from '../auth/Account';
 import TextInput from '../form/TextInput';
+import { Google } from './config';
 import { OIDC_LOGIN, VERIFY_CAPTCHA } from './queries/mutations';
 import { COMPANY_PROVIDER, VALIDATE_COMPANY_TOKEN } from './queries/queries';
 
@@ -360,7 +367,6 @@ export default function LoginComp() {
                         size="normal"
                      />
                   </Grid>
-
                   <Grid item xs={24}>
                      <LoadingButton
                         type="submit"

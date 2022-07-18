@@ -14,7 +14,6 @@ import { Containers, LoginContainer } from './components';
 import Customer from './components/customerContainer/Customers';
 import DashboardContainer from './components/dashboardContainer/DashboardContainer';
 import ForgotPassword from './components/forgotPasswordContainer/ForgotPasswordContainer';
-// import ResetPassword from './components/resetPasswordContainer/ResetPasswordContainer';
 import Layout from './components/Layout';
 import LoginCallback from './components/loginContainer/Callback';
 import MyShopContainer from './components/myshopContainer/MyShopContainer';
@@ -39,17 +38,11 @@ import {
    SHOP_DETAILS,
    TRANSACTIONS,
    PROFILE,
-   RESET_PASSWORD,
 } from './constants/routes';
-// import { FirebaseContext } from './components/auth/firebase/FirebaseContext';
 import AuthProvider from './components/auth/authProvider/AuthProvider';
 import { customTheming, theme } from './theme';
 import apolloClient from './ApolloClient';
 import AuthGuard from './components/auth/authGuard/AuthGuard';
-// const firebaseConfig = {
-//    apiKey: 'AIzaSyAb2yKgDGJowDNhEugINyMyjqBry8c-nBI',
-//    authDomain: 'freeing-returns.firebaseapp.com',
-// };
 
 export default function App() {
    // @ts-ignore
@@ -60,14 +53,12 @@ export default function App() {
          render(main(PageComponent), appRootElement);
       });
    }
-   // const firebase = initializeApp(firebaseConfig);
 
    const mergeTheme = createTheme(deepmerge(theme, customTheming));
    return (
       <StrictMode>
          <StyledEngineProvider injectFirst>
             <ApolloProvider client={apolloClient}>
-               {/* <FirebaseContext.Provider value={firebase}> */}
                <AuthProvider>
                   <ThemeProvider theme={mergeTheme}>
                      <CssBaseline />
@@ -151,7 +142,6 @@ export default function App() {
                      </Router>
                   </ThemeProvider>
                </AuthProvider>
-               {/* </FirebaseContext.Provider> */}
             </ApolloProvider>
          </StyledEngineProvider>
       </StrictMode>
