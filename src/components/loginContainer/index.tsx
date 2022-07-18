@@ -88,15 +88,21 @@ export default function LoginComp() {
          },
       })
          .then((data) => {
-            setUser({
-               ...data.data.loginProvider,
-            });
+            const user = {
+               company: {
+                  company_name: data.data.loginProvider.company,
+               },
+               saml: {
+                  group: data.data.loginProvider.group,
+                  role: data.data.loginProvider.group,
+                  access: [],
+               },
+               token: data.data.loginProvider.token,
+            };
+            setUser(user);
 
             //store session token
-            sessionStorage.setItem(
-               'user',
-               JSON.stringify(data.data.loginProvider)
-            );
+            sessionStorage.setItem('user', JSON.stringify(user));
 
             setLoading(false);
 
@@ -113,42 +119,68 @@ export default function LoginComp() {
    };
 
    const handleCompanyIdp = async (values: any) => {
-      //1. query for company identity provider
-      const identity = await getCompanyProvider({
-         variables: {
-            identity: values.company,
-         },
-      });
+      setLoading(true);
 
-      // console.log('identity', identity?.data?.getCompanyProvider);
-      if (!identity?.data?.getCompanyProvider) {
-         return setNotify({
-            open: true,
-            error: 'Company not yet register, contact your administrator.',
+      try {
+         //1. query for company identity provider
+         const identity = await getCompanyProvider({
+            variables: {
+               identity: values.company,
+            },
          });
+
+         // console.log('identity', identity?.data?.getCompanyProvider);
+         if (!identity?.data?.getCompanyProvider) {
+            return setNotify({
+               open: true,
+               error: 'Company not yet register, contact your administrator.',
+            });
+         }
+         //2.instantiates company identity
+         const data: any = await companyIdentity(
+            identity?.data?.getCompanyProvider,
+            values
+         );
+
+         //3. send both token and Saml details for validation to server
+         const userDetails = JSON.stringify({
+            ...data,
+            company: identity?.data?.getCompanyProvider,
+         });
+         // console.log('data-saml', userDetails);
+         const userWithToken = await validateCompanyToken({
+            variables: {
+               payload: userDetails,
+            },
+         });
+
+         console.log(
+            'userWithToken?.data?.validateCompanyToken',
+            userWithToken?.data?.validateCompanyToken
+         );
+
+         if (userWithToken?.data?.validateCompanyToken?.success) {
+            //1. set user context
+            setUser({
+               ...userWithToken?.data?.validateCompanyToken,
+            });
+
+            //store session token
+            sessionStorage.setItem(
+               'user',
+               JSON.stringify(userWithToken?.data?.validateCompanyToken)
+            );
+
+            setLoading(false);
+
+            //navigate to dashboard
+            navigate(DASHBOARD);
+         }
+      } catch (err) {
+         setLoading(false);
+
+         console.log('err', err);
       }
-      //2.instantiates company identity
-      const data: any = await companyIdentity(
-         identity?.data?.getCompanyProvider,
-         values
-      );
-
-      //3. send both token and Saml details for validation to server
-      const userDetails = JSON.stringify({
-         ...data,
-         ...identity?.data?.getCompanyProvider,
-      });
-
-      const isValid = await validateCompanyToken({
-         variables: {
-            payload: userDetails,
-         },
-      });
-
-      console.log(
-         'isValid?.data?.validateCompanyToken',
-         isValid?.data?.validateCompanyToken
-      );
    };
    const handleClose = () => setNotify({ open: false, error: '' });
    const onCaptchaChange = async (val: any) => {

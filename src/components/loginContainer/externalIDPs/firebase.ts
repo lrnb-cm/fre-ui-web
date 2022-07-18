@@ -25,7 +25,7 @@ export default async (firebaseConfig: string, credentials: any) => {
       return {
          token: userT?.accessToken,
          email: userT?.email,
-         ...snapshot.data(),
+         saml: snapshot.data(),
       };
    } catch (err) {
       return err;

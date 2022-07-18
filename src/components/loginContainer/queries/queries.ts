@@ -23,6 +23,22 @@ export const COMPANY_PROVIDER = gql`
 
 export const VALIDATE_COMPANY_TOKEN = gql`
    query validateCompanyToken($payload: String!) {
-      validateCompanyToken(payload: $payload)
+      validateCompanyToken(payload: $payload) {
+         success
+         email
+         saml {
+            group
+            role
+            access
+         }
+         token
+         company {
+            id
+            company_identity
+            identity_provider
+            company_name
+            public_keys
+         }
+      }
    }
 `;
