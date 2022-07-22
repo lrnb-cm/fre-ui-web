@@ -1,0 +1,3 @@
+dispatch:
+  - url: "dev-app.freeingreturns.com/*"
+    service: development

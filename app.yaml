@@ -1,5 +1,6 @@
-# runtime: nodejs16
-# env: standard
+runtime: python37
+env: standard
+service: development
 
 # Upgrade for production usage
 manual_scaling:
