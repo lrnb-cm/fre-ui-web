@@ -176,7 +176,7 @@ export default function LoginComp() {
 
             //store session token
             sessionStorage.setItem(
-               'user',
+               'lilli_user',
                JSON.stringify(userWithToken?.data?.validateCompanyToken)
             );
 
