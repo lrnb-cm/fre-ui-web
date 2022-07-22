@@ -29,6 +29,7 @@ import MuiAlert from '@mui/material/Alert';
 import ReCAPTCHA from 'react-google-recaptcha';
 import LoadingButton from '@mui/lab/LoadingButton';
 import companyIdentity from './externalIDPs/companyIdentity';
+import IdleTimer from '../auth/idleTimer/IdleTimer';
 const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
@@ -72,7 +73,6 @@ export default function LoginComp() {
    const [getCompanyProvider] = useLazyQuery(COMPANY_PROVIDER);
    const [validateCompanyToken] = useLazyQuery(VALIDATE_COMPANY_TOKEN);
 
-   // const firebase = useFirebaseContext();
    const apolloClient = useApolloClient();
    const navigate = useNavigate();
    const { setUser } = useAuthContext();
@@ -383,6 +383,7 @@ export default function LoginComp() {
                         Login
                      </LoadingButton>
                   </Grid>
+                  <IdleTimer />
                </Account>
             </form>
          )}
