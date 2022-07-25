@@ -32,6 +32,7 @@ export const VALIDATE_COMPANY_TOKEN = gql`
             access
          }
          token
+         refreshToken
          company {
             id
             company_identity

@@ -20,13 +20,18 @@ const errorLink = onError(
 );
 
 const authLink = setContext((_, { headers, ...context }) => {
-   const idToken =
-      context.idToken || JSON.parse(sessionStorage.getItem('lilli_user')).token;
-   console.log(idToken, 'idToken in authLink');
+   const token =
+      JSON.parse(sessionStorage.getItem('lilli_user'))?.token || null;
+   const refreshToken =
+      JSON.parse(sessionStorage.getItem('lilli_user'))?.refreshToken || null;
+
+   console.log('context', token, refreshToken);
+
    return {
       headers: {
          ...headers,
-         authorization: `Bearer ${idToken}`,
+         'x-access-token': `Bearer ${token}`,
+         'x-refresh-token': refreshToken,
       },
       ...context,
    };

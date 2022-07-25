@@ -135,7 +135,7 @@ export default function LoginComp() {
                identity: values.company,
             },
          });
-
+         console.log('identity', identity);
          // console.log('identity', identity?.data?.getCompanyProvider);
          if (!identity?.data?.getCompanyProvider) {
             setLoading(false);

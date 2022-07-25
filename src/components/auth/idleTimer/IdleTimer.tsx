@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './styles.css';
 export default function IdleTimer() {
    // Set timeout values
-   const timeout = 1000 * 10;
+   const timeout = 1000 * 10 * 400;
    const promptTimeout = 1000 * 30;
 
    // Modal open state
