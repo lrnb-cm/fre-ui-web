@@ -78,7 +78,7 @@ export default function LoginComp() {
    const { setUser } = useAuthContext();
 
    const [showPassword, setShowPassword] = useState(false);
-   const [isDisabled, setIsDisabled] = useState(true);
+   const [isDisabled, setIsDisabled] = useState(false);
    const [loading, setLoading] = useState(false);
 
    const [notify, setNotify] = useState({

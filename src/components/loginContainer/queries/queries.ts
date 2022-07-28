@@ -21,6 +21,17 @@ export const COMPANY_PROVIDER = gql`
    }
 `;
 
+export const GET_A_COMPANY = gql`
+   query getCompany($id: Float!) {
+      getCompany(id: $id) {
+         id
+         company_identity
+         identity_provider
+         company_name
+      }
+   }
+`;
+
 export const VALIDATE_COMPANY_TOKEN = gql`
    query validateCompanyToken($payload: String!) {
       validateCompanyToken(payload: $payload) {

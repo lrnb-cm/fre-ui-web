@@ -1,4 +1,10 @@
-import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
+import {
+   ApolloClient,
+   from,
+   HttpLink,
+   InMemoryCache,
+   ApolloLink,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { uri } from './config';
@@ -25,21 +31,58 @@ const authLink = setContext((_, { headers, ...context }) => {
    const refreshToken =
       JSON.parse(sessionStorage.getItem('lilli_user'))?.refreshToken || null;
 
-   console.log('context', token, refreshToken);
-
    return {
       headers: {
          ...headers,
-         'x-access-token': `Bearer ${token}`,
+         'x-access-token': token,
          'x-refresh-token': refreshToken,
       },
       ...context,
    };
 });
 
+const afterwareLink = new ApolloLink((operation, forward) => {
+   return forward(operation).map((response) => {
+      const context = operation.getContext();
+
+      const {
+         response: { headers },
+      } = context;
+
+      if (headers) {
+         const user = JSON.parse(sessionStorage.getItem('lilli_user')) || null;
+
+         if (user) {
+            const token = headers.get('x-access-token') || null;
+            const refreshToken = headers.get('x-refresh-token') || null;
+
+            if (
+               token !== 'undefined' &&
+               token !== null &&
+               token !== undefined
+            ) {
+               user.token = token;
+            }
+
+            if (
+               refreshToken !== 'undefined' &&
+               refreshToken !== null &&
+               refreshToken !== undefined
+            ) {
+               user.refreshToken = refreshToken;
+            }
+
+            sessionStorage.setItem('lilli_user', JSON.stringify(user));
+         }
+      }
+
+      return response;
+   });
+});
+
 // Setup Apollo Client
 export default new ApolloClient({
-   link: from([authLink, errorLink, httpLink]),
+   link: from([authLink, errorLink, afterwareLink.concat(httpLink)]),
    uri,
    cache: new InMemoryCache(),
 });

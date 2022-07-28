@@ -9,17 +9,17 @@ import BarGraph from './components/BarChart';
 import barData from './components/barData';
 import ChartSection from './components/ChartSection';
 
-import { COMPANY_PROVIDER } from '../loginContainer/queries/queries';
+import { GET_A_COMPANY } from '../loginContainer/queries/queries';
 import { useLazyQuery } from '@apollo/client';
 
 export default function dashboard() {
-   const [getCompanyProvider] = useLazyQuery(COMPANY_PROVIDER);
+   const [getACompany] = useLazyQuery(GET_A_COMPANY);
 
    useEffect(() => {
       (async () => {
-         const identity = await getCompanyProvider({
+         const identity = await getACompany({
             variables: {
-               identity: 'biglilli-1234',
+               id: 1,
             },
          });
          console.log('identity', identity);
