@@ -17,6 +17,7 @@ export const COMPANY_PROVIDER = gql`
          identity_provider
          company_name
          public_keys
+         inactivity_allowance
       }
    }
 `;
@@ -28,10 +29,16 @@ export const GET_A_COMPANY = gql`
          company_identity
          identity_provider
          company_name
+         inactivity_allowance
       }
    }
 `;
 
+export const LOG_OUT = gql`
+   mutation logout($email: String!) {
+      logout(email: $email)
+   }
+`;
 export const VALIDATE_COMPANY_TOKEN = gql`
    query validateCompanyToken($payload: String!) {
       validateCompanyToken(payload: $payload) {
@@ -50,6 +57,7 @@ export const VALIDATE_COMPANY_TOKEN = gql`
             identity_provider
             company_name
             public_keys
+            inactivity_allowance
          }
       }
    }

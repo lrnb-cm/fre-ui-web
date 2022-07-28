@@ -11,6 +11,7 @@ import ChartSection from './components/ChartSection';
 
 import { GET_A_COMPANY } from '../loginContainer/queries/queries';
 import { useLazyQuery } from '@apollo/client';
+import IdleTimer from '../auth/idleTimer/IdleTimer';
 
 export default function dashboard() {
    const [getACompany] = useLazyQuery(GET_A_COMPANY);
@@ -27,6 +28,7 @@ export default function dashboard() {
    }, []);
    return (
       <DashboardLayout>
+         <IdleTimer />
          <DashboardTitle>Dashboard</DashboardTitle>
          <DashboardStatTile container>
             <Stats title="shops" count={321} />

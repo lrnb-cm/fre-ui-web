@@ -71,7 +71,7 @@ const afterwareLink = new ApolloLink((operation, forward) => {
             ) {
                user.refreshToken = refreshToken;
             }
-
+            //store session user
             sessionStorage.setItem('lilli_user', JSON.stringify(user));
          }
       }

@@ -29,7 +29,6 @@ import MuiAlert from '@mui/material/Alert';
 import ReCAPTCHA from 'react-google-recaptcha';
 import LoadingButton from '@mui/lab/LoadingButton';
 import companyIdentity from './externalIDPs/companyIdentity';
-import IdleTimer from '../auth/idleTimer/IdleTimer';
 const CAPTCHA_KEY = '6LehR5YgAAAAAGUaPsAswViBvBRwEzovKmnrDW3i';
 
 const Alert = React.forwardRef(function Alert(props: any, ref: any) {
@@ -163,18 +162,13 @@ export default function LoginComp() {
             },
          });
 
-         console.log(
-            'userWithToken?.data?.validateCompanyToken',
-            userWithToken?.data?.validateCompanyToken
-         );
-
          if (userWithToken?.data?.validateCompanyToken?.success) {
             //1. set user context
             setUser({
                ...userWithToken?.data?.validateCompanyToken,
             });
 
-            //store session token
+            //store session user
             sessionStorage.setItem(
                'lilli_user',
                JSON.stringify(userWithToken?.data?.validateCompanyToken)
@@ -361,11 +355,11 @@ export default function LoginComp() {
                      </Link>
                   </Grid>
                   <Grid item xs={24}>
-                     <ReCAPTCHA
+                     {/* <ReCAPTCHA
                         sitekey={CAPTCHA_KEY}
                         onChange={onCaptchaChange}
                         size="normal"
-                     />
+                     /> */}
                   </Grid>
                   <Grid item xs={24}>
                      <LoadingButton
@@ -383,7 +377,6 @@ export default function LoginComp() {
                         Login
                      </LoadingButton>
                   </Grid>
-                  <IdleTimer />
                </Account>
             </form>
          )}
