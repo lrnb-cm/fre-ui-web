@@ -40,7 +40,7 @@ export const LOG_OUT = gql`
    }
 `;
 export const VALIDATE_COMPANY_TOKEN = gql`
-   query validateCompanyToken($payload: String!) {
+   query validateCompanyToken($payload: companyCredInputs!) {
       validateCompanyToken(payload: $payload) {
          success
          email

@@ -36,7 +36,6 @@ export default function IdleTimer() {
       setOpen(false);
       setRemaining(0);
       //call logout functionality
-      console.log('log out ........=>');
       if (user) {
          const userParsed = JSON.parse(user);
          logout({

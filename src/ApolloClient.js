@@ -26,10 +26,16 @@ const errorLink = onError(
 );
 
 const authLink = setContext((_, { headers, ...context }) => {
-   const token =
-      JSON.parse(sessionStorage.getItem('lilli_user'))?.token || null;
-   const refreshToken =
-      JSON.parse(sessionStorage.getItem('lilli_user'))?.refreshToken || null;
+   const user = sessionStorage.getItem('lilli_user');
+
+   if (!user) {
+      return {
+         headers,
+         ...context,
+      };
+   }
+   const token = JSON.parse(user)?.token || null;
+   const refreshToken = JSON.parse(user)?.refreshToken || null;
 
    return {
       headers: {
@@ -50,9 +56,9 @@ const afterwareLink = new ApolloLink((operation, forward) => {
       } = context;
 
       if (headers) {
-         const user = JSON.parse(sessionStorage.getItem('lilli_user')) || null;
-
+         const user = sessionStorage.getItem('lilli_user');
          if (user) {
+            const userParsed = JSON.parse(user);
             const token = headers.get('x-access-token') || null;
             const refreshToken = headers.get('x-refresh-token') || null;
 
@@ -61,7 +67,7 @@ const afterwareLink = new ApolloLink((operation, forward) => {
                token !== null &&
                token !== undefined
             ) {
-               user.token = token;
+               userParsed.token = token;
             }
 
             if (
@@ -69,10 +75,10 @@ const afterwareLink = new ApolloLink((operation, forward) => {
                refreshToken !== null &&
                refreshToken !== undefined
             ) {
-               user.refreshToken = refreshToken;
+               userParsed.refreshToken = refreshToken;
             }
             //store session user
-            sessionStorage.setItem('lilli_user', JSON.stringify(user));
+            sessionStorage.setItem('lilli_user', JSON.stringify(userParsed));
          }
       }
 

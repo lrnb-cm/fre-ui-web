@@ -134,8 +134,7 @@ export default function LoginComp() {
                identity: values.company,
             },
          });
-         console.log('identity', identity);
-         // console.log('identity', identity?.data?.getCompanyProvider);
+         console.log('identity', identity?.data?.getCompanyProvider);
          if (!identity?.data?.getCompanyProvider) {
             setLoading(false);
 
@@ -151,16 +150,28 @@ export default function LoginComp() {
          );
 
          //3. send both token and Saml details for validation to server
-         const userDetails = JSON.stringify({
-            ...data,
-            company: identity?.data?.getCompanyProvider,
-         });
-         // console.log('data-saml', userDetails);
+         console.log('data', data);
          const userWithToken = await validateCompanyToken({
             variables: {
-               payload: userDetails,
+               payload: {
+                  email: data?.email,
+                  idpToken: data?.token,
+                  saml: data?.saml,
+                  company: {
+                     company_identity:
+                        identity?.data?.getCompanyProvider?.company_identity,
+                     identity_provider:
+                        identity?.data?.getCompanyProvider?.identity_provider,
+                     company_name:
+                        identity?.data?.getCompanyProvider?.company_name,
+                  },
+               },
             },
          });
+         console.log(
+            'userWithToken',
+            userWithToken?.data?.validateCompanyToken
+         );
 
          if (userWithToken?.data?.validateCompanyToken?.success) {
             //1. set user context
@@ -212,7 +223,6 @@ export default function LoginComp() {
             return errors;
          }}
          onSubmit={(values) => {
-            console.log({ values });
             if (values.company) {
                return handleCompanyIdp(values);
             }
