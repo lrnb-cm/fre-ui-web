@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useIdleTimer } from 'react-idle-timer';
-import ReactDOM from 'react-dom';
 import { useMutation } from '@apollo/client';
 import { LOG_OUT } from '../../loginContainer/queries/queries';
 import { useNavigate } from 'react-router-dom';

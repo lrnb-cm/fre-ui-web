@@ -10,9 +10,9 @@ import barData from './components/barData';
 import ChartSection from './components/ChartSection';
 
 import { GET_A_COMPANY } from '../loginContainer/queries/queries';
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import IdleTimer from '../auth/idleTimer/IdleTimer';
-export default function dashboard() {
+export default function Dashboard() {
    const [getACompany] = useLazyQuery(GET_A_COMPANY);
 
    useEffect(() => {
