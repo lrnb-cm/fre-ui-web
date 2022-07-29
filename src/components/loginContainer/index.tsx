@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
    useApolloClient,
    useLazyQuery,
@@ -70,21 +70,33 @@ export default function LoginComp() {
    const [login] = useMutation(OIDC_LOGIN);
    const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
    const [getCompanyProvider] = useLazyQuery(COMPANY_PROVIDER);
-   const [validateCompanyToken] = useLazyQuery(VALIDATE_COMPANY_TOKEN);
+   const [
+      validateCompanyToken,
+      { error: validateError, loading: validateLoading },
+   ] = useLazyQuery(VALIDATE_COMPANY_TOKEN);
 
-   // const firebase = useFirebaseContext();
    const apolloClient = useApolloClient();
    const navigate = useNavigate();
    const { setUser } = useAuthContext();
 
    const [showPassword, setShowPassword] = useState(false);
-   const [isDisabled, setIsDisabled] = useState(true);
+   const [isDisabled, setIsDisabled] = useState(false);
    const [loading, setLoading] = useState(false);
 
    const [notify, setNotify] = useState({
       open: false,
       error: 'Incorrect Email or Password!',
    });
+
+   useEffect(() => {
+      if (!validateLoading && validateError) {
+         setNotify({
+            open: true,
+            error: 'Server error!!!',
+         });
+         setLoading(false);
+      }
+   }, [validateError, validateLoading]);
 
    const handleLogin = (payload: any) => {
       setLoading(true);
@@ -135,8 +147,7 @@ export default function LoginComp() {
                identity: values.company,
             },
          });
-
-         // console.log('identity', identity?.data?.getCompanyProvider);
+         console.log('identity', identity?.data?.getCompanyProvider);
          if (!identity?.data?.getCompanyProvider) {
             setLoading(false);
 
@@ -152,19 +163,26 @@ export default function LoginComp() {
          );
 
          //3. send both token and Saml details for validation to server
-         const userDetails = JSON.stringify({
-            ...data,
-            company: identity?.data?.getCompanyProvider,
-         });
-         // console.log('data-saml', userDetails);
+         console.log('data', data);
          const userWithToken = await validateCompanyToken({
             variables: {
-               payload: userDetails,
+               payload: {
+                  email: data?.email,
+                  idpToken: data?.token,
+                  saml: data?.saml,
+                  company: {
+                     company_identity:
+                        identity?.data?.getCompanyProvider?.company_identity,
+                     identity_provider:
+                        identity?.data?.getCompanyProvider?.identity_provider,
+                     company_name:
+                        identity?.data?.getCompanyProvider?.company_name,
+                  },
+               },
             },
          });
-
          console.log(
-            'userWithToken?.data?.validateCompanyToken',
+            'userWithToken',
             userWithToken?.data?.validateCompanyToken
          );
 
@@ -174,9 +192,9 @@ export default function LoginComp() {
                ...userWithToken?.data?.validateCompanyToken,
             });
 
-            //store session token
+            //store session user
             sessionStorage.setItem(
-               'user',
+               'lilli_user',
                JSON.stringify(userWithToken?.data?.validateCompanyToken)
             );
 
@@ -218,7 +236,6 @@ export default function LoginComp() {
             return errors;
          }}
          onSubmit={(values) => {
-            console.log({ values });
             if (values.company) {
                return handleCompanyIdp(values);
             }
@@ -361,11 +378,11 @@ export default function LoginComp() {
                      </Link>
                   </Grid>
                   <Grid item xs={24}>
-                     <ReCAPTCHA
+                     {/* <ReCAPTCHA
                         sitekey={CAPTCHA_KEY}
                         onChange={onCaptchaChange}
                         size="normal"
-                     />
+                     /> */}
                   </Grid>
                   <Grid item xs={24}>
                      <LoadingButton

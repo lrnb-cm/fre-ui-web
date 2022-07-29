@@ -17,12 +17,30 @@ export const COMPANY_PROVIDER = gql`
          identity_provider
          company_name
          public_keys
+         inactivity_allowance
       }
    }
 `;
 
+export const GET_A_COMPANY = gql`
+   query getCompany($id: Float!) {
+      getCompany(id: $id) {
+         id
+         company_identity
+         identity_provider
+         company_name
+         inactivity_allowance
+      }
+   }
+`;
+
+export const LOG_OUT = gql`
+   mutation logout($email: String!) {
+      logout(email: $email)
+   }
+`;
 export const VALIDATE_COMPANY_TOKEN = gql`
-   query validateCompanyToken($payload: String!) {
+   query validateCompanyToken($payload: companyCredInputs!) {
       validateCompanyToken(payload: $payload) {
          success
          email
@@ -32,12 +50,14 @@ export const VALIDATE_COMPANY_TOKEN = gql`
             access
          }
          token
+         refreshToken
          company {
             id
             company_identity
             identity_provider
             company_name
             public_keys
+            inactivity_allowance
          }
       }
    }

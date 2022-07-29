@@ -3,7 +3,7 @@ import { AuthContext } from './AuthContext';
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
    const [user, setUser] = useState<any | null>(null);
-   const userData = sessionStorage.getItem('user') || '';
+   const userData = sessionStorage.getItem('lilli_user') || '';
 
    useEffect(() => {
       (async () => {
