@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
    useApolloClient,
    useLazyQuery,
@@ -70,7 +70,10 @@ export default function LoginComp() {
    const [login] = useMutation(OIDC_LOGIN);
    const [verifyCaptcha] = useLazyQuery(VERIFY_CAPTCHA);
    const [getCompanyProvider] = useLazyQuery(COMPANY_PROVIDER);
-   const [validateCompanyToken] = useLazyQuery(VALIDATE_COMPANY_TOKEN);
+   const [
+      validateCompanyToken,
+      { error: validateError, loading: validateLoading },
+   ] = useLazyQuery(VALIDATE_COMPANY_TOKEN);
 
    const apolloClient = useApolloClient();
    const navigate = useNavigate();
@@ -84,6 +87,16 @@ export default function LoginComp() {
       open: false,
       error: 'Incorrect Email or Password!',
    });
+
+   useEffect(() => {
+      if (!validateLoading && validateError) {
+         setNotify({
+            open: true,
+            error: 'Server error!!!',
+         });
+         setLoading(false);
+      }
+   }, [validateError, validateLoading]);
 
    const handleLogin = (payload: any) => {
       setLoading(true);
